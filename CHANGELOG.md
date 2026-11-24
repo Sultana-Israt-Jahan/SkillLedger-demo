@@ -1,6 +1,7 @@
 # SkillLedger changelog
 
 ## v1.1.0
+- Added a demo build for public pages. It has the same screens and features as the full build; only the data differs (12 fictional records, typing locked, examples to enter, nothing stored). Built from the same source, so the full build is unchanged.
 - Watermark "SIJ - SkillLedger" (author initials) shown faintly on every screen, including the login screen, and restored automatically if removed or hidden.
 - Watermark and copyright line added to PDF/Word reports, the Excel Summary sheet, the last row of the CSV export and the JSON backup.
 - Honest limit: the watermark is part of the page code. It deters casual reuse and shows origin; it cannot stop someone who edits the source.

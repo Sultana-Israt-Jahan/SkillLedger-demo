@@ -25,11 +25,21 @@ Built for an "AI in HR" capstone competition. All data in this demo is fictional
 |---|---|
 | ![Register](register.png) | ![Add training](add-training.png) |
 
+## Demo and full version
+
+This public page is a **demo build of the full system**. Every screen and feature is the same as in the full version: add and edit training, register, dashboard, improvement tracker, exports, access control, settings and the manual. In the demo only the data differs:
+
+- It opens with 12 fictional records.
+- Typing is locked. To try the form, pick a demo example (valid ones, and ones that trigger the checks such as a score of 6 or a session ending after midnight without the tick).
+- Changes last only until the page is reloaded, and nothing is stored or sent anywhere.
+
+The full version is developed privately and presented in the competition.
+
 ## Try it
 
 1. Open the live demo (or open `index.html` in a browser).
-2. Choose any passcode (at least 6 characters) and load the 12 test records.
-3. To try the viewer role, sign out and use the viewer code `TMS-VIEW-2026`.
+2. Open **Add training**, pick a demo example and save it. Try the examples under "Shows a check" to see validation.
+3. Explore the register, dashboard, improvement tracker, exports and the user manual.
 
 ## Honest limits
 
