@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="en" data-theme="mist">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SkillLedger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&display=swap">
+<style>
+/* SkillLedger v1 (Phase 1). Single file. (c) 2026 SULTANA ISRAT JAHAN. All rights reserved. */
+:root,[data-theme="mist"]{--bg:#F3F6F5;--card:#fff;--ink:#12302F;--muted:#4A6361;--line:#D5E0DD;--line2:#E4ECEA;--head:#0F3D3E;--headink:#fff;--headmuted:#CFE3E0;--brand:#0E6E6B;--onbrand:#fff;--accent:#F2A93B;--soft:#EAF1EF;--field:#9DB3AF;--focus:#1B4FA8;
+--up-bg:#E0EAFB;--up-fg:#1B4FA8;--ok-bg:#DDF1E6;--ok-fg:#146B42;--pe-bg:#FBEBCB;--pe-fg:#7A4E0B;--lo-bg:#F8DDD8;--lo-fg:#9B2C1B;--lowrow:#FDF3F1;--c1:#0E6E6B;--c2:#F2A93B;--c3:#1B4FA8;--danger:#9B2C1B;--shadow:0 6px 18px rgba(15,61,62,.15)}
+[data-theme="sand"]{--bg:#EFEAE0;--card:#FBF8F2;--ink:#2B2A24;--muted:#5A5648;--line:#D9D1BF;--line2:#E6DFCF;--head:#3A3A2E;--headink:#FFFDF6;--headmuted:#E3DDC8;--brand:#0B6360;--onbrand:#fff;--accent:#D9902B;--soft:#EAE3D2;--field:#8F8870;--focus:#1B4FA8;
+--up-bg:#DCE6F7;--up-fg:#1B4FA8;--ok-bg:#D8EEDD;--ok-fg:#135C39;--pe-bg:#F6E6BE;--pe-fg:#6E4508;--lo-bg:#F5D9D2;--lo-fg:#8E2918;--lowrow:#F8ECE6;--c1:#0B6360;--c2:#D9902B;--c3:#1B4FA8;--danger:#8E2918;--shadow:0 6px 18px rgba(58,58,46,.18)}
+[data-theme="dusk"]{--bg:#0E1F1F;--card:#152B2B;--ink:#E6F0EE;--muted:#A9C2BE;--line:#2C4A48;--line2:#223B3A;--head:#0A1616;--headink:#E6F0EE;--headmuted:#A9C2BE;--brand:#4CC9C2;--onbrand:#06201F;--accent:#F2B84B;--soft:#1B3636;--field:#6F8F8B;--focus:#8DB8FF;
+--up-bg:#1E3558;--up-fg:#BBD3FF;--ok-bg:#16402C;--ok-fg:#9DE3BE;--pe-bg:#4A3912;--pe-fg:#F5D58C;--lo-bg:#4E2220;--lo-fg:#FFB4A8;--lowrow:#2A1E1E;--c1:#4CC9C2;--c2:#F2B84B;--c3:#8DB8FF;--danger:#FF9C8E;--shadow:0 6px 18px rgba(0,0,0,.45)}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter','Hind Siliguri',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:1.5}
+html[lang="bn"] body{font-family:'Hind Siliguri','Inter',system-ui,sans-serif;font-size:16px}
+h1,h2,h3,h4{font-family:'Plus Jakarta Sans','Hind Siliguri',system-ui,sans-serif;margin:0;letter-spacing:-.01em;line-height:1.2}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--brand)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+a.sr:focus{width:auto;height:auto;clip:auto;background:var(--card);color:var(--ink);padding:10px 14px;z-index:100;left:8px;top:8px;border-radius:8px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(14px,3vw,32px)}
+.muted{color:var(--muted)}.small{font-size:13px}.xs{font-size:12px}
+.lbl{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px}
+.pad{padding:clamp(14px,2vw,20px)}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.between{justify-content:space-between}
+.col{display:flex;flex-direction:column;gap:12px}
+.grid{display:grid;gap:16px}
+.g-auto{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g-kpi{grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}
+.g-chart{grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr))}
+/* header */
+.top{background:var(--head);color:var(--headink);position:sticky;top:0;z-index:30}
+.top .wrap{display:flex;align-items:center;gap:14px;min-height:58px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:18px;color:var(--headink);text-decoration:none}
+.nav{display:flex;gap:2px;flex:1;flex-wrap:wrap}
+.nav a{padding:8px 12px;border-radius:8px;color:var(--headink);text-decoration:none;font-weight:500;font-size:14px;min-height:40px;display:flex;align-items:center}
+.nav a:hover{background:rgba(255,255,255,.1)}
+.nav a[aria-current="page"]{background:rgba(255,255,255,.18);font-weight:600}
+.burger{display:none;background:transparent;border:1.5px solid var(--headmuted);color:var(--headink);border-radius:8px;min-height:40px;min-width:44px;font-size:18px;cursor:pointer}
+.topsel{background:var(--card);color:var(--ink);border:1.5px solid var(--headmuted);border-radius:8px;padding:6px 8px;min-height:40px}
+.chip-user{display:flex;align-items:center;gap:8px;font-size:13px}
+.av{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#12302F;font-weight:700;display:flex;align-items:center;justify-content:center}
+.linkbtn{background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;padding:6px;min-height:36px}
+/* buttons and fields */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:8px;border:1.5px solid var(--brand);background:var(--brand);color:var(--onbrand);font-weight:600;font-size:14px;min-height:44px;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.07)}
+.btn.sec{background:var(--card);color:var(--brand)}
+.btn.dng{background:var(--danger);border-color:var(--danger);color:#fff}
+.btn.sm{min-height:36px;padding:5px 12px;font-size:13px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fld>label,.fld>.fl{font-weight:600;font-size:14px}
+.req{color:var(--danger)}
+.inp,select.inp,textarea.inp{width:100%;border:1.5px solid var(--field);border-radius:8px;padding:9px 12px;background:var(--card);min-height:44px}
+textarea.inp{min-height:84px;resize:vertical}
+.inp:focus{border-color:var(--brand)}
+.inp[aria-invalid="true"]{border-color:var(--danger);background:var(--lowrow)}
+.err{color:var(--danger);font-size:13px;font-weight:600;display:none}
+.err.on{display:block}
+.hint{color:var(--muted);font-size:13px}
+.seg{display:flex;gap:10px;flex-wrap:wrap}
+.opt{display:flex;align-items:center;gap:8px;border:1.5px solid var(--field);border-radius:8px;padding:8px 14px;min-height:44px;cursor:pointer;background:var(--card)}
+.opt:has(input:checked){border-color:var(--brand);background:var(--soft);font-weight:600}
+.opt input{accent-color:var(--brand);width:18px;height:18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chipx{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1.5px solid var(--field);background:var(--card);font-size:13px;font-weight:600;cursor:pointer;min-height:36px}
+.chipx:has(input:checked),.chipx.on{background:var(--brand);color:var(--onbrand);border-color:var(--brand)}
+.chipx input{position:absolute;opacity:0;pointer-events:none}
+.chipx:has(input:focus-visible){outline:3px solid var(--focus);outline-offset:2px}
+/* pills */
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.p-up{background:var(--up-bg);color:var(--up-fg)}.p-ok{background:var(--ok-bg);color:var(--ok-fg)}.p-pe{background:var(--pe-bg);color:var(--pe-fg)}.p-lo{background:var(--lo-bg);color:var(--lo-fg)}.p-soft{background:var(--soft);color:var(--ink)}
+/* tables */
+.tw{overflow-x:auto;border-radius:12px}
+table{border-collapse:collapse;width:100%}
+th{text-align:left;font-size:12px;color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--line);background:var(--soft);white-space:nowrap;position:sticky;top:0}
+th button{all:unset;cursor:pointer;display:inline-flex;gap:4px;align-items:center;font-weight:600;padding:2px 0}
+th button:focus-visible{outline:3px solid var(--focus)}
+td{padding:10px 12px;border-bottom:1px solid var(--line2);font-size:13px;vertical-align:middle;font-variant-numeric:tabular-nums}
+td.r,th.r{text-align:right}
+tr.low td{background:var(--lowrow)}
+tr.flash td{animation:fl 2.4s ease}
+@keyframes fl{0%,60%{background:var(--up-bg)}100%{background:transparent}}
+.act{background:none;border:0;color:var(--brand);font-weight:600;cursor:pointer;padding:6px 8px;min-height:36px}
+.act.d{color:var(--danger)}
+/* hero and tiles */
+.hero{background:linear-gradient(135deg,var(--head),var(--brand));color:var(--headink);border-radius:16px;padding:clamp(18px,4vw,36px);display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.hero h1{font-size:clamp(24px,4vw,38px);font-weight:800}
+.tile{display:flex;gap:12px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--card);text-decoration:none;color:var(--ink);min-height:72px}
+.tile:hover{border-color:var(--brand)}
+.tile .ic{width:44px;height:44px;border-radius:10px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.kv{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(24px,3vw,30px);font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi{padding:16px 18px;display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:12px;background:var(--card);min-width:0}
+.ins{padding:10px 14px;background:var(--card);border-radius:8px;border:1px solid var(--line);border-left:4px solid var(--accent);font-size:14px}
+.item{padding:14px 0;border-top:1px solid var(--line2);display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.item:first-child{border-top:0}
+.bar{display:flex;height:40px;border-radius:6px;overflow:hidden;gap:2px}
+.bar button{all:unset;cursor:pointer;display:flex;align-items:center;padding:0 12px;font-weight:600;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;box-sizing:border-box}
+.bar button:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+svg text{font-family:'Inter','Hind Siliguri',sans-serif}
+.svgbtn{cursor:pointer}
+.svgbtn:focus-visible{outline:3px solid var(--focus)}
+/* toast, modal, lumi */
+#toasts{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:10px;z-index:90;max-width:min(380px,calc(100vw - 32px))}
+.toast{display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--brand);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow);animation:up .25s ease}
+.toast.ok{border-left-color:#2E9E62}.toast.err{border-left-color:#D44B3C}.toast.warn{border-left-color:var(--accent)}
+.toast .x{margin-left:auto;background:none;border:0;cursor:pointer;font-size:18px;color:var(--muted);min-width:32px;min-height:32px}
+@keyframes up{from{transform:translateY(10px);opacity:0}to{transform:none;opacity:1}}
+#ov{position:fixed;inset:0;background:rgba(10,22,22,.55);display:none;align-items:center;justify-content:center;z-index:80;padding:16px}
+#ov.on{display:flex}
+.modal{background:var(--card);border-radius:14px;max-width:560px;width:100%;max-height:90vh;overflow:auto;padding:22px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.modal.wide{max-width:760px}
+/* dropdown */
+.dd{position:relative}
+.menu{position:absolute;right:0;top:calc(100% + 6px);min-width:240px;background:var(--card);border:1px solid var(--field);border-radius:10px;box-shadow:var(--shadow);z-index:40;overflow:hidden;display:none}
+.menu.on{display:block}
+.menu button{all:unset;display:block;width:100%;box-sizing:border-box;padding:11px 16px;cursor:pointer;font-size:14px}
+.menu button:hover,.menu button:focus-visible{background:var(--soft)}
+.menu hr{border:0;border-top:1px solid var(--line2);margin:0}
+/* footer */
+footer.foot{background:var(--head);color:var(--headmuted);font-size:13px;margin-top:40px}
+footer.foot .wrap{padding-top:28px;padding-bottom:20px;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between}
+footer.foot a{color:var(--headmuted)}
+footer.foot .copy{border-top:1px solid rgba(255,255,255,.18);text-align:center;padding:14px;color:var(--headink)}
+/* manual */
+.manual h2{font-size:20px;margin-top:22px}.manual h3{font-size:16px;margin-top:14px}.manual p,.manual li{max-width:78ch}
+.manual .grey{opacity:.55}
+.dz{border:2px dashed var(--field);border-radius:12px;padding:16px}
+.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(160deg,var(--head),var(--brand))}
+.gate .box{background:var(--card);border-radius:18px;max-width:460px;width:100%;padding:clamp(20px,4vw,32px);display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+#printRoot{display:none}
+@media (max-width:860px){
+ .burger{display:inline-flex;align-items:center;justify-content:center}
+ .nav{display:none;order:9;flex-basis:100%;flex-direction:column}
+ .nav.on{display:flex}
+ .top .grow{flex:1}
+}
+@media (max-width:700px){
+ table.cards,table.cards tbody,table.cards tr,table.cards td{display:block;width:100%}
+ table.cards thead{display:none}
+ table.cards tr{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;padding:8px 4px;background:var(--card)}
+ table.cards td{border:0;display:flex;justify-content:space-between;gap:12px;padding:5px 12px;text-align:right}
+ table.cards td::before{content:attr(data-l);font-weight:600;color:var(--muted);text-align:left}
+ table.cards tr.tot{display:none}
+ #toasts{left:16px;right:16px;max-width:none}
+}
+@media print{
+ body.pr-report>*:not(#printRoot),body.pr-manual>*:not(#printRoot){display:none!important}
+ body.pr-report #printRoot,body.pr-manual #printRoot{display:block}
+ body{background:#fff;color:#000;font-size:11pt}
+ #printRoot{color:#000}
+ #printRoot table{font-size:9pt}
+ #printRoot th{position:static;background:#eee;color:#000}
+ #printRoot h1{font-size:18pt}#printRoot h2{font-size:14pt;margin-top:14pt}
+ .pbreak{page-break-before:always}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="sr" href="#main">Skip to content</a>
+<div id="app"></div>
+<div id="ov" role="dialog" aria-modal="true"></div>
+<div id="toasts" role="status" aria-live="polite"></div>
+<div id="printRoot"></div>
+<noscript>SkillLedger needs JavaScript. Please enable it.</noscript>
+<script>
+(function(){
+'use strict';
+/* ===== constants ===== */
+const VERSION='1.0.0';
+const COPY='© 2026 SULTANA ISRAT JAHAN. All rights reserved.';
+const KEY='skillledger.v1';
+const LS_OK=(()=>{try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return true}catch(e){return false}})();
+const ZONES=['Asia/Dhaka','Asia/Kolkata','Asia/Karachi','Asia/Dubai','Asia/Singapore','Asia/Kuala_Lumpur','Asia/Hong_Kong','Asia/Tokyo','Europe/London','Europe/Berlin','Europe/Paris','America/New_York','America/Chicago','America/Los_Angeles','Australia/Sydney','UTC'];
+const CURRENCIES={BDT:'৳',USD:'$',EUR:'€',GBP:'£',INR:'₹',SGD:'S$',AED:'AED',MYR:'RM',JPY:'¥',CAD:'C$',AUD:'A$'};
+const DEFAULT_COMP=['Leadership','Communication','Technical skills','Compliance','Customer service','Analytics','Coaching','Safety','Project management','Digital literacy'];
+const DELIVERY=['In person','Online','Hybrid'];
+const WIDGETS=[
+ ['kpi_trainings','kpi'],['kpi_hours','kpi'],['kpi_people','kpi'],['kpi_cost','kpi'],['kpi_score','kpi'],['kpi_cph','kpi'],['kpi_pending','kpi'],
+ ['c_month','chart'],['c_mix','chart'],['c_fac','chart'],['c_scatter','chart'],['c_low','chart']];
+const WNAME={kpi_trainings:'Trainings',kpi_hours:'Total hours',kpi_people:'Participants',kpi_cost:'Total cost',kpi_score:'Avg feedback',kpi_cph:'Cost per participant',kpi_pending:'Pending feedback',c_month:'By month',c_mix:'Type, scope and status',c_fac:'Feedback by facilitator',c_scatter:'Cost against score',c_low:'Low scores and pending'};
+const VIEWS={
+ overview:{vis:['kpi_trainings','kpi_hours','kpi_people','kpi_cost','kpi_score','c_month','c_mix','c_fac','c_scatter','c_low'],order:['kpi_trainings','kpi_hours','kpi_people','kpi_cost','kpi_score','kpi_cph','kpi_pending','c_month','c_mix','c_fac','c_scatter','c_low']},
+ cost:{vis:['kpi_cost','kpi_cph','kpi_hours','kpi_trainings','c_month','c_scatter','c_mix'],order:['kpi_cost','kpi_cph','kpi_hours','kpi_trainings','kpi_people','kpi_score','kpi_pending','c_month','c_scatter','c_mix','c_fac','c_low']},
+ quality:{vis:['kpi_score','kpi_pending','kpi_trainings','c_fac','c_low','c_scatter','c_month'],order:['kpi_score','kpi_pending','kpi_trainings','kpi_hours','kpi_people','kpi_cost','kpi_cph','c_fac','c_low','c_scatter','c_month','c_mix']},
+ people:{vis:['kpi_people','kpi_trainings','kpi_hours','kpi_cph','c_month','c_mix'],order:['kpi_people','kpi_trainings','kpi_hours','kpi_cph','kpi_cost','kpi_score','kpi_pending','c_month','c_mix','c_fac','c_scatter','c_low']},
+ follow:{vis:['kpi_pending','kpi_score','c_low','c_fac','kpi_trainings'],order:['kpi_pending','kpi_score','kpi_trainings','kpi_hours','kpi_people','kpi_cost','kpi_cph','c_low','c_fac','c_month','c_mix','c_scatter']}
+};
+
+/* ===== helpers ===== */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.prototype.slice.call(r.querySelectorAll(s));
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const nowISO=()=>new Date().toISOString();
+const clone=o=>JSON.parse(JSON.stringify(o));
+const num=v=>{if(v===null||v===undefined)return NaN;const s=String(v).trim();if(s===''||!/^-?\d+(\.\d+)?$/.test(s))return NaN;return Number(s)};
+const fmtN=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
+const fmtH=h=>String(+Number(h).toFixed(2));
+const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+const round1=x=>Math.round(x*10+1e-9)/10;
+
+/* sha256 (pure JS, exact) */
+function sha256(str){
+ const m=Math.pow,mw=m(2,32);const bytes=Array.from(new TextEncoder().encode(str));
+ const hash=[],k=[],isC={};let pc=0;
+ for(let c=2;pc<64;c++){if(!isC[c]){for(let i=c*c;i<313;i+=c)isC[i]=c;hash[pc]=(m(c,.5)*mw)|0;k[pc++]=(m(c,1/3)*mw)|0}}
+ const len=bytes.length*8;bytes.push(0x80);while(bytes.length%64!==56)bytes.push(0);
+ for(let i=7;i>=0;i--)bytes.push(i>3?0:(len>>>(i*8))&255);
+ const h=hash.slice(0,8);
+ for(let o=0;o<bytes.length;o+=64){
+  const w=[];for(let i=0;i<64;i++){if(i<16)w[i]=(bytes[o+i*4]<<24)|(bytes[o+i*4+1]<<16)|(bytes[o+i*4+2]<<8)|bytes[o+i*4+3];else{const w15=w[i-15],w2=w[i-2];const s0=((w15>>>7)|(w15<<25))^((w15>>>18)|(w15<<14))^(w15>>>3);const s1=((w2>>>17)|(w2<<15))^((w2>>>19)|(w2<<13))^(w2>>>10);w[i]=(w[i-16]+s0+w[i-7]+s1)|0}}
+  let [a,b,c,d,e,f,g,hh]=h;
+  for(let i=0;i<64;i++){const S1=((e>>>6)|(e<<26))^((e>>>11)|(e<<21))^((e>>>25)|(e<<7));const ch=(e&f)^(~e&g);const t1=(hh+S1+ch+k[i]+w[i])|0;const S0=((a>>>2)|(a<<30))^((a>>>13)|(a<<19))^((a>>>22)|(a<<10));const mj=(a&b)^(a&c)^(b&c);const t2=(S0+mj)|0;hh=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0}
+  h[0]=(h[0]+a)|0;h[1]=(h[1]+b)|0;h[2]=(h[2]+c)|0;h[3]=(h[3]+d)|0;h[4]=(h[4]+e)|0;h[5]=(h[5]+f)|0;h[6]=(h[6]+g)|0;h[7]=(h[7]+hh)|0}
+ return h.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('');
+}
+
+/* dates and times */
+const parseD=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');if(!m)return null;const d=new Date(Date.UTC(+m[1],+m[2]-1,+m[3]));return d.getUTCMonth()===+m[2]-1&&d.getUTCDate()===+m[3]?d:null};
+const dayDiff=(a,b)=>Math.round((parseD(b)-parseD(a))/864e5);
+const mins=t=>{const m=/^(\d{2}):(\d{2})$/.exec(t||'');if(!m)return null;const h=+m[1],mi=+m[2];return(h<24&&mi<60)?h*60+mi:null};
+const hhmm=n=>pad(Math.floor(n/60))+':'+pad(n%60);
+function tzOffsetMs(utcMs,tz){
+ const f=new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}).formatToParts(new Date(utcMs));
+ const o={};f.forEach(p=>o[p.type]=p.value);
+ return Date.UTC(+o.year,+o.month-1,+o.day,+o.hour%24,+o.minute,+o.second)-Math.floor(utcMs/1000)*1000;
+}
+function zonedToUtc(dateStr,time,tz){
+ const d=parseD(dateStr),mm=mins(time);if(!d||mm===null)return null;
+ const guess=d.getTime()+mm*60000;let off=tzOffsetMs(guess,tz);let utc=guess-off;const off2=tzOffsetMs(utc,tz);if(off2!==off)utc=guess-off2;return utc;
+}
+function fmtInZone(utcMs,tz){return new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit',hourCycle:'h23',day:'numeric',month:'short'}).format(new Date(utcMs))}
+function utcOffsetLabel(tz,ms){const o=tzOffsetMs(ms||Date.now(),tz)/60000;const s=o<0?'-':'+';const a=Math.abs(o);return 'UTC'+s+Math.floor(a/60)+(a%60?':'+pad(a%60):'')}
+
+/* duration: the heart of the brief */
+function calcDuration(f){
+ const out={ok:false,hours:null,error:null,days:null,per:null};
+ const sd=parseD(f.startDate),ed=parseD(f.endDate),a=mins(f.timeFrom),b=mins(f.timeTo);
+ if(!sd||!ed||a===null||b===null)return out;
+ if(ed<sd){out.error='end_before_start';return out}
+ const days=dayDiff(f.startDate,f.endDate)+1;let span=b-a;
+ if(b===a){out.error='zero';return out}
+ if(b<a){if(!f.endsNextDay){out.error='to_earlier';return out}span+=1440}
+ else if(f.endsNextDay){out.error='tick_not_needed';return out}
+ out.ok=true;out.days=days;out.per=span;out.hours=Math.round(span*days/60*100)/100;return out;
+}
+const hoursOf=r=>(r.durationManual!=null&&r.durationManual!=='')?Number(r.durationManual):(calcDuration(r).hours||0);
+const isManual=r=>r.durationManual!=null&&r.durationManual!=='';
+
+/* ===== state ===== */
+let S=null,mem=null,SESSION=null;
+function defaults(){return{v:1,settings:{appName:'SkillLedger',ownerName:'',lang:'en',theme:'mist',currency:'BDT',fyStart:7,lowLine:3.5,lumi:true,myZone:Intl.DateTimeFormat().resolvedOptions().timeZone||'Asia/Dhaka',fixedDate:'',competencies:DEFAULT_COMP.slice(),lock:'open',owner:null,dash:{view:'overview',vis:VIEWS.overview.vis.slice(),order:VIEWS.overview.order.slice()}},viewers:[],logins:[],log:[],trainings:[],seq:0,seeded:false}}
+function load(){
+ let raw=null;try{raw=LS_OK?localStorage.getItem(KEY):mem}catch(e){}
+ if(raw){try{const o=JSON.parse(raw);if(o&&o.settings&&Array.isArray(o.trainings)){const d=defaults();o.settings=Object.assign(d.settings,o.settings);o.settings.dash=Object.assign(d.settings.dash,o.settings.dash||{});S=Object.assign(d,o);return}}catch(e){}}
+ S=defaults();
+}
+function save(){const s=JSON.stringify(S);try{if(LS_OK)localStorage.setItem(KEY,s);else mem=s}catch(e){toast('err','Could not save in this browser. Export a backup now.')}}
+function logAct(a){S.log.unshift({t:nowISO(),who:whoLabel(),a:a});if(S.log.length>300)S.log.length=300}
+function whoLabel(){return SESSION?(SESSION.role==='owner'?'Owner':'Viewer '+(SESSION.label||'')):'System'}
+const T=()=>S.settings;
+const isOwner=()=>SESSION&&SESSION.role==='owner';
+const canEdit=()=>isOwner()&&S.settings.lock==='open';
+const lang=()=>S.settings.lang;
+const sym=()=>CURRENCIES[T().currency]||T().currency;
+
+/* ===== i18n ===== */
+let BN={};
+function t(k,v){if(lang()==='bn'&&!BN[k]){(window.__MISS=window.__MISS||{})[k]=1}let s=(lang()==='bn'&&BN[k])||k;if(v)for(const x in v)s=s.split('{'+x+'}').join(v[x]);return s}
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MON_BN=['জানু','ফেব','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগ','সেপ্ট','অক্টো','নভে','ডিসে'];
+const monName=i=>lang()==='bn'?MON_BN[i]:MON[i];
+function fmtDate(s,withYear){const d=parseD(s);if(!d)return s||'';return d.getUTCDate()+' '+monName(d.getUTCMonth())+(withYear?' '+d.getUTCFullYear():'')}
+function fmtRange(r){return r.startDate===r.endDate?fmtDate(r.startDate,true):fmtDate(r.startDate)+' – '+fmtDate(r.endDate,true)}
+function todayStr(){if(S.settings.fixedDate&&parseD(S.settings.fixedDate))return S.settings.fixedDate;const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+
+/* ===== business rules ===== */
+function status(r){return r.endDate>=todayStr()?'Upcoming':(r.score!=null?'Completed':'Pending Feedback')}
+const stCls=s=>s==='Upcoming'?'p-up':s==='Completed'?'p-ok':'p-pe';
+const isLow=r=>r.score!=null&&r.score<T().lowLine;
+const nextCode=()=>{S.seq=Math.max(S.seq,...S.trainings.map(r=>+String(r.code).split('-')[2]||0))+1;return S.seq};
+const codeFor=(startDate,seq)=>'SL-'+startDate.slice(0,4)+'-'+String(seq).padStart(4,'0');
+function validate(f,editingId){
+ const e={},R=t('This field is required');
+ const title=(f.title||'').trim();
+ if(!title)e.title=R;else if(title.length>150)e.title=t('Use 150 characters or fewer');
+ const sd=parseD(f.startDate),ed=parseD(f.endDate);
+ if(!f.startDate)e.startDate=R;else if(!sd)e.startDate=t('Enter a real date');
+ if(!f.endDate)e.endDate=R;else if(!ed)e.endDate=t('Enter a real date');
+ if(sd&&ed&&ed<sd)e.endDate=t('End date cannot be before the start date');
+ const a=mins(f.timeFrom),b=mins(f.timeTo);
+ if(!f.timeFrom)e.timeFrom=R;else if(a===null)e.timeFrom=t('Enter a time like 09:30');
+ if(!f.timeTo)e.timeTo=R;else if(b===null)e.timeTo=t('Enter a time like 16:00');
+ if(a!==null&&b!==null&&!e.endDate){const d=calcDuration(f);
+  if(d.error==='zero')e.timeTo=t('Start and end time are the same. The training must last more than zero minutes');
+  if(d.error==='to_earlier')e.timeTo=t('End time must be later than start time. If it ends after midnight, tick "Ends next day (+1)"');
+  if(d.error==='tick_not_needed')e.timeTo=t('"Ends next day" applies only when the end time is earlier than the start time');}
+ if(!ZONES.includes(f.tz))e.tz=R;
+ if(!['In-house','External'].includes(f.type))e.type=R;
+ if(!['Domestic','International'].includes(f.scope))e.scope=R;
+ if(!(f.facilitator||'').trim())e.facilitator=R;
+ if(!(f.targets||'').trim())e.targets=R;
+ if(!f.competencies||!f.competencies.length)e.competencies=t('Choose at least one competency');
+ const p=num(f.participants);
+ if(String(f.participants??'').trim()==='')e.participants=R;else if(isNaN(p)||!Number.isInteger(p))e.participants=t('Enter a whole number (no decimals, no text)');else if(p<0)e.participants=t('Participants cannot be negative');else if(p>100000)e.participants=t('That number looks too large');
+ if(!(f.venue||'').trim())e.venue=R;
+ const c=num(f.cost);
+ if(String(f.cost??'').trim()==='')e.cost=R;else if(isNaN(c))e.cost=t('Enter a number');else if(c<0)e.cost=t('Cost cannot be negative. Enter 0 for a free training');else if(!/^\d+(\.\d{1,2})?$/.test(String(f.cost).trim()))e.cost=t('Use at most 2 decimals');
+ if(f.durationManual!=null&&f.durationManual!==''){const m=num(f.durationManual);const d=calcDuration(f);if(isNaN(m)||m<=0)e.durationManual=t('Enter hours above 0');else if(d.ok&&m>d.days*24)e.durationManual=t('More than 24 hours per day is not possible');}
+ if(String(f.score??'').trim()!==''){const s=num(f.score);
+  if(isNaN(s))e.score=t('Enter a number from 1 to 5');else if(s<1||s>5)e.score=t('Score must be between 1 and 5. {v} is outside the scale',{v:String(f.score).trim()});else if(!/^\d(\.\d)?$/.test(String(f.score).trim()))e.score=t('Use at most 1 decimal');
+  else if(ed&&f.endDate>=todayStr())e.score=t('A score can be entered only after the training end date');}
+ if(String((f.improvements||'')).length>2000)e.improvements=t('Use 2000 characters or fewer');
+ return e;
+}
+function dupOf(f,editingId){const ti=(f.title||'').trim().toLowerCase();return S.trainings.find(r=>r.id!==editingId&&r.title.trim().toLowerCase()===ti&&r.startDate===f.startDate)}
+function totals(list){
+ const rated=list.filter(r=>r.score!=null);
+ const cost=list.reduce((s,r)=>s+r.cost,0),pp=list.reduce((s,r)=>s+r.participants,0);
+ return{n:list.length,hours:list.reduce((s,r)=>s+hoursOf(r),0),people:pp,cost:cost,avg:rated.length?avg(rated.map(r=>r.score)):null,rated:rated.length,cph:pp?cost/pp:null,
+  done:list.filter(r=>status(r)==='Completed').length,pend:list.filter(r=>status(r)==='Pending Feedback').length,up:list.filter(r=>status(r)==='Upcoming').length};
+}
+/* financial year: label and range from start month */
+function fyOf(dateStr){const d=parseD(dateStr);const y=d.getUTCFullYear(),m=d.getUTCMonth()+1,fs=T().fyStart;if(fs===1)return y;return m>=fs?y:y-1}
+function fyLabel(y){const fs=T().fyStart;return fs===1?String(y):y+'–'+String(y+1).slice(2)}
+function fyRange(y){const fs=T().fyStart;if(fs===1)return[y+'-01-01',y+'-12-31'];const s=y+'-'+pad(fs)+'-01';const ey=y+1,em=fs-1;const last=new Date(Date.UTC(ey,em,0)).getUTCDate();return[s,ey+'-'+pad(em)+'-'+pad(last)]}
+
+/* seed: 12 fictional records */
+function seed(){
+ const D='Asia/Dhaka',SG='Asia/Singapore';
+ const rows=[
+  ['Leadership Essentials','2026-08-12','2026-08-13','09:30','16:00',D,'In-house','Domestic','Farhana Rahman','Build confidence in setting direction, giving feedback and running team meetings.',['Leadership','Coaching'],24,'Dhaka Learning Centre, Level 4',85000,4.5,'', 'In person',0,null],
+  ['Workplace Safety Refresher','2026-09-03','2026-09-03','10:00','13:00',D,'In-house','Domestic','Imran Hossain','Refresh emergency procedures, fire safety and reporting of unsafe conditions.',['Safety','Compliance'],40,'Head office training room',30000,3.2,'Replace slides with a floor walk-through\nMove the session to the morning when staff are fresher','In person',1,null],
+  ['Advanced Excel for HR','2026-09-21','2026-09-21','09:00','15:30',D,'External','Domestic','Nusrat Jahan','Use pivot tables, lookups and simple dashboards for HR reporting.',['Technical skills','Analytics'],15,'Partner computer lab, Gulshan',60000,4.1,'Share practice files before the session\nAdd a follow-up hour on pivot tables','In person',0,null],
+  ['Global HR Trends Summit','2026-10-05','2026-10-07','09:00','17:00',SG,'External','International','Daniel Whitmore','Learn current practice in workforce planning, skills-based hiring and HR analytics.',['Analytics','Leadership'],4,'Marina Bay Convention Hall, Singapore',420000,4.7,'','In person',0,null],
+  ['Effective Communication','2026-10-14','2026-10-14','14:00','17:00',D,'In-house','Domestic','Farhana Rahman','Improve clear writing, active listening and difficult conversations.',['Communication'],30,'Head office training room',25000,2.9,'Shorten the lecture part, add paired speaking practice\nUse real workplace situations from our own departments\nSplit the group into two sessions of 15','In person',0,null],
+  ['Data Privacy & Compliance','2026-11-02','2026-11-02','10:00','16:00',D,'External','Domestic','Tanvir Ahmed','Understand data protection duties and handling of personnel records.',['Compliance'],20,'Legal Academy Hall, Motijheel',48000,null,'','In person',0,null],
+  ['New Manager Onboarding','2026-11-09','2026-11-09','09:00','17:00',D,'In-house','Domestic','Imran Hossain','Prepare first-time managers for planning, delegation and performance talks.',['Leadership','Project management'],12,'Dhaka Learning Centre, Level 2',18000,4.3,'Give each new manager a mentor for 30 days','In person',0,7],
+  ['Customer Service Excellence','2026-11-17','2026-11-17','09:30','12:30',D,'In-house','Domestic','Sabrina Akter','Handle service moments with empathy and clear next steps.',['Customer service','Communication'],35,'Customer care floor, Banani',22000,null,'','In person',0,null],
+  ['Singapore Talent Analytics Workshop','2026-12-08','2026-12-10','09:00','16:00',SG,'External','International','Priya Menon','Hands-on workshop on talent data, dashboards and fair use of analytics.',['Analytics','Digital literacy'],3,'Raffles Place Training Suite, Singapore',310000,null,'','In person',0,null],
+  ['Coaching Skills for Supervisors','2026-12-15','2026-12-15','10:00','16:30',D,'In-house','Domestic','Farhana Rahman','Practise coaching conversations and goal setting with supervisors.',['Coaching','Leadership'],18,'Dhaka Learning Centre, Level 3',40000,null,'','In person',0,null],
+  ['Remote Team Management (online)','2026-12-22','2026-12-22','15:00','18:00',D,'External','International','Daniel Whitmore','Lead remote and cross-country teams with clear routines and trust.',['Leadership','Digital literacy'],25,'Online (video call)',55000,null,'','Online',0,null],
+  ['Technical Writing Basics','2027-01-07','2027-01-07','09:00','13:00',D,'In-house','Domestic','Nusrat Jahan','Write clear procedures, emails and short reports.',['Communication','Technical skills'],22,'Head office training room',15000,null,'','In person',0,null]];
+ S.trainings=[];S.seq=0;
+ rows.forEach(r=>{const seq=++S.seq;const o={id:uid()+seq,code:codeFor(r[1],seq),title:r[0],startDate:r[1],endDate:r[2],timeFrom:r[3],timeTo:r[4],endsNextDay:false,tz:r[5],type:r[6],scope:r[7],facilitator:r[8],targets:r[9],competencies:r[10],participants:r[11],venue:r[12],cost:r[13],score:r[14],improvements:r[15],delivery:r[16],actioned:!!r[17],durationManual:r[18],createdAt:nowISO(),updatedAt:nowISO()};S.trainings.push(o)});
+ S.seeded=true;
+}
+
+/* ===== UI helpers ===== */
+const ACT={};
+const ICON={ok:'✓',err:'✕',warn:'!',info:'i',def:''};
+function lumi(kind,size){
+ size=size||44;kind=kind||'def';
+ const col={def:'#7ED6C8',ok:'#3DBA7A',err:'#E5594A',warn:'#F2A93B',info:'#4DA6E0'}[kind];
+ const mouth={ok:'M17 28q7 7 14 0',err:'M18 32q6-6 12 0',warn:'M19 31h10',info:'M19 29q5 4 10 0',def:'M19 28q5 4 10 0'}[kind];
+ const badge={ok:'<circle cx="39" cy="9" r="8" fill="#fff" stroke="#2E9E62" stroke-width="2"/><path d="M35 9l3 3 5-6" fill="none" stroke="#2E9E62" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+  err:'<circle cx="39" cy="9" r="8" fill="#fff" stroke="#C0392B" stroke-width="2"/><path d="M35.5 5.5l7 7M42.5 5.5l-7 7" stroke="#C0392B" stroke-width="2.4" stroke-linecap="round"/>',
+  warn:'<circle cx="39" cy="9" r="8" fill="#fff" stroke="#B26A00" stroke-width="2"/><path d="M39 5v5M39 12.6v.4" stroke="#B26A00" stroke-width="2.4" stroke-linecap="round"/>',
+  info:'<circle cx="39" cy="9" r="8" fill="#fff" stroke="#2D7FB8" stroke-width="2"/><path d="M39 8.5v5M39 5.4v.4" stroke="#2D7FB8" stroke-width="2.4" stroke-linecap="round"/>',def:''}[kind];
+ return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 48 48" aria-hidden="true" focusable="false" style="flex:none"><path d="M24 6c10 0 17 7 17 17 0 11-7 19-17 19S7 34 7 23C7 13 14 6 24 6z" fill="'+col+'"/><circle cx="18" cy="22" r="2.6" fill="#12302F"/><circle cx="30" cy="22" r="2.6" fill="#12302F"/><path d="'+mouth+'" fill="none" stroke="#12302F" stroke-width="2.2" stroke-linecap="round"/>'+badge+'</svg>';
+}
+function toast(kind,msg,ms){
+ const box=$('#toasts');if(!box)return;
+ const d=document.createElement('div');d.className='toast '+kind;
+ const icon=T().lumi?lumi(kind,42):'<b aria-hidden="true" style="font-size:18px;width:26px;text-align:center">'+ICON[kind]+'</b>';
+ d.innerHTML=icon+'<div style="min-width:0;overflow-wrap:anywhere">'+esc(msg)+'</div><button class="x" aria-label="'+esc(t('Close'))+'">×</button>';
+ d.querySelector('.x').onclick=()=>d.remove();
+ box.appendChild(d);while(box.children.length>4)box.firstChild.remove();
+ setTimeout(()=>d.remove(),ms||(kind==='err'?8000:4500));
+}
+let modalResolve=null,lastFocus=null;
+function openModal(html,wide){lastFocus=document.activeElement;const o=$('#ov');o.innerHTML='<div class="modal'+(wide?' wide':'')+'" tabindex="-1">'+html+'</div>';o.classList.add('on');const m=o.firstChild;const f=m.querySelector('[autofocus],input,select,textarea,button');(f||m).focus()}
+function closeModal(v){const o=$('#ov');o.classList.remove('on');o.innerHTML='';if(modalResolve){const r=modalResolve;modalResolve=null;r(v===true)}if(lastFocus&&lastFocus.focus)try{lastFocus.focus()}catch(e){}}
+function confirmBox(o){return new Promise(res=>{modalResolve=res;openModal('<h2 style="font-size:20px;margin-bottom:8px">'+esc(o.title)+'</h2><div class="col" style="gap:10px;margin-bottom:16px">'+(o.body||'')+'</div><div class="row" style="justify-content:flex-end"><button class="btn sec" data-act="mclose">'+esc(o.cancel||t('Cancel'))+'</button><button class="btn'+(o.danger?' dng':'')+'" data-act="mok" autofocus>'+esc(o.ok||t('OK'))+'</button></div>')})}
+ACT.mclose=()=>closeModal(false);ACT.mok=()=>closeModal(true);
+$('#ov').addEventListener('mousedown',e=>{if(e.target.id==='ov')closeModal(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('#ov').classList.contains('on'))closeModal(false);$$('.menu.on').forEach(m=>m.classList.remove('on'))}
+ if(e.key==='Tab'&&$('#ov').classList.contains('on')){const f=$$('button,input,select,textarea,a[href]',$('#ov')).filter(x=>!x.disabled&&x.offsetParent!==null);if(!f.length)return;const a=f[0],b=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();b.focus()}else if(!e.shiftKey&&document.activeElement===b){e.preventDefault();a.focus()}}});
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-act]');
+ if(!e.target.closest('.dd'))$$('.menu.on').forEach(m=>m.classList.remove('on'));
+ if(!el)return;const f=ACT[el.dataset.act];if(f)f(el,e);
+});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('svgbtn')){e.preventDefault();e.target.click()}});
+ACT.menu=(el)=>{const m=el.parentElement.querySelector('.menu');const on=m.classList.contains('on');$$('.menu.on').forEach(x=>x.classList.remove('on'));if(!on){m.classList.add('on');const b=m.querySelector('button');if(b)b.focus()}el.setAttribute('aria-expanded',String(!on))};
+
+/* ===== auth ===== */
+let owFails=0,owLockUntil=0;
+function sessionLoad(){try{const s=sessionStorage.getItem('sl.s');if(s)SESSION=JSON.parse(s)}catch(e){}}
+function sessionSet(s){SESSION=s;try{if(s)sessionStorage.setItem('sl.s',JSON.stringify(s));else sessionStorage.removeItem('sl.s')}catch(e){}}
+function logLogin(role,who,ok,note){S.logins.unshift({t:nowISO(),role:role,who:who,ok:ok,note:note||''});if(S.logins.length>500)S.logins.length=500;save()}
+function hashPw(p,salt){return sha256(salt+'|'+p)}
+function viewerOk(code){code=(code||'').trim().toLowerCase();if(!code)return null;return S.viewers.find(v=>v.code.toLowerCase()===code&&!v.revoked&&(!v.expires||v.expires>=todayStr()))||null}
+function gateHtml(){
+ const setup=!S.settings.owner;
+ const lang_sel='<label class="sr" for="gl">Language</label><select id="gl" class="inp" style="max-width:150px" data-chg="lang"><option value="en"'+(lang()==='en'?' selected':'')+'>English</option><option value="bn"'+(lang()==='bn'?' selected':'')+'>বাংলা</option></select>';
+ if(setup)return '<div class="gate"><form class="box" id="setupForm" novalidate><div class="row between"><div class="row" style="gap:10px">'+lumi('def',46)+'<h1 style="font-size:24px">'+esc(t('Welcome'))+'</h1></div>'+lang_sel+'</div>'+
+  '<p class="muted" style="margin:0">'+esc(t('First time here. Set the Owner passcode. Only the Owner can add, change or delete records and decide who can look.'))+'</p>'+
+  '<div class="fld"><label for="su_n">'+esc(t('Your name (shown in the greeting)'))+'</label><input class="inp" id="su_n" autocomplete="name"></div>'+
+  '<div class="fld"><label for="su_p">'+esc(t('Owner passcode (at least 6 characters)'))+' <span class="req">*</span></label><input class="inp" id="su_p" type="password" autocomplete="new-password"><div class="err" id="su_pe"></div></div>'+
+  '<div class="fld"><label for="su_p2">'+esc(t('Repeat the passcode'))+' <span class="req">*</span></label><input class="inp" id="su_p2" type="password" autocomplete="new-password"><div class="err" id="su_p2e"></div></div>'+
+  '<label class="opt"><input type="checkbox" id="su_s" checked><span>'+esc(t('Load the 12 fictional test records'))+'</span></label>'+
+  '<button class="btn" type="submit">'+esc(t('Create and enter'))+'</button>'+
+  '<p class="muted small" style="margin:0">'+esc(t('This version keeps data in this browser only. All data here is fictional.'))+'</p><p class="small" style="margin:0;color:var(--muted)">'+esc(COPY)+'</p></form></div>';
+ return '<div class="gate"><div class="box"><div class="row between"><div class="row" style="gap:10px">'+lumi('def',46)+'<div><h1 style="font-size:24px">'+esc(T().appName)+'</h1><div class="muted small">'+esc(t('Training Management System'))+'</div></div></div>'+lang_sel+'</div>'+
+  '<div class="seg" role="tablist"><label class="opt"><input type="radio" name="gm" value="owner" checked data-chg="gm"><span>'+esc(t('Owner'))+'</span></label><label class="opt"><input type="radio" name="gm" value="viewer" data-chg="gm"><span>'+esc(t('Viewer code'))+'</span></label></div>'+
+  '<form id="loginForm" novalidate class="col"><div class="fld" id="gOwner"><label for="lg_p">'+esc(t('Owner passcode'))+'</label><input class="inp" id="lg_p" type="password" autocomplete="current-password"></div>'+
+  '<div class="fld" id="gViewer" style="display:none"><label for="lg_c">'+esc(t('Viewer code'))+'</label><input class="inp" id="lg_c" autocomplete="off" placeholder="TMS-VIEW-..."><div class="hint">'+esc(t('View-only. You can look at everything but change nothing.'))+'</div></div>'+
+  '<div class="fld" id="gName" style="display:none"><label for="lg_n">'+esc(t('Your name (so the Owner can see who looked)'))+'</label><input class="inp" id="lg_n" autocomplete="name"></div>'+
+  '<div class="err" id="lgErr" role="alert"></div><button class="btn" type="submit">'+esc(t('Enter'))+'</button></form>'+
+  '<p class="muted small" style="margin:0">'+esc(t('Forgot the passcode? It is stored only in this browser. Restoring a backup file (Settings) or clearing this site\'s data resets it, and clearing data deletes records.'))+'</p><p class="small" style="margin:0;color:var(--muted)">'+esc(COPY)+'</p></div></div>';
+}
+function bindGate(){
+ const sf=$('#setupForm');
+ if(sf)sf.addEventListener('submit',e=>{e.preventDefault();const p=$('#su_p').value,p2=$('#su_p2').value;let bad=false;$('#su_pe').classList.remove('on');$('#su_p2e').classList.remove('on');
+  if(p.length<6){$('#su_pe').textContent=t('Use at least 6 characters');$('#su_pe').classList.add('on');bad=true}
+  if(p!==p2){$('#su_p2e').textContent=t('The two passcodes are different');$('#su_p2e').classList.add('on');bad=true}
+  if(bad)return;
+  const salt=uid();S.settings.owner={salt:salt,hash:hashPw(p,salt)};S.settings.ownerName=$('#su_n').value.trim();
+  if($('#su_s').checked)seed();
+  S.viewers=[{code:'TMS-VIEW-2026',label:'Instructor',created:nowISO(),revoked:false,expires:''}];
+  save();sessionSet({role:'owner',label:''});logLogin('Owner','Owner',true,'first setup');render();});
+ const lf=$('#loginForm');
+ if(lf){lf.addEventListener('submit',e=>{e.preventDefault();const mode=($('input[name=gm]:checked')||{}).value;const er=$('#lgErr');er.classList.remove('on');
+  if(mode==='owner'){
+   if(Date.now()<owLockUntil){er.textContent=t('Too many wrong tries. Wait 30 seconds.');er.classList.add('on');return}
+   const o=S.settings.owner;if(hashPw($('#lg_p').value,o.salt)===o.hash){owFails=0;sessionSet({role:'owner',label:''});logLogin('Owner','Owner',true);location.hash='#home';render()}
+   else{owFails++;logLogin('Owner','Owner',false,'wrong passcode');if(owFails>=5){owLockUntil=Date.now()+30000;owFails=0}er.textContent=t('Wrong passcode');er.classList.add('on')}
+  }else{
+   const c=$('#lg_c').value,n=$('#lg_n').value.trim()||'(no name)';
+   if(S.settings.lock==='private'){logLogin('Viewer',n,false,'system private');er.textContent=t('The Owner has closed the system for now.');er.classList.add('on');return}
+   const v=viewerOk(c);if(v){sessionSet({role:'viewer',label:n,code:v.code});logLogin('Viewer',n+' ('+v.label+')',true);location.hash='#home';render()}
+   else{logLogin('Viewer',n,false,'wrong or revoked code');er.textContent=t('This code is not valid, or it has been revoked or has expired.');er.classList.add('on')}}
+ });}
+}
+const CHG={};
+document.addEventListener('change',e=>{const el=e.target.closest('[data-chg]');if(!el)return;const f=CHG[el.dataset.chg];if(f)f(el,e)});
+CHG.lang=el=>{S.settings.lang=el.value;save();render()};
+CHG.gm=()=>{const m=($('input[name=gm]:checked')||{}).value;$('#gOwner').style.display=m==='owner'?'':'none';$('#gViewer').style.display=m==='viewer'?'':'none';$('#gName').style.display=m==='viewer'?'':'none'};
+ACT.logout=()=>{if(SESSION)logLogin(SESSION.role==='owner'?'Owner':'Viewer',whoLabel(),true,'signed out');sessionSet(null);location.hash='';render()};
+
+/* ===== shell ===== */
+const NAV=[['home','Home'],['dashboard','Dashboard'],['register','Register'],['add','Add training'],['improvements','Improvements'],['access','Access'],['settings','Settings'],['help','Help']];
+function route(){const h=(location.hash||'#home').slice(1).split('/');return{name:h[0]||'home',arg:h[1]||''}}
+function shell(inner,cur){
+ const items=NAV.filter(n=>!(n[0]==='add'&&!canEdit())&&!(n[0]==='access'&&!isOwner())).map(n=>'<a href="#'+n[0]+'"'+(n[0]===cur?' aria-current="page"':'')+'>'+esc(t(n[1]))+'</a>').join('');
+ const lockNote=S.settings.lock==='locked'?'<span class="pill p-pe">'+esc(t('Locked (read-only)'))+'</span>':S.settings.lock==='private'?'<span class="pill p-lo">'+esc(t('Private'))+'</span>':'';
+ return '<header class="top"><div class="wrap"><a class="brand" href="#home"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#F2A93B"/><path d="M8 22 L13 15 L18 19 L24 9" stroke="#0F3D3E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>'+esc(T().appName)+'</span></a>'+
+  '<button class="burger" data-act="burger" aria-label="'+esc(t('Menu'))+'" aria-expanded="false">☰</button><nav class="nav" aria-label="Main">'+items+'</nav><div class="grow"></div>'+lockNote+
+  '<label class="sr" for="langSel">Language</label><select id="langSel" class="topsel" data-chg="lang"><option value="en"'+(lang()==='en'?' selected':'')+'>English</option><option value="bn"'+(lang()==='bn'?' selected':'')+'>বাংলা</option></select>'+
+  '<div class="chip-user"><span class="av" aria-hidden="true">'+esc(isOwner()?((T().ownerName||'O')[0]||'O').toUpperCase():'V')+'</span><span>'+esc(isOwner()?t('Owner'):t('Viewer'))+'</span><button class="linkbtn" data-act="logout">'+esc(t('Sign out'))+'</button></div></div></header>'+
+  '<main id="main" class="wrap" style="padding-top:24px;padding-bottom:8px;display:flex;flex-direction:column;gap:20px" tabindex="-1">'+inner+'</main>'+footHtml();
+}
+function footHtml(){return '<footer class="foot"><div class="wrap"><div class="col" style="gap:6px;max-width:420px"><b style="color:var(--headink);font-size:15px;font-family:\'Plus Jakarta Sans\'">'+esc(T().appName)+'</b><span>'+esc(t('Training Management System for Learning and Development teams.'))+'</span></div><div class="row" style="gap:22px"><a href="#help">'+esc(t('Help'))+'</a><a href="#terms">'+esc(t('Terms of use'))+'</a><a href="#settings">'+esc(t('Settings'))+'</a></div></div><div class="copy" data-copy="1">'+esc(COPY)+'</div></footer>'}
+ACT.burger=el=>{const n=$('.nav');const on=n.classList.toggle('on');el.setAttribute('aria-expanded',String(on))};
+function guardCopy(){
+ const f=$('footer.foot .copy');
+ if(!f||f.textContent!==COPY){const ft=$('footer.foot');if(ft)ft.outerHTML=footHtml();else if(SESSION&&S.settings.owner){render()}}
+ if(document.title.indexOf('©')===-1){/* title carries app name only */}
+}
+setInterval(()=>{try{guardCopy()}catch(e){}},1500);
+
+function render(){
+ document.documentElement.setAttribute('data-theme',T().theme);document.documentElement.lang=lang();
+ const app=$('#app');
+ if(SESSION&&SESSION.role==='viewer'&&S.settings.lock==='private'){sessionSet(null)}
+ if(!S.settings.owner||!SESSION){document.title=T().appName;app.innerHTML=gateHtml();bindGate();return}
+ const r=route();let v;
+ if(r.name!=='add'&&r.name!=='edit'){F=null;FID=null;FT={}}
+ const views={home:vHome,dashboard:vDash,register:vReg,add:vForm,edit:vForm,improvements:vImp,access:vAccess,settings:vSettings,help:vHelp,terms:vTerms};
+ const fn=views[r.name]||vHome;
+ v=fn(r);
+ document.title=T().appName+' · '+t(NAV.filter(n=>n[0]===(r.name==='edit'?'add':r.name))[0]?NAV.filter(n=>n[0]===(r.name==='edit'?'add':r.name))[0][1]:'Terms of use');
+ app.innerHTML=shell(v.html,r.name==='edit'?'add':r.name);
+ if(v.after)v.after();
+ const mm=$('#main');if(mm&&window._focusMain){window._focusMain=false;mm.focus({preventScroll:true})}
+}
+window.addEventListener('hashchange',()=>{window._focusMain=true;render();window.scrollTo(0,0)});
+
+/* ===== shared pieces ===== */
+function pill(s){return '<span class="pill '+stCls(s)+'">'+esc(t(s))+'</span>'}
+function scoreCell(r){if(r.score==null)return status(r)==='Upcoming'?'<span class="muted">n/a</span>':'<span class="muted">'+esc(t('none'))+'</span>';return isLow(r)?'<span class="pill p-lo">'+r.score+'</span>':String(r.score)}
+function exportMenu(id){return '<div class="dd"><button class="btn sec" data-act="menu" aria-haspopup="true" aria-expanded="false" id="'+(id||'exp')+'">'+esc(t('Export'))+' ▾</button><div class="menu" role="menu">'+
+ '<button role="menuitem" data-act="exp" data-k="xlsx">Excel (.xlsx)</button><button role="menuitem" data-act="exp" data-k="csv">CSV (.csv)</button><button role="menuitem" data-act="exp" data-k="doc">'+esc(t('Word report'))+' (.doc)</button><button role="menuitem" data-act="exp" data-k="pdf">'+esc(t('PDF report (print)'))+'</button><hr><button role="menuitem" data-act="exp" data-k="json">'+esc(t('Backup file (all data)'))+'</button></div></div>'}
+function fyNow(){const td=todayStr();return fyOf(td)}
+function inPeriod(list,p){if(p.period==='all')return list;const[a,b]=fyRange(p.fy);return list.filter(r=>r.startDate>=a&&r.startDate<=b)}
+
+/* ===== Home ===== */
+function vHome(){
+ const hr=new Date().getHours();const g=hr<12?'Good morning':hr<18?'Good afternoon':'Good evening';
+ const fy=defaultFy();const list=inPeriod(S.trainings,{period:fy==null?'all':'fy',fy:fy});const tt=totals(list);
+ const td=todayStr();
+ const pend=S.trainings.filter(r=>status(r)==='Pending Feedback');
+ const low=S.trainings.filter(isLow);
+ const soon=S.trainings.filter(r=>status(r)==='Upcoming'&&dayDiff(td,r.startDate)>=0&&dayDiff(td,r.startDate)<=14).sort((a,b)=>a.startDate<b.startDate?-1:1);
+ const nxt=S.trainings.filter(r=>status(r)==='Upcoming').sort((a,b)=>a.startDate<b.startDate?-1:1).slice(0,3);
+ const tile=(href,ic,tl,sub)=>'<a class="tile" href="'+href+'"><span class="ic" aria-hidden="true">'+ic+'</span><span><b>'+esc(t(tl))+'</b><div class="muted small">'+esc(t(sub))+'</div></span></a>';
+ const att=[];
+ pend.forEach(r=>att.push('<div class="item"><div><b>'+esc(r.title)+'</b><div class="muted small">'+esc(r.code)+' · '+esc(t('ended {n} days ago, no score',{n:dayDiff(r.endDate,td)}))+'</div></div><div class="row">'+pill('Pending Feedback')+(canEdit()?'<a class="btn sm sec" href="#edit/'+r.id+'">'+esc(t('Add score'))+'</a>':'')+'</div></div>'));
+ low.forEach(r=>att.push('<div class="item"><div><b>'+esc(r.title)+'</b><div class="muted small">'+esc(r.code)+' · '+esc(t('score {s} is below {l}',{s:r.score,l:T().lowLine}))+'</div></div><div class="row"><span class="pill p-lo">'+r.score+'</span><a class="btn sm sec" href="#improvements">'+esc(t('Open improvements'))+'</a></div></div>'));
+ soon.forEach(r=>att.push('<div class="item"><div><b>'+esc(r.title)+'</b><div class="muted small">'+esc(r.code)+' · '+esc(t('starts in {n} days',{n:dayDiff(td,r.startDate)}))+'</div></div>'+pill('Upcoming')+'</div>'));
+ const k=(l,v,s)=>'<div class="kpi"><div class="lbl">'+esc(t(l))+'</div><div class="kv">'+v+'</div><div class="muted xs">'+s+'</div></div>';
+ const html='<section class="hero"><div class="col" style="gap:8px"><div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">'+esc(T().appName)+'</div><h1>'+esc(t(g))+(T().ownerName&&isOwner()?', '+esc(T().ownerName):'')+'.</h1><div style="color:var(--headmuted);font-size:16px">'+esc(t('Your training year at a glance.'))+'</div></div>'+lumi('ok',92)+'</section>'+
+ '<section class="grid g-auto" aria-label="'+esc(t('Quick actions'))+'">'+(canEdit()?tile('#add','＋','Add training','Log a new training'):'')+tile('#register','☰','Register','Search, sort and filter')+tile('#dashboard','▤','Dashboard','Totals and charts')+tile('#improvements','⚑','Improvements','Low scores first')+'</section>'+
+ '<section class="col"><div class="row between"><h2 style="font-size:22px">'+esc(t('This year'))+(fy==null?'':' · '+esc(fyLabel(fy)))+'</h2>'+exportMenu('expH')+'</div><div class="grid g-kpi">'+
+  k('Trainings',tt.n,esc(t('{a} done · {b} pending · {c} upcoming',{a:tt.done,b:tt.pend,c:tt.up})))+k('Total hours',fmtH(tt.hours),esc(t('{n} set manually',{n:list.filter(isManual).length})))+k('Participants',fmtN(tt.people),esc(t('registered, all trainings')))+k('Total cost',fmtN(tt.cost),esc(T().currency+' · '+(tt.cph==null?'-':fmtN(Math.round(tt.cph)))+' '+t('per participant')))+k('Avg feedback',tt.avg==null?'-':round1(tt.avg).toFixed(1)+'<span style="font-size:16px;font-weight:600"> / 5</span>',esc(t('from {n} rated trainings',{n:tt.rated})))+'</div></section>'+
+ '<section class="grid g-auto"><div class="card pad"><h2 style="font-size:20px;margin-bottom:6px">'+esc(t('Needs your attention'))+'</h2>'+(att.length?att.join(''):'<p class="muted">'+esc(t('Nothing needs attention right now.'))+'</p>')+'</div>'+
+ '<div class="card pad"><h2 style="font-size:20px;margin-bottom:6px">'+esc(t('Next up'))+'</h2>'+(nxt.length?nxt.map(r=>'<div class="item"><div><b>'+esc(r.title)+'</b><div class="muted small">'+esc(fmtRange(r))+' · '+esc(r.timeFrom)+'–'+esc(r.timeTo)+' · '+esc(r.facilitator)+'</div></div><button class="act" data-act="view" data-id="'+r.id+'">'+esc(t('View'))+'</button></div>').join(''):'<p class="muted">'+esc(t('No upcoming trainings.'))+'</p>')+'</div></section>'+
+ (S.trainings.length===0?'<div class="card pad"><b>'+esc(t('No trainings yet.'))+'</b> '+(canEdit()?'<a href="#add">'+esc(t('Add the first training'))+'</a>':'')+'</div>':'');
+ return{html:html};
+}
+function defaultFy(){const f=fyNow();if(S.trainings.some(r=>fyOf(r.startDate)===f))return f;if(!S.trainings.length)return f;return Math.max.apply(null,S.trainings.map(r=>fyOf(r.startDate)))}
+
+/* ===== Form ===== */
+let F=null,FT={},FID=null;
+function blankForm(){return{title:'',startDate:'',endDate:'',timeFrom:'',timeTo:'',endsNextDay:false,tz:T().myZone&&ZONES.includes(T().myZone)?T().myZone:'Asia/Dhaka',type:'',scope:'',facilitator:'',targets:'',competencies:[],participants:'',venue:'',cost:'',score:'',improvements:'',delivery:'In person',durationManual:null,manualOn:false}}
+function fld(id,label,inner,req,hint){return '<div class="fld"><label for="'+id+'">'+esc(t(label))+(req?' <span class="req" aria-hidden="true">*</span>':'')+'</label>'+inner+(hint?'<div class="hint" id="'+id+'_h">'+esc(t(hint))+'</div>':'')+'<div class="err" id="'+id+'_e" role="alert"></div></div>'}
+function vForm(r){
+ if(!canEdit()){return{html:'<div class="card pad col"><h1 style="font-size:26px">'+esc(t('Add training'))+'</h1><div class="ins">'+esc(isOwner()?t('The system is locked. Unlock it in Access to add or change records.'):t('You have view-only access. Only the Owner can add or change records.'))+'</div></div>'}}
+ if(r.name==='edit'){const rec=S.trainings.find(x=>x.id===r.arg);if(!rec){return{html:'<div class="card pad">'+esc(t('That training was not found.'))+' <a href="#register">'+esc(t('Back to register'))+'</a></div>'}}
+  if(FID!==rec.id){FID=rec.id;F=Object.assign(blankForm(),clone(rec));F.cost=String(rec.cost);F.participants=String(rec.participants);F.score=rec.score==null?'':String(rec.score);F.manualOn=isManual(rec);F.durationManual=isManual(rec)?String(rec.durationManual):null;FT={}}}
+ else if(FID!==null||!F){FID=null;F=blankForm();FT={}}
+ const e=Object.keys(FT).length?validate(F,FID):{};
+ const v=x=>esc(F[x]==null?'':F[x]);
+ const facs=[...new Set(S.trainings.map(x=>x.facilitator))].sort();
+ const rd=(name,val,lab)=>'<label class="opt"><input type="radio" name="'+name+'" value="'+val+'"'+(F[name]===val?' checked':'')+' data-f="'+name+'"><span>'+esc(t(lab||val))+'</span></label>';
+ const html='<div class="row between"><div><div class="lbl">'+esc(FID?t('Edit training')+' · '+(S.trainings.find(x=>x.id===FID)||{}).code:t('New training'))+'</div><h1 style="font-size:clamp(24px,3.5vw,32px)">'+esc(FID?t('Edit training'):t('Add training'))+'</h1></div><a class="btn sec" href="#register">'+esc(t('Cancel'))+'</a></div>'+
+ '<div id="formSummary" class="ins err-sum" style="display:none;border-left-color:var(--danger)" role="alert" tabindex="-1"></div>'+
+ '<form id="tf" novalidate class="col" style="gap:18px"><div class="card pad col"><h2 style="font-size:18px">1. '+esc(t('What'))+'</h2><div class="grid g-auto">'+
+  fld('f_title','Training title','<input class="inp" id="f_title" data-f="title" value="'+v('title')+'" maxlength="160" autocomplete="off">',true)+
+  fld('f_delivery','Delivery','<select class="inp" id="f_delivery" data-f="delivery">'+DELIVERY.map(d=>'<option value="'+d+'"'+(F.delivery===d?' selected':'')+'>'+esc(t(d))+'</option>').join('')+'</select>')+'</div>'+
+  '<div class="grid g-auto"><div class="fld"><span class="fl">'+esc(t('Type'))+' <span class="req">*</span></span><div class="seg" role="radiogroup" aria-label="Type">'+rd('type','In-house')+rd('type','External')+'</div><div class="err" id="f_type_e" role="alert"></div></div>'+
+  '<div class="fld"><span class="fl">'+esc(t('Scope'))+' <span class="req">*</span></span><div class="seg" role="radiogroup" aria-label="Scope">'+rd('scope','Domestic')+rd('scope','International')+'</div><div class="err" id="f_scope_e" role="alert"></div></div></div></div>'+
+ '<div class="card pad col"><h2 style="font-size:18px">2. '+esc(t('When'))+'</h2><div class="grid g-auto">'+
+  fld('f_startDate','Start date','<input class="inp" type="date" id="f_startDate" data-f="startDate" value="'+v('startDate')+'">',true)+
+  fld('f_endDate','End date','<input class="inp" type="date" id="f_endDate" data-f="endDate" value="'+v('endDate')+'">',true,'Same as the start date for a one-day training')+
+  fld('f_timeFrom','Time from','<input class="inp" type="time" id="f_timeFrom" data-f="timeFrom" value="'+v('timeFrom')+'">',true)+
+  fld('f_timeTo','Time to','<input class="inp" type="time" id="f_timeTo" data-f="timeTo" value="'+v('timeTo')+'">',true,'Must be later than "from"')+'</div>'+
+  '<label class="opt" style="align-self:flex-start"><input type="checkbox" id="f_next" data-f="endsNextDay"'+(F.endsNextDay?' checked':'')+'><span>'+esc(t('Ends next day (+1)'))+' <span class="muted small">'+esc(t('for sessions that finish after midnight'))+'</span></span></label>'+
+  '<div class="grid g-auto">'+fld('f_tz','Time zone of this training','<select class="inp" id="f_tz" data-f="tz">'+ZONES.map(z=>'<option value="'+z+'"'+(F.tz===z?' selected':'')+'>'+esc(z+' ('+utcOffsetLabel(z)+')')+'</option>').join('')+'</select>',true)+
+  '<div class="fld"><span class="fl">'+esc(t('Duration'))+'</span><div id="durBox" class="card pad" style="background:var(--soft)" aria-live="polite"></div></div></div>'+
+  '<div id="tzNote" class="hint"></div></div>'+
+ '<div class="card pad col"><h2 style="font-size:18px">3. '+esc(t('Who and where'))+'</h2><div class="grid g-auto">'+
+  fld('f_facilitator','Facilitator','<input class="inp" id="f_facilitator" data-f="facilitator" list="facs" value="'+v('facilitator')+'" autocomplete="off"><datalist id="facs">'+facs.map(x=>'<option value="'+esc(x)+'">').join('')+'</datalist>',true,'Start typing: earlier names are suggested')+
+  fld('f_venue','Venue','<input class="inp" id="f_venue" data-f="venue" value="'+v('venue')+'" autocomplete="off">',true,'For online training write "Online" and the platform')+
+  fld('f_participants','Registered participants','<input class="inp" id="f_participants" data-f="participants" inputmode="numeric" value="'+v('participants')+'">',true,'Whole number, 0 or more')+
+  fld('f_cost','Cost ('+T().currency+')','<div class="row" style="flex-wrap:nowrap;gap:8px"><span class="muted" aria-hidden="true">'+esc(sym())+'</span><input class="inp" id="f_cost" data-f="cost" inputmode="decimal" value="'+v('cost')+'"></div>',true,'Total cost of the training. Enter 0 if free')+'</div></div>'+
+ '<div class="card pad col"><h2 style="font-size:18px">4. '+esc(t('Learning'))+'</h2>'+
+  fld('f_targets','Key learning targets','<textarea class="inp" id="f_targets" data-f="targets">'+v('targets')+'</textarea>',true)+
+  '<div class="fld"><span class="fl" id="compL">'+esc(t('Key competencies'))+' <span class="req">*</span></span><div class="chips" role="group" aria-labelledby="compL" id="compBox">'+T().competencies.concat(F.competencies.filter(c=>!T().competencies.includes(c))).map(c=>'<label class="chipx"><input type="checkbox" data-comp="'+esc(c)+'"'+(F.competencies.includes(c)?' checked':'')+'><span>'+esc(c)+'</span></label>').join('')+'</div>'+
+  '<div class="row"><input class="inp" id="newComp" style="max-width:260px" placeholder="'+esc(t('Add another competency'))+'" aria-label="'+esc(t('Add another competency'))+'"><button type="button" class="btn sec sm" data-act="addcomp">'+esc(t('Add'))+'</button></div><div class="err" id="f_competencies_e" role="alert"></div></div></div>'+
+ '<div class="card pad col"><h2 style="font-size:18px">5. '+esc(t('Feedback'))+'</h2><div class="grid g-auto">'+
+  fld('f_score','Feedback score (1 to 5)','<input class="inp" id="f_score" data-f="score" inputmode="decimal" value="'+v('score')+'" placeholder="'+esc(t('e.g. 4.2'))+'">',false,'Average of participant answers, 1 to 5, at most 1 decimal. Leave empty until feedback arrives')+
+  fld('f_improvements','Key improvements','<textarea class="inp" id="f_improvements" data-f="improvements">'+v('improvements')+'</textarea>',false,'One recommendation per line. Low scores appear in the Improvement tracker')+'</div>'+
+  '<div id="lowNote" class="ins" style="display:none"></div></div>'+
+ '<div class="row" style="justify-content:flex-end;position:sticky;bottom:0;background:var(--bg);padding:10px 0"><a class="btn sec" href="#register">'+esc(t('Cancel'))+'</a><button class="btn" type="submit">'+esc(FID?t('Save changes'):t('Save training'))+'</button></div></form>';
+ return{html:html,after:()=>{formBind();formRefresh(true)}};
+}
+function formRefresh(initial){
+ const d=calcDuration(F);const box=$('#durBox');if(!box)return;
+ let h='';
+ if(F.manualOn){const m=num(F.durationManual);h='<div class="row" style="gap:8px"><b style="font-size:20px">'+(isNaN(m)?'?':fmtH(m))+' h</b><span class="pill p-pe">'+esc(t('Manual'))+'</span></div><div class="fld"><label class="sr" for="f_dm">Manual hours</label><input class="inp" id="f_dm" data-f="durationManual" inputmode="decimal" value="'+esc(F.durationManual==null?'':F.durationManual)+'" style="max-width:160px"><div class="err" id="f_dm_e" role="alert"></div></div><div class="row"><button type="button" class="btn sec sm" data-act="resetdur">'+esc(t('Reset to auto'))+'</button>'+(d.ok?'<span class="muted small">'+esc(t('Auto would be {h} h',{h:fmtH(d.hours)}))+'</span>':'')+'</div>';}
+ else if(d.ok){h='<div class="row" style="gap:8px"><b style="font-size:20px">'+fmtH(d.hours)+' h</b><span class="pill p-ok">'+esc(t('Auto'))+'</span></div><div class="muted small">'+esc(t('{d} day(s) × {h} h per day',{d:d.days,h:fmtH(d.per/60)}))+'</div><button type="button" class="act" style="align-self:flex-start;padding-left:0" data-act="setmanual">'+esc(t('Set hours manually'))+'</button>';}
+ else h='<div class="muted">'+esc(t(d.error?'Fix the date or time to see the duration':'Fill dates and times to see the duration'))+'</div><button type="button" class="act" style="align-self:flex-start;padding-left:0" data-act="setmanual">'+esc(t('Set hours manually'))+'</button>';
+ const had=document.activeElement&&document.activeElement.id==='f_dm';
+ box.innerHTML=h;if(had){const x=$('#f_dm');if(x){x.focus();x.setSelectionRange(x.value.length,x.value.length)}}
+ const dm=$('#f_dm');
+ const tz=$('#tzNote');const a=zonedToUtc(F.startDate,F.timeFrom,F.tz);
+ if(tz){let s=t('Times are in {z} ({o}).',{z:F.tz,o:utcOffsetLabel(F.tz,a||Date.now())});
+  if(a&&d.ok&&T().myZone&&T().myZone!==F.tz){const b=a+d.per*60000;s+=' '+t('In your zone {z}: {a} to {b}.',{z:T().myZone,a:fmtInZone(a,T().myZone),b:fmtInZone(b,T().myZone)})}
+  tz.textContent=s}
+ const ln=$('#lowNote');const sc=num(F.score);
+ if(ln){if(!isNaN(sc)&&sc>=1&&sc<=5&&sc<T().lowLine){ln.style.display='';ln.textContent=t('This score is below {l}. It will be marked Low. Please add at least one improvement.',{l:T().lowLine})}else ln.style.display='none'}
+ showErrors(initial);
+}
+const FLAB={title:'Training title',startDate:'Start date',endDate:'End date',timeFrom:'Time from',timeTo:'Time to',tz:'Time zone of this training',type:'Type',scope:'Scope',facilitator:'Facilitator',targets:'Key learning targets',competencies:'Key competencies',participants:'Registered participants',venue:'Venue',cost:'Cost',score:'Feedback score',improvements:'Key improvements',durationManual:'Duration'};
+function showErrors(silent){
+ const e=validate(F,FID);const map={title:'f_title',startDate:'f_startDate',endDate:'f_endDate',timeFrom:'f_timeFrom',timeTo:'f_timeTo',tz:'f_tz',type:'f_type',scope:'f_scope',facilitator:'f_facilitator',targets:'f_targets',competencies:'f_competencies',participants:'f_participants',venue:'f_venue',cost:'f_cost',score:'f_score',improvements:'f_improvements',durationManual:'f_dm'};
+ Object.keys(map).forEach(k=>{const el=$('#'+map[k]+'_e');if(!el)return;const show=!silent&&(FT[k]||FT.__all)&&e[k];el.textContent=show?e[k]:'';el.classList.toggle('on',!!show);const inp=$('#'+map[k]);if(inp&&inp.setAttribute){if(show){inp.setAttribute('aria-invalid','true');inp.setAttribute('aria-describedby',map[k]+'_e')}else inp.removeAttribute('aria-invalid')}});
+ return e;
+}
+function formBind(){
+ const f=$('#tf');if(!f)return;
+ const upd=(el)=>{const k=el.dataset.f;if(!k)return;
+  if(el.type==='checkbox')F[k]=el.checked;else if(el.type==='radio'){if(el.checked)F[k]=el.value}else F[k]=el.value;FT[k]=true;
+  if(k==='startDate'&&!F.endDate){F.endDate=F.startDate;const ed=$('#f_endDate');if(ed)ed.value=F.endDate}
+  formRefresh()};
+ f.addEventListener('input',e=>{if(e.target.dataset.comp!==undefined){const c=e.target.dataset.comp;F.competencies=e.target.checked?F.competencies.concat([c]):F.competencies.filter(x=>x!==c);FT.competencies=true;showErrors();return}upd(e.target)});
+ f.addEventListener('change',e=>{if(e.target.dataset.comp!==undefined)return;upd(e.target)});
+ f.addEventListener('blur',e=>{if(e.target.dataset&&e.target.dataset.f){FT[e.target.dataset.f]=true;showErrors()}},true);
+ f.addEventListener('submit',async e=>{e.preventDefault();await formSave()});
+}
+ACT.setmanual=()=>{F.manualOn=true;const d=calcDuration(F);F.durationManual=d.ok?String(d.hours):'';formRefresh()};
+ACT.resetdur=()=>{F.manualOn=false;F.durationManual=null;formRefresh();toast('info',t('Duration is automatic again.'))};
+ACT.addcomp=()=>{const i=$('#newComp');const v=(i.value||'').trim();if(!v)return;if(v.length>40){toast('err',t('Use 40 characters or fewer'));return}
+ if(!T().competencies.some(c=>c.toLowerCase()===v.toLowerCase())){T().competencies.push(v);save()}
+ const real=T().competencies.find(c=>c.toLowerCase()===v.toLowerCase());if(!F.competencies.includes(real))F.competencies.push(real);i.value='';const keep=Object.assign({},FT);const cur=clone(F);vRerenderForm();FT=keep};
+function vRerenderForm(){const y=window.scrollY;render();window.scrollTo(0,y)}
+async function formSave(){
+ FT.__all=true;const e=showErrors();const keys=Object.keys(e);
+ if(keys.length){const s=$('#formSummary');s.style.display='';s.innerHTML='<b>'+esc(t('Please fix {n} item(s) before saving:',{n:keys.length}))+'</b><ul style="margin:6px 0 0;padding-left:20px">'+keys.map(k=>'<li><b>'+esc(t(FLAB[k]||k))+':</b> '+esc(e[k])+'</li>').join('')+'</ul>';
+  const first={title:'f_title',startDate:'f_startDate',endDate:'f_endDate',timeFrom:'f_timeFrom',timeTo:'f_timeTo',tz:'f_tz',type:'f_type',scope:'f_scope',facilitator:'f_facilitator',targets:'f_targets',competencies:'compBox',participants:'f_participants',venue:'f_venue',cost:'f_cost',score:'f_score',improvements:'f_improvements',durationManual:'f_dm'};
+  const target=$('#'+first[keys[0]])||$('input[name='+keys[0]+']');if(target&&target.focus){target.scrollIntoView({block:'center'});try{target.focus()}catch(x){}}else s.focus();
+  toast('err',t('Not saved. {n} item(s) need your attention.',{n:keys.length}));return}
+ const d=dupOf(F,FID);
+ if(d){const ok=await confirmBox({title:t('Possible duplicate'),body:'<p style="margin:0">'+esc(t('A training with the same title and start date already exists ({c}). Save anyway?',{c:d.code}))+'</p>',ok:t('Save anyway'),cancel:t('Go back')});if(!ok)return}
+ const rec={title:F.title.trim(),startDate:F.startDate,endDate:F.endDate,timeFrom:F.timeFrom,timeTo:F.timeTo,endsNextDay:!!F.endsNextDay,tz:F.tz,type:F.type,scope:F.scope,facilitator:F.facilitator.trim(),targets:F.targets.trim(),competencies:F.competencies.slice(),participants:parseInt(F.participants,10),venue:F.venue.trim(),cost:Number(F.cost),score:String(F.score).trim()===''?null:Number(F.score),improvements:(F.improvements||'').trim(),delivery:F.delivery,durationManual:F.manualOn&&F.durationManual!==''&&F.durationManual!=null?Number(F.durationManual):null};
+ let id;
+ if(FID){const o=S.trainings.find(x=>x.id===FID);Object.assign(o,rec,{updatedAt:nowISO()});id=FID;logAct('Edited '+o.code+' '+o.title)}
+ else{const seq=nextCode();const o=Object.assign({id:uid(),code:codeFor(rec.startDate,seq),actioned:false,createdAt:nowISO(),updatedAt:nowISO()},rec);S.trainings.push(o);id=o.id;logAct('Added '+o.code+' '+o.title)}
+ save();const was=FID;F=null;FID=null;FT={};R.flash=id;toast('ok',was?t('Changes saved.'):t('Training saved.'));location.hash='#register';
+}
+
+/* ===== Register ===== */
+const R={q:'',type:'',scope:'',fac:'',status:'',from:'',to:'',sort:'startDate',dir:1,flash:null};
+const COLS=[['code','Code'],['title','Title'],['startDate','Date'],['time','Time'],['hours','Hours'],['type','Type'],['scope','Scope'],['facilitator','Facilitator'],['participants','People'],['cost','Cost'],['score','Score'],['status','Status']];
+function regList(){
+ const q=R.q.trim().toLowerCase();
+ let l=S.trainings.filter(r=>(!q||[r.title,r.facilitator,r.venue,r.code,r.competencies.join(' ')].join(' ').toLowerCase().includes(q))&&(!R.type||r.type===R.type)&&(!R.scope||r.scope===R.scope)&&(!R.fac||r.facilitator===R.fac)&&(!R.status||status(r)===R.status)&&(!R.from||r.startDate>=R.from)&&(!R.to||r.startDate<=R.to));
+ const g={hours:hoursOf,status:status,time:r=>r.timeFrom,score:r=>r.score==null?-1:r.score};
+ const key=g[R.sort]||(r=>r[R.sort]);
+ l.sort((a,b)=>{let x=key(a),y=key(b);if(typeof x==='string'){x=x.toLowerCase();y=String(y).toLowerCase()}return(x<y?-1:x>y?1:0)*R.dir||((a.startDate<b.startDate)?-1:1)});
+ return l;
+}
+function vReg(){
+ const facs=[...new Set(S.trainings.map(x=>x.facilitator))].sort();
+ const sel=(id,label,opts,val)=>'<div class="fld"><label class="xs lbl" for="'+id+'">'+esc(t(label))+'</label><select class="inp" id="'+id+'" data-r="'+id+'"><option value="">'+esc(t('All'))+'</option>'+opts.map(o=>'<option value="'+esc(o[0])+'"'+(val===o[0]?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select></div>';
+ const html='<div class="row between"><div><h1 style="font-size:clamp(24px,3.5vw,32px)">'+esc(t('Training register'))+'</h1><div class="muted" id="regCount" aria-live="polite"></div></div><div class="row">'+exportMenu('expR')+(canEdit()?'<a class="btn" href="#add">+ '+esc(t('Add training'))+'</a>':'')+'</div></div>'+
+ '<div class="card pad"><div class="grid g-auto" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));align-items:end"><div class="fld" style="grid-column:span 2;min-width:min(100%,260px)"><label class="xs lbl" for="rq">'+esc(t('Search'))+'</label><input class="inp" id="rq" type="search" data-r="q" value="'+esc(R.q)+'" placeholder="'+esc(t('Title, facilitator, venue, code...'))+'"></div>'+
+  sel('rtype','Type',[['In-house',t('In-house')],['External',t('External')]],R.type)+sel('rscope','Scope',[['Domestic',t('Domestic')],['International',t('International')]],R.scope)+sel('rfac','Facilitator',facs.map(f=>[f,f]),R.fac)+sel('rstatus','Status',['Upcoming','Completed','Pending Feedback'].map(s=>[s,t(s)]),R.status)+
+  '<div class="fld"><label class="xs lbl" for="rfrom">'+esc(t('Start from'))+'</label><input class="inp" type="date" id="rfrom" data-r="from" value="'+esc(R.from)+'"></div><div class="fld"><label class="xs lbl" for="rto">'+esc(t('Start until'))+'</label><input class="inp" type="date" id="rto" data-r="to" value="'+esc(R.to)+'"></div><button class="btn sec" data-act="rclear">'+esc(t('Clear filters'))+'</button></div></div>'+
+ '<div class="card tw" id="regTable"></div><div class="row muted small"><span>'+esc(t('Pink rows: score below {l}.',{l:T().lowLine}))+'</span><span>'+esc(t('"none": held, feedback missing.'))+'</span><span>'+esc(t('"n/a": not held yet.'))+'</span></div>';
+ return{html:html,after:()=>{regBind();regDraw()}};
+}
+function regBind(){const M={rq:'q',rtype:'type',rscope:'scope',rfac:'fac',rstatus:'status',rfrom:'from',rto:'to'};$$('[data-r]').forEach(el=>{el.addEventListener(el.tagName==='SELECT'||el.type==='date'?'change':'input',()=>{R[M[el.dataset.r]||el.dataset.r]=el.value;regDraw()})})}
+ACT.rclear=()=>{Object.assign(R,{q:'',type:'',scope:'',fac:'',status:'',from:'',to:''});render()};
+ACT.sort=el=>{const k=el.dataset.k;if(R.sort===k)R.dir*=-1;else{R.sort=k;R.dir=1}regDraw()};
+function regDraw(){
+ const l=regList();const box=$('#regTable');if(!box)return;const c=$('#regCount');if(c)c.textContent=t('{a} of {b} records shown · click a column heading to sort',{a:l.length,b:S.trainings.length});
+ if(!l.length){box.innerHTML='<div class="pad"><b>'+esc(S.trainings.length?t('No record matches these filters.'):t('No trainings yet.'))+'</b> '+(S.trainings.length?'<button class="act" data-act="rclear">'+esc(t('Clear filters'))+'</button>':(canEdit()?'<a href="#add">'+esc(t('Add the first training'))+'</a>':''))+'</div>';return}
+ const tt=totals(l);
+ const th=COLS.map(c=>{const num=['hours','participants','cost','score'].includes(c[0]);const on=R.sort===c[0];return '<th class="'+(num?'r':'')+'" scope="col" aria-sort="'+(on?(R.dir>0?'ascending':'descending'):'none')+'"><button data-act="sort" data-k="'+c[0]+'">'+esc(t(c[1]==='Cost'?'Cost ('+T().currency+')':c[1]))+(on?(R.dir>0?' ▲':' ▼'):'')+'</button></th>'}).join('')+'<th scope="col">'+esc(t('Actions'))+'</th>';
+ const body=l.map(r=>{const st=status(r);const L=(k)=>' data-l="'+esc(t(k))+'"';
+  return '<tr class="'+(isLow(r)?'low ':'')+(R.flash===r.id?'flash':'')+'"><td'+L('Code')+'>'+esc(r.code)+'</td><td'+L('Title')+'><b>'+esc(r.title)+'</b></td><td'+L('Date')+'>'+esc(fmtRange(r))+'</td><td'+L('Time')+'>'+esc(r.timeFrom)+'–'+esc(r.timeTo)+(r.endsNextDay?' <span class="pill p-soft">+1</span>':'')+'</td><td class="r"'+L('Hours')+'>'+fmtH(hoursOf(r))+' <span class="pill '+(isManual(r)?'p-pe':'p-ok')+'">'+esc(t(isManual(r)?'Manual':'Auto'))+'</span></td><td'+L('Type')+'>'+esc(t(r.type))+'</td><td'+L('Scope')+'>'+esc(t(r.scope))+'</td><td'+L('Facilitator')+'>'+esc(r.facilitator)+'</td><td class="r"'+L('People')+'>'+r.participants+'</td><td class="r"'+L('Cost')+'>'+fmtN(r.cost)+'</td><td class="r"'+L('Score')+'>'+scoreCell(r)+'</td><td'+L('Status')+'>'+pill(st)+'</td><td'+L('Actions')+'><button class="act" data-act="view" data-id="'+r.id+'">'+esc(t('View'))+'</button>'+(canEdit()?'<a class="act" href="#edit/'+r.id+'">'+esc(t('Edit'))+'</a><button class="act d" data-act="del" data-id="'+r.id+'">'+esc(t('Delete'))+'</button>':'')+'</td></tr>'}).join('');
+ const tot='<tr class="tot"><td></td><td><b>'+esc(t('Totals'))+'</b></td><td></td><td></td><td class="r"><b>'+fmtH(tt.hours)+'</b></td><td></td><td></td><td></td><td class="r"><b>'+fmtN(tt.people)+'</b></td><td class="r"><b>'+fmtN(tt.cost)+'</b></td><td class="r"><b>'+(tt.avg==null?'-':round1(tt.avg).toFixed(1))+'</b></td><td></td><td></td></tr>';
+ box.innerHTML='<table class="cards" style="min-width:1100px"><thead><tr>'+th+'</tr></thead><tbody>'+body+tot+'</tbody></table>';
+ if(window.innerWidth<=700)box.querySelector('table').style.minWidth='0';
+ if(R.flash){const f=$('tr.flash',box);if(f&&f.scrollIntoView)f.scrollIntoView({block:'center'});R.flash=null}
+}
+window.addEventListener('resize',()=>{const tb=$('#regTable table');if(tb)tb.style.minWidth=window.innerWidth<=700?'0':'1100px'});
+ACT.del=async el=>{if(!canEdit())return;const r=S.trainings.find(x=>x.id===el.dataset.id);if(!r)return;
+ const ok=await confirmBox({title:t('Delete this training?'),body:'<p style="margin:0"><b>'+esc(r.title)+'</b> ('+esc(r.code)+')</p><p class="muted" style="margin:0">'+esc(t('This cannot be undone. Export a backup first if you are unsure.'))+'</p>',ok:t('Delete'),danger:true});
+ if(!ok)return;S.trainings=S.trainings.filter(x=>x.id!==r.id);logAct('Deleted '+r.code+' '+r.title);save();toast('ok',t('Training deleted.'));regDraw();const c=$('#regCount');if(!$('#regTable'))render()};
+ACT.view=el=>{const r=S.trainings.find(x=>x.id===el.dataset.id);if(!r)return;
+ const d=calcDuration(r);const a=zonedToUtc(r.startDate,r.timeFrom,r.tz);const st=status(r);
+ let lz='';if(a&&d.ok&&T().myZone&&T().myZone!==r.tz){lz='<div class="muted small">'+esc(t('In your zone {z}: {a} to {b}.',{z:T().myZone,a:fmtInZone(a,T().myZone),b:fmtInZone(a+d.per*60000,T().myZone)}))+'</div>'}
+ const row=(k,v)=>'<div style="display:grid;grid-template-columns:minmax(110px,160px) 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--line2)"><div class="lbl" style="padding-top:2px">'+esc(t(k))+'</div><div style="overflow-wrap:anywhere">'+v+'</div></div>';
+ openModal('<div class="row between" style="align-items:flex-start"><div><div class="lbl">'+esc(r.code)+'</div><h2 style="font-size:22px">'+esc(r.title)+'</h2></div>'+pill(st)+'</div>'+
+  row('Date',esc(fmtRange(r)))+row('Time',esc(r.timeFrom+' – '+r.timeTo)+(r.endsNextDay?' (+1)':'')+' · '+esc(r.tz)+lz)+
+  row('Duration',fmtH(hoursOf(r))+' h <span class="pill '+(isManual(r)?'p-pe':'p-ok')+'">'+esc(t(isManual(r)?'Manual':'Auto'))+'</span>'+(isManual(r)&&d.ok?' <span class="muted small">('+esc(t('Auto would be {h} h',{h:fmtH(d.hours)}))+')</span>':''))+
+  row('Type',esc(t(r.type))+' · '+esc(t(r.scope))+' · '+esc(t(r.delivery||'In person')))+row('Facilitator',esc(r.facilitator))+row('Learning targets',esc(r.targets))+
+  row('Competencies',r.competencies.map(c=>'<span class="pill p-soft">'+esc(c)+'</span>').join(' '))+row('Participants',String(r.participants))+row('Venue',esc(r.venue))+
+  row('Cost',esc(T().currency)+' '+fmtN(r.cost)+(r.participants?' <span class="muted small">('+fmtN(Math.round(r.cost/r.participants))+' '+esc(t('per participant'))+')</span>':''))+
+  row('Feedback score',r.score==null?'<span class="muted">'+esc(t(st==='Upcoming'?'not held yet':'none yet'))+'</span>':scoreCell(r)+' / 5')+
+  row('Key improvements',r.improvements?'<ul style="margin:0;padding-left:18px">'+r.improvements.split('\n').filter(x=>x.trim()).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<span class="muted">–</span>')+
+  '<div class="row" style="justify-content:flex-end;margin-top:14px">'+(canEdit()?'<a class="btn sec" href="#edit/'+r.id+'" data-act="mclose">'+esc(t('Edit'))+'</a>':'')+'<button class="btn" data-act="mclose" autofocus>'+esc(t('Close'))+'</button></div>',true)};
+
+/* ===== Improvements ===== */
+const I={f:'all'};
+function vImp(){
+ const rated=S.trainings.filter(r=>r.score!=null),low=rated.filter(isLow),miss=S.trainings.filter(r=>status(r)==='Pending Feedback');
+ const chip=(k,label,n,cls)=>'<button class="chipx'+(I.f===k?' on':'')+'" data-act="ifil" data-k="'+k+'" aria-pressed="'+(I.f===k)+'">'+esc(t(label))+' · '+n+'</button>';
+ let l=I.f==='low'?low:I.f==='missing'?miss:rated.concat(miss);
+ l=l.slice().sort((a,b)=>(a.score==null?99:a.score)-(b.score==null?99:b.score)||(a.startDate<b.startDate?-1:1));
+ const html='<div class="row between"><div><h1 style="font-size:clamp(24px,3.5vw,32px)">'+esc(t('Improvement tracker'))+'</h1><div class="muted">'+esc(t('Recommendations from feedback. Lowest scores first.'))+'</div></div>'+exportMenu('expI')+'</div>'+
+ '<div class="card pad row"><span class="lbl">'+esc(t('Show'))+'</span>'+chip('all','All with feedback',rated.length)+chip('low','Low score only',low.length)+chip('missing','Feedback missing',miss.length)+'<span class="muted small" style="margin-left:auto">'+esc(t('Low-score line: below {l} of 5 (change in Settings)',{l:T().lowLine}))+'</span></div>'+
+ (l.length?l.map(r=>{const lowr=isLow(r),pe=r.score==null;const imps=(r.improvements||'').split('\n').filter(x=>x.trim());
+  return '<div class="card pad item" style="'+(lowr?'background:var(--lowrow);border-color:var(--lo-fg)':pe?'border-color:var(--pe-fg)':'')+';align-items:flex-start;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:16px"><div><div class="kv" style="'+(lowr?'color:var(--lo-fg)':'')+'">'+(pe?esc(t('none')):r.score)+'</div>'+(lowr?'<span class="pill p-lo">'+esc(t('Low score'))+'</span>':pe?pill('Pending Feedback'):'')+'<div style="margin-top:8px;font-weight:600">'+esc(r.title)+'</div><div class="muted small">'+esc(r.code)+' · '+esc(fmtDate(r.startDate,true))+' · '+esc(r.facilitator)+' · '+esc(t(r.type))+'</div></div>'+
+  '<div><div class="lbl">'+esc(t('Improvements recommended'))+'</div>'+(imps.length?'<ul style="margin:4px 0 0;padding-left:18px">'+imps.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<div class="muted" style="margin-top:4px">'+esc(pe?t('No feedback score or improvements recorded yet.'):lowr?t('Low score with no improvement written. Please add one.'):t('No improvement recorded.'))+'</div>')+'</div>'+
+  '<div class="col" style="gap:8px;align-items:flex-start">'+(pe||(lowr&&!imps.length)?(canEdit()?'<a class="btn sec sm" href="#edit/'+r.id+'">'+esc(pe?t('Add feedback'):t('Add improvement'))+'</a>':''):'<label class="opt" style="min-height:40px"><input type="checkbox" data-act="actioned" data-id="'+r.id+'"'+(r.actioned?' checked':'')+(canEdit()?'':' disabled')+'><span>'+esc(t('Actioned'))+'</span></label>')+'</div></div>'}).join(''):'<div class="card pad"><b>'+esc(t('Nothing to show here.'))+'</b></div>')+
+ '<div class="muted small">'+esc(t('"Actioned" is a tick so you can see which recommendations were acted on.'))+'</div>';
+ return{html:html};
+}
+ACT.ifil=el=>{I.f=el.dataset.k;render()};
+document.addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.act==='actioned'){if(!canEdit()){el.checked=!el.checked;return}const r=S.trainings.find(x=>x.id===el.dataset.id);if(r){r.actioned=el.checked;logAct((el.checked?'Marked actioned ':'Unmarked actioned ')+r.code);save();toast('ok',el.checked?t('Marked as actioned.'):t('Marked as not actioned.'))}}});
+
+/* ===== Dashboard ===== */
+const D={period:'fy',fy:null,type:'',scope:'',fac:'',status:'',month:'',metric:'cost',table:{},local:null};
+function dashCfg(){return D.local||T().dash}
+function dList(){
+ if(D.fy==null)D.fy=defaultFy();
+ let l=inPeriod(S.trainings,{period:D.period,fy:D.fy});
+ return l.filter(r=>(!D.type||r.type===D.type)&&(!D.scope||r.scope===D.scope)&&(!D.fac||r.facilitator===D.fac)&&(!D.status||status(r)===D.status)&&(!D.month||r.startDate.slice(0,7)===D.month));
+}
+function niceMax(v){if(v<=0)return 1;const p=Math.pow(10,Math.floor(Math.log10(v)));const m=v/p;const n=m<=1?1:m<=2?2:m<=5?5:10;return n*p}
+function shortNum(v,metric){if(metric==='cost'){return v>=1000?fmtN(Math.round(v/100)/10)+'k':fmtN(v)}return fmtH(v)}
+function monthsOf(list){
+ let a,b;
+ if(D.period==='fy'){const[s,e]=fyRange(D.fy);a=s.slice(0,7);b=e.slice(0,7)}else{const ks=S.trainings.map(r=>r.startDate.slice(0,7)).sort();if(!ks.length)return[];a=ks[0];b=ks[ks.length-1]}
+ const out=[];let[y,m]=a.split('-').map(Number);const[ye,me]=b.split('-').map(Number);
+ while(y<ye||(y===ye&&m<=me)){out.push(y+'-'+pad(m));m++;if(m>12){m=1;y++}if(out.length>120)break}
+ return out;
+}
+const METRICS={cost:['Cost',r=>r.cost],hours:['Hours',hoursOf],participants:['Participants',r=>r.participants],trainings:['Trainings',()=>1]};
+function chartMonth(){
+ const base=inPeriod(S.trainings,{period:D.period,fy:D.fy}).filter(r=>(!D.type||r.type===D.type)&&(!D.scope||r.scope===D.scope)&&(!D.fac||r.facilitator===D.fac)&&(!D.status||status(r)===D.status));
+ const ms=monthsOf(base);const f=METRICS[D.metric][1];
+ const vals=ms.map(k=>base.filter(r=>r.startDate.slice(0,7)===k).reduce((s,r)=>s+f(r),0));
+ const label=ms.map(k=>{const[y,m]=k.split('-').map(Number);return monName(m-1)+(ms.length>12?' '+String(y).slice(2):'')});
+ if(D.table.c_month)return '<div class="tw"><table><tr><th>'+esc(t('Month'))+'</th><th class="r">'+esc(t(METRICS[D.metric][0]))+'</th></tr>'+ms.map((k,i)=>'<tr><td>'+esc(label[i])+'</td><td class="r">'+fmtN(vals[i])+'</td></tr>').join('')+'</table></div>';
+ if(!ms.length||vals.every(v=>v===0))return '<p class="muted">'+esc(t('No data yet for this selection.'))+'</p>';
+ const W=560,H=250,L=48,Rr=10,Tp=16,B=34;const max=niceMax(Math.max.apply(null,vals));const pw=(W-L-Rr),ph=H-Tp-B;const n=ms.length,bw=Math.min(44,pw/n*.62),gap=pw/n;
+ let s='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto" role="img" aria-label="'+esc(t(METRICS[D.metric][0])+': '+ms.map((k,i)=>label[i]+' '+fmtN(vals[i])).join(', '))+'">';
+ for(let i=0;i<=4;i++){const y=Tp+ph-ph*i/4;s+='<line class="sl" x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y+'" y2="'+y+'" stroke-width="1" style="stroke:var(--line)"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" style="fill:var(--muted)">'+shortNum(max*i/4,D.metric)+'</text>'}
+ vals.forEach((v,i)=>{const h=ph*v/max,x=L+gap*i+(gap-bw)/2,y=Tp+ph-h;const sel=D.month===ms[i];
+  s+='<g class="svgbtn" tabindex="0" role="button" aria-label="'+esc(label[i]+': '+fmtN(v)+'. '+t('Click to filter'))+'" data-act="mon" data-m="'+ms[i]+'"><title>'+esc(label[i]+': '+fmtN(v))+'</title><rect x="'+(L+gap*i)+'" y="'+Tp+'" width="'+gap+'" height="'+ph+'" fill="transparent"/><rect x="'+x+'" y="'+y+'" width="'+bw+'" height="'+Math.max(h,v>0?2:0)+'" rx="3" style="fill:'+(sel?'var(--c2)':'var(--c1)')+'"/><text x="'+(x+bw/2)+'" y="'+(y-4)+'" text-anchor="middle" font-size="11" font-weight="600" style="fill:var(--ink)">'+(v?shortNum(v,D.metric):'')+'</text></g>';
+  s+='<text x="'+(x+bw/2)+'" y="'+(H-14)+'" text-anchor="middle" font-size="11" style="fill:var(--muted)">'+esc(label[i])+'</text>'});
+ return s+'</svg>';
+}
+ACT.mon=el=>{D.month=D.month===el.dataset.m?'':el.dataset.m;dashDraw()};
+function chartMix(l){
+ const seg=(k,items,fill)=>{const tot=items.reduce((s,x)=>s+x[1],0);if(!tot)return '<div class="muted small">'+esc(t('No data yet for this selection.'))+'</div>';return '<div class="bar" role="group" aria-label="'+esc(t(k))+'">'+items.filter(x=>x[1]>0).map((x,i)=>'<button data-act="mix" data-k="'+x[2]+'" data-v="'+esc(x[0])+'" style="flex:'+x[1]+';background:'+x[3]+';color:'+x[4]+'" aria-label="'+esc(t(x[0])+' '+x[1]+'. '+t('Click to filter'))+'" aria-pressed="'+(D[x[2]]===x[0])+'">'+esc(t(x[5]||x[0]))+' '+x[1]+'</button>').join('')+'</div>'};
+ const c=(f)=>l.filter(f).length;
+ const brand=['var(--c1)','var(--onbrand)'],acc=['var(--c2)','#12302F'];
+ if(D.table.c_mix)return '<div class="tw"><table><tr><th>'+esc(t('Group'))+'</th><th class="r">'+esc(t('Trainings'))+'</th></tr>'+[['In-house',c(r=>r.type==='In-house')],['External',c(r=>r.type==='External')],['Domestic',c(r=>r.scope==='Domestic')],['International',c(r=>r.scope==='International')],['Completed',c(r=>status(r)==='Completed')],['Pending Feedback',c(r=>status(r)==='Pending Feedback')],['Upcoming',c(r=>status(r)==='Upcoming')]].map(x=>'<tr><td>'+esc(t(x[0]))+'</td><td class="r">'+x[1]+'</td></tr>').join('')+'</table></div>';
+ return '<div class="col" style="gap:6px"><div class="lbl">'+esc(t('Type'))+'</div>'+seg('Type',[['In-house',c(r=>r.type==='In-house'),'type',brand[0],brand[1]],['External',c(r=>r.type==='External'),'type',acc[0],acc[1]]])+'</div>'+
+ '<div class="col" style="gap:6px"><div class="lbl">'+esc(t('Scope'))+'</div>'+seg('Scope',[['Domestic',c(r=>r.scope==='Domestic'),'scope',brand[0],brand[1]],['International',c(r=>r.scope==='International'),'scope',acc[0],acc[1]]])+'</div>'+
+ '<div class="col" style="gap:6px"><div class="lbl">'+esc(t('Status'))+'</div>'+seg('Status',[['Completed',c(r=>status(r)==='Completed'),'status','var(--ok-bg)','var(--ok-fg)'],['Pending Feedback',c(r=>status(r)==='Pending Feedback'),'status','var(--pe-bg)','var(--pe-fg)'],['Upcoming',c(r=>status(r)==='Upcoming'),'status','var(--up-bg)','var(--up-fg)']])+'</div>';
+}
+ACT.mix=el=>{const k=el.dataset.k,v=el.dataset.v;D[k]=D[k]===v?'':v;dashDraw()};
+function chartFac(l){
+ const by={};l.filter(r=>r.score!=null).forEach(r=>{(by[r.facilitator]=by[r.facilitator]||[]).push(r.score)});
+ const rows=Object.keys(by).map(k=>({n:k,a:avg(by[k]),c:by[k].length})).sort((a,b)=>b.a-a.a);
+ const nos=[...new Set(l.filter(r=>r.score==null).map(r=>r.facilitator))].filter(x=>!by[x]).length;
+ if(!rows.length)return '<p class="muted">'+esc(t('No scores yet for this selection.'))+'</p>';
+ if(D.table.c_fac)return '<div class="tw"><table><tr><th>'+esc(t('Facilitator'))+'</th><th class="r">'+esc(t('Average'))+'</th><th class="r">'+esc(t('Rated'))+'</th></tr>'+rows.map(r=>'<tr><td>'+esc(r.n)+'</td><td class="r">'+round1(r.a)+'</td><td class="r">'+r.c+'</td></tr>').join('')+'</table></div>';
+ const W=560,rh=42,H=rows.length*rh+44,L=150,pw=400;
+ let s='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto" role="img" aria-label="'+esc(t('Average feedback by facilitator')+': '+rows.map(r=>r.n+' '+round1(r.a)).join(', ')+'. '+t('Low line')+' '+T().lowLine)+'">';
+ s+='<line x1="'+L+'" x2="'+L+'" y1="14" y2="'+(H-30)+'" style="stroke:var(--line)"/><line x1="'+(L+pw)+'" x2="'+(L+pw)+'" y1="14" y2="'+(H-30)+'" style="stroke:var(--line)"/>';
+ const lx=L+pw*T().lowLine/5;s+='<line x1="'+lx+'" x2="'+lx+'" y1="14" y2="'+(H-30)+'" stroke-width="1.5" stroke-dasharray="5 4" style="stroke:var(--danger)"/><text x="'+(lx+4)+'" y="11" font-size="11" font-weight="600" style="fill:var(--danger)">'+esc(t('Low line'))+' '+T().lowLine+'</text>';
+ rows.forEach((r,i)=>{const y=22+i*rh,w=pw*r.a/5;s+='<g class="svgbtn" tabindex="0" role="button" data-act="fac" data-v="'+esc(r.n)+'" aria-label="'+esc(r.n+' '+round1(r.a)+'. '+t('Click to filter'))+'"><title>'+esc(r.n+': '+round1(r.a)+' ('+r.c+')')+'</title><rect x="0" y="'+(y-6)+'" width="'+W+'" height="'+(rh-4)+'" fill="transparent"/><rect x="'+L+'" y="'+y+'" width="'+w+'" height="26" rx="3" style="fill:'+(D.fac===r.n?'var(--c2)':r.a<T().lowLine?'var(--danger)':'var(--c1)')+'"/><text x="'+(L-8)+'" y="'+(y+18)+'" text-anchor="end" font-size="12" style="fill:var(--ink)">'+esc(r.n.length>20?r.n.slice(0,19)+'…':r.n)+'</text><text x="'+(L+w+6)+'" y="'+(y+18)+'" font-size="12" font-weight="700" style="fill:var(--ink)">'+round1(r.a)+'</text></g>'});
+ s+='<text x="'+L+'" y="'+(H-12)+'" text-anchor="middle" font-size="11" style="fill:var(--muted)">0</text><text x="'+(L+pw)+'" y="'+(H-12)+'" text-anchor="middle" font-size="11" style="fill:var(--muted)">5</text></svg>';
+ return s+(nos?'<div class="muted small">'+esc(t('{n} facilitator(s) have no score yet.',{n:nos}))+'</div>':'');
+}
+ACT.fac=el=>{D.fac=D.fac===el.dataset.v?'':el.dataset.v;dashDraw()};
+function chartScatter(l){
+ const p=l.filter(r=>r.score!=null);
+ if(!p.length)return '<p class="muted">'+esc(t('No scores yet for this selection.'))+'</p>';
+ if(D.table.c_scatter)return '<div class="tw"><table><tr><th>'+esc(t('Training'))+'</th><th class="r">'+esc(t('Cost'))+'</th><th class="r">'+esc(t('Score'))+'</th></tr>'+p.map(r=>'<tr><td>'+esc(r.title)+'</td><td class="r">'+fmtN(r.cost)+'</td><td class="r">'+r.score+'</td></tr>').join('')+'</table></div>';
+ const W=560,H=250,L=52,Rr=16,Tp=14,B=44,pw=W-L-Rr,ph=H-Tp-B;const mx=niceMax(Math.max.apply(null,p.map(r=>r.cost))||1);
+ const X=c=>L+pw*c/mx,Y=s=>Tp+ph-ph*(s-1)/4;
+ let s='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto" role="img" aria-label="'+esc(t('Cost against feedback score')+': '+p.map(r=>r.title+' '+fmtN(r.cost)+', '+r.score).join('; '))+'">';
+ for(let v=1;v<=5;v++){s+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" style="stroke:var(--line)"/><text x="'+(L-6)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="11" style="fill:var(--muted)">'+v+'</text>'}
+ for(let i=0;i<=4;i++){s+='<text x="'+(L+pw*i/4)+'" y="'+(H-24)+'" text-anchor="middle" font-size="11" style="fill:var(--muted)">'+shortNum(mx*i/4,'cost')+'</text>'}
+ s+='<text x="'+(L+pw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="11" style="fill:var(--muted)">'+esc(t('Cost per training')+' ('+T().currency+')')+'</text>';
+ s+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+Y(T().lowLine)+'" y2="'+Y(T().lowLine)+'" stroke-width="1.5" stroke-dasharray="5 4" style="stroke:var(--danger)"/><text x="'+(W-Rr-4)+'" y="'+(Y(T().lowLine)-5)+'" text-anchor="end" font-size="11" font-weight="600" style="fill:var(--danger)">'+esc(t('Low line'))+' '+T().lowLine+'</text>';
+ p.forEach(r=>{s+='<g class="svgbtn" tabindex="0" role="button" data-act="view" data-id="'+r.id+'" aria-label="'+esc(r.title+', '+fmtN(r.cost)+', '+r.score)+'"><title>'+esc(r.title+' · '+fmtN(r.cost)+' · '+r.score)+'</title><circle cx="'+X(r.cost)+'" cy="'+Y(r.score)+'" r="8" style="fill:'+(isLow(r)?'var(--danger)':'var(--c1)')+'"/></g>';
+  if(isLow(r)||r.cost===Math.max.apply(null,p.map(x=>x.cost)))s+='<text x="'+Math.min(X(r.cost)+11,W-Rr-2)+'" y="'+(Y(r.score)-9)+'" font-size="11" '+(X(r.cost)>W-140?'text-anchor="end" x="'+(X(r.cost)-11)+'"':'')+' style="fill:var(--ink)">'+esc(r.title.length>22?r.title.slice(0,21)+'…':r.title)+'</text>'});
+ return s+'</svg>';
+}
+function chartLow(l){
+ const low=l.filter(isLow).sort((a,b)=>a.score-b.score),pe=l.filter(r=>status(r)==='Pending Feedback');
+ if(!low.length&&!pe.length)return '<p class="muted">'+esc(t('No low scores and nothing pending.'))+'</p>';
+ return low.map(r=>'<div class="item"><div><b>'+esc(r.title)+'</b><div class="muted small">'+esc(r.facilitator)+' · '+esc(fmtDate(r.startDate))+' · '+esc(r.code)+'</div></div><div class="row"><span class="pill p-lo">'+r.score+'</span><button class="act" data-act="view" data-id="'+r.id+'">'+esc(t('View'))+'</button></div></div>').join('')+pe.map(r=>'<div class="item"><div><b>'+esc(r.title)+'</b><div class="muted small">'+esc(r.facilitator)+' · '+esc(fmtDate(r.startDate))+' · '+esc(r.code)+'</div></div><div class="row">'+pill('Pending Feedback')+'<button class="act" data-act="view" data-id="'+r.id+'">'+esc(t('View'))+'</button></div></div>').join('')+'<div class="muted small">'+esc(t('Click View to open the training. Improvement actions are in the Improvement tracker.'))+'</div>';
+}
+function insights(l,all){
+ const out=[];
+ const tt=totals(l);
+ const by={};l.forEach(r=>{const k=r.startDate.slice(0,7);by[k]=(by[k]||0)+r.cost});
+ const ks=Object.keys(by).sort((a,b)=>by[b]-by[a]);
+ if(ks.length>=3&&tt.cost>0){const two=by[ks[0]]+by[ks[1]];const pc=Math.round(two/tt.cost*100);if(pc>=50){const nm=k=>monName(+k.slice(5)-1);out.push(t('{p}% of spend sits in two months. {a} and {b} carry {c} of {d}.',{p:pc,a:nm(ks[0]),b:nm(ks[1]),c:fmtN(two),d:fmtN(tt.cost)}))}}
+ const lw=l.filter(isLow).length,pe=l.filter(r=>status(r)==='Pending Feedback').length;
+ if(lw||pe)out.push(t('{a} training(s) are below the {l} line and {b} have no score yet. Open the Improvement tracker.',{a:lw,l:T().lowLine,b:pe}));
+ const withP=l.filter(r=>r.participants>0&&r.cost>0).sort((a,b)=>b.cost/b.participants-a.cost/a.participants)[0];
+ if(withP)out.push(t('Highest cost per participant: {x} at {c} {u}.',{x:withP.title,c:fmtN(Math.round(withP.cost/withP.participants)),u:T().currency}));
+ if(!out.length)out.push(t('No special pattern found in this selection.'));
+ return out;
+}
+function widget(id,l){
+ const cfg={c_month:['By month',chartMonth,1],c_mix:['Trainings by type, scope and status',chartMix,1],c_fac:['Average feedback by facilitator (1 to 5)',chartFac,1],c_scatter:['Cost against feedback score',chartScatter,1],c_low:['Low scores and pending feedback',chartLow,0]}[id];
+ if(!cfg)return '';
+ const tools=id==='c_month'?'<div class="chips" role="group" aria-label="'+esc(t('Measure'))+'">'+Object.keys(METRICS).map(k=>'<button class="chipx'+(D.metric===k?' on':'')+'" data-act="metric" data-k="'+k+'" aria-pressed="'+(D.metric===k)+'">'+esc(t(METRICS[k][0]))+'</button>').join('')+'</div>':'';
+ return '<section class="card pad col" style="gap:10px;min-width:0" aria-label="'+esc(t(cfg[0]))+'"><div class="row between"><h3 style="font-size:17px">'+esc(t(cfg[0]))+'</h3>'+(cfg[2]?'<button class="act" data-act="tbl" data-k="'+id+'" aria-pressed="'+!!D.table[id]+'">'+esc(D.table[id]?t('Show chart'):t('Show as table'))+'</button>':'')+'</div>'+tools+(id==='c_month'?'<div class="muted small">'+esc(t(METRICS[D.metric][0])+' · '+t('click a bar to filter the whole dashboard to that month'))+'</div>':'')+cfg[1](l)+'</section>';
+}
+ACT.metric=el=>{D.metric=el.dataset.k;dashDraw()};
+ACT.tbl=el=>{D.table[el.dataset.k]=!D.table[el.dataset.k];dashDraw()};
+function kpiTile(id,l){
+ const tt=totals(l);
+ const d={kpi_trainings:['Trainings',tt.n,t('{a} done · {b} pending · {c} upcoming',{a:tt.done,b:tt.pend,c:tt.up}),'#register'],kpi_hours:['Total hours',fmtH(tt.hours),t('{n} set manually',{n:l.filter(isManual).length})],kpi_people:['Participants',fmtN(tt.people),t('registered, all trainings')],kpi_cost:['Total cost',fmtN(tt.cost),T().currency+' · '+(tt.cph==null?'-':fmtN(Math.round(tt.cph)))+' '+t('per participant')],kpi_score:['Avg feedback',tt.avg==null?'-':round1(tt.avg).toFixed(1)+'<span style="font-size:16px;font-weight:600"> / 5</span>',t('from {n} rated trainings',{n:tt.rated})],kpi_cph:['Cost per participant',tt.cph==null?'-':fmtN(Math.round(tt.cph)),T().currency],kpi_pending:['Pending feedback',tt.pend,t('held, but no score entered')]}[id];
+ if(!d)return '';return '<div class="kpi"><div class="lbl">'+esc(t(d[0]))+'</div><div class="kv">'+d[1]+'</div><div class="muted xs">'+d[2]+'</div></div>';
+}
+function vDash(){
+ if(D.fy==null)D.fy=defaultFy();
+ const facs=[...new Set(S.trainings.map(x=>x.facilitator))].sort();
+ const fys=[...new Set(S.trainings.map(r=>fyOf(r.startDate)))].sort();
+ const html='<div class="row between"><div><h1 style="font-size:clamp(24px,3.5vw,32px)">'+esc(t('Dashboard'))+'</h1><div class="muted">'+esc(t('Your view. Arrange it, pick what matters, and every chart is clickable.'))+'</div></div><div class="row"><button class="btn sec" data-act="custom">✎ '+esc(t('Customize'))+'</button>'+exportMenu('expD')+'</div></div>'+
+ '<div class="col" style="gap:8px"><div class="lbl">'+esc(t('View: choose by what you care about'))+'</div><div class="chips" id="viewChips"></div></div>'+
+ '<div class="card pad row" id="dFilters"></div><div id="dBody" class="col" style="gap:20px"></div>';
+ return{html:html,after:()=>{dashDraw()}};
+}
+function dashDraw(){
+ const vc=$('#viewChips');if(!vc)return;
+ const views=[['overview','Overview'],['cost','Cost control'],['quality','Quality of training'],['people','Participation'],['follow','Follow-up needed']];
+ const cur=dashCfg();
+ vc.innerHTML=views.map(v=>'<button class="chipx'+(cur.view===v[0]?' on':'')+'" data-act="dview" data-k="'+v[0]+'" aria-pressed="'+(cur.view===v[0])+'">'+esc(t(v[1]))+'</button>').join('')+(cur.view==='custom'?'<span class="chipx on">★ '+esc(t('My view'))+'</span>':'');
+ const facs=[...new Set(S.trainings.map(x=>x.facilitator))].sort();
+ const fys=[...new Set(S.trainings.map(r=>fyOf(r.startDate)))].sort();
+ const sel=(id,opts,val)=>'<select class="inp" id="'+id+'" data-dd="'+id+'" style="width:auto;min-width:120px" aria-label="'+esc(id)+'">'+opts.map(o=>'<option value="'+esc(o[0])+'"'+(val===o[0]?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>';
+ const fl=$('#dFilters');
+ const act=[];if(D.month)act.push(['month',D.month]);if(D.type)act.push(['type',D.type]);if(D.scope)act.push(['scope',D.scope]);if(D.fac)act.push(['fac',D.fac]);if(D.status)act.push(['status',D.status]);
+ fl.innerHTML='<span class="lbl">'+esc(t('Filters'))+'</span><div class="row" style="gap:6px"><button class="btn sec sm" data-act="fyprev" aria-label="'+esc(t('Previous year'))+'"'+(D.period==='all'?' disabled':'')+'>◀</button><b style="min-width:110px;text-align:center">'+(D.period==='all'?esc(t('All time')):'FY '+esc(fyLabel(D.fy)))+'</b><button class="btn sec sm" data-act="fynext" aria-label="'+esc(t('Next year'))+'"'+(D.period==='all'?' disabled':'')+'>▶</button></div>'+
+  '<div class="chips"><button class="chipx'+(D.period==='fy'?' on':'')+'" data-act="per" data-k="fy" aria-pressed="'+(D.period==='fy')+'">'+esc(t('Year'))+'</button><button class="chipx'+(D.period==='all'?' on':'')+'" data-act="per" data-k="all" aria-pressed="'+(D.period==='all')+'">'+esc(t('All time'))+'</button></div>'+
+  sel('dd_type',[['',t('Type: All')],['In-house',t('In-house')],['External',t('External')]],D.type)+sel('dd_scope',[['',t('Scope: All')],['Domestic',t('Domestic')],['International',t('International')]],D.scope)+sel('dd_fac',[['',t('Facilitator: All')]].concat(facs.map(f=>[f,f])),D.fac)+sel('dd_status',[['',t('Status: All')],['Upcoming',t('Upcoming')],['Completed',t('Completed')],['Pending Feedback',t('Pending Feedback')]],D.status)+
+  (act.length?'<button class="btn sec sm" data-act="dclear">'+esc(t('Clear filters'))+' ('+act.length+')</button>':'');
+ $$('[data-dd]',fl).forEach(el=>el.addEventListener('change',()=>{({dd_type:()=>D.type=el.value,dd_scope:()=>D.scope=el.value,dd_fac:()=>D.fac=el.value,dd_status:()=>D.status=el.value})[el.dataset.dd]();dashDraw()}));
+ const l=dList();
+ const order=cur.order.filter(id=>cur.vis.includes(id));
+ const kp=order.filter(i=>i.startsWith('kpi_')),ch=order.filter(i=>i.startsWith('c_'));
+ const ins=insights(l);
+ $('#dBody').innerHTML=
+  (act.length?'<div class="row" aria-label="'+esc(t('Active filters'))+'">'+act.map(a=>'<span class="pill p-soft">'+esc(a[0]==='month'?a[1]:t(a[1]))+'</span>').join(' ')+'</div>':'')+
+  '<div class="col" style="gap:8px"><div class="lbl">'+esc(t('Insights from your data (calculated, not guessed)'))+'</div><div class="grid g-auto">'+ins.map(x=>'<div class="ins">'+esc(x)+'</div>').join('')+'</div></div>'+
+  (l.length?'':'<div class="card pad"><b>'+esc(t('No trainings in this selection.'))+'</b> <button class="act" data-act="dclear">'+esc(t('Clear filters'))+'</button></div>')+
+  '<div class="grid g-kpi">'+kp.map(i=>kpiTile(i,l)).join('')+'</div><div class="grid g-chart">'+ch.map(i=>widget(i,l)).join('')+'</div>'+
+  '<div class="muted small">'+esc(t('Totals and charts follow the filters. Average feedback counts only trainings that have a score.'))+'</div>';
+}
+ACT.dview=el=>{const v=VIEWS[el.dataset.k];const c={view:el.dataset.k,vis:v.vis.slice(),order:v.order.slice()};if(isOwner()){T().dash=c;D.local=null;save()}else D.local=c;dashDraw()};
+ACT.per=el=>{D.period=el.dataset.k;D.month='';dashDraw()};
+ACT.fyprev=()=>{D.fy--;D.month='';dashDraw()};ACT.fynext=()=>{D.fy++;D.month='';dashDraw()};
+ACT.dclear=()=>{D.type=D.scope=D.fac=D.status=D.month='';dashDraw()};
+ACT.custom=()=>{
+ const cur=dashCfg();const c=clone(cur);window._cc=c;
+ const rows=()=>c.order.map((id,i)=>'<div class="row" style="padding:8px 0;border-top:1px solid var(--line2);flex-wrap:nowrap"><label class="opt" style="flex:1;min-height:40px"><input type="checkbox" data-cv="'+id+'"'+(c.vis.includes(id)?' checked':'')+'><span>'+esc(t(WNAME[id]))+' <span class="pill p-soft">'+esc(t(id.startsWith('kpi_')?'KPI':'Chart'))+'</span></span></label><button class="btn sec sm" data-act="cup" data-i="'+i+'" aria-label="'+esc(t('Move up'))+'"'+(i===0?' disabled':'')+'>▲</button><button class="btn sec sm" data-act="cdn" data-i="'+i+'" aria-label="'+esc(t('Move down'))+'"'+(i===c.order.length-1?' disabled':'')+'>▼</button></div>').join('');
+ window._crows=rows;
+ openModal('<h2 style="font-size:20px">'+esc(t('Customize dashboard'))+'</h2><p class="muted small" style="margin:6px 0">'+esc(t('Tick what you want to see. Use the arrows to set the order. KPIs and charts are placed in this order.'))+(isOwner()?'':' '+esc(t('Viewer changes last until you leave this page.')))+'</p><div id="cList">'+rows()+'</div><div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn sec" data-act="mclose">'+esc(t('Cancel'))+'</button><button class="btn" data-act="csave">'+esc(t('Save as My view'))+'</button></div>',true);
+};
+function cRedraw(){$('#cList').innerHTML=window._crows();}
+document.addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.cv&&window._cc){const c=window._cc;if(el.checked){if(!c.vis.includes(el.dataset.cv))c.vis.push(el.dataset.cv)}else c.vis=c.vis.filter(x=>x!==el.dataset.cv)}});
+ACT.cup=el=>{const c=window._cc,i=+el.dataset.i;if(i>0){[c.order[i-1],c.order[i]]=[c.order[i],c.order[i-1]];window._crows=window._crows;cRedraw();const b=$('[data-act=cup][data-i="'+(i-1)+'"]');if(b&&!b.disabled)b.focus()}};
+ACT.cdn=el=>{const c=window._cc,i=+el.dataset.i;if(i<c.order.length-1){[c.order[i+1],c.order[i]]=[c.order[i],c.order[i+1]];cRedraw();const b=$('[data-act=cdn][data-i="'+(i+1)+'"]');if(b&&!b.disabled)b.focus()}};
+ACT.csave=()=>{const c=window._cc;c.view='custom';if(isOwner()){T().dash=c;D.local=null;save()}else D.local=c;closeModal(true);toast('ok',t('Your dashboard view is saved.'));dashDraw()};
+
+/* ===== Export ===== */
+function crcTable(){const t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t}
+const CRC=crcTable();
+function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRC[(c^b[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
+function zipStore(files){
+ const enc=new TextEncoder();const chunks=[];const cen=[];let off=0;
+ const now=new Date();const dt=((now.getFullYear()-1980)<<9)|((now.getMonth()+1)<<5)|now.getDate();const tm=(now.getHours()<<11)|(now.getMinutes()<<5)|(now.getSeconds()>>1);
+ files.forEach(f=>{const name=enc.encode(f.name),data=typeof f.data==='string'?enc.encode(f.data):f.data,crc=crc32(data);
+  const lh=new DataView(new ArrayBuffer(30));lh.setUint32(0,0x04034b50,true);lh.setUint16(4,20,true);lh.setUint16(6,0x0800,true);lh.setUint16(8,0,true);lh.setUint16(10,tm,true);lh.setUint16(12,dt,true);lh.setUint32(14,crc,true);lh.setUint32(18,data.length,true);lh.setUint32(22,data.length,true);lh.setUint16(26,name.length,true);lh.setUint16(28,0,true);
+  chunks.push(new Uint8Array(lh.buffer),name,data);
+  const ch=new DataView(new ArrayBuffer(46));ch.setUint32(0,0x02014b50,true);ch.setUint16(4,20,true);ch.setUint16(6,20,true);ch.setUint16(8,0x0800,true);ch.setUint16(10,0,true);ch.setUint16(12,tm,true);ch.setUint16(14,dt,true);ch.setUint32(16,crc,true);ch.setUint32(20,data.length,true);ch.setUint32(24,data.length,true);ch.setUint16(28,name.length,true);ch.setUint32(42,off,true);
+  cen.push(new Uint8Array(ch.buffer),name);off+=30+name.length+data.length});
+ let cs=0;cen.forEach(c=>cs+=c.length);
+ const e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cs,true);e.setUint32(16,off,true);
+ return new Blob(chunks.concat(cen,[new Uint8Array(e.buffer)]),{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+const colL=n=>{let s='';n++;while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26)}return s};
+const xesc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'');
+function sheetXml(rows,widths){
+ let x='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols>'+widths.map((w,i)=>'<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>').join('')+'</cols><sheetData>';
+ rows.forEach((r,ri)=>{x+='<row r="'+(ri+1)+'">';r.forEach((v,ci)=>{const ref=colL(ci)+(ri+1);if(typeof v==='number'&&isFinite(v))x+='<c r="'+ref+'"><v>'+v+'</v></c>';else if(v!==null&&v!==undefined&&v!=='')x+='<c r="'+ref+'" t="inlineStr"'+(ri===0?' s="1"':'')+'><is><t xml:space="preserve">'+xesc(v)+'</t></is></c>'});x+='</row>'});
+ return x+'</sheetData></worksheet>';
+}
+function buildXlsx(sheets){
+ const ct='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'+sheets.map((s,i)=>'<Override PartName="/xl/worksheets/sheet'+(i+1)+'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>').join('')+'<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>';
+ const rels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>';
+ const wb='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'+sheets.map((s,i)=>'<sheet name="'+xesc(s.name.slice(0,31))+'" sheetId="'+(i+1)+'" r:id="rId'+(i+1)+'"/>').join('')+'</sheets></workbook>';
+ const wr='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+sheets.map((s,i)=>'<Relationship Id="rId'+(i+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet'+(i+1)+'.xml"/>').join('')+'<Relationship Id="rId'+(sheets.length+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>';
+ const st='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF0F3D3E"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/></cellXfs></styleSheet>';
+ const files=[{name:'[Content_Types].xml',data:ct},{name:'_rels/.rels',data:rels},{name:'xl/workbook.xml',data:wb},{name:'xl/_rels/workbook.xml.rels',data:wr},{name:'xl/styles.xml',data:st}].concat(sheets.map((s,i)=>({name:'xl/worksheets/sheet'+(i+1)+'.xml',data:sheetXml(s.rows,s.widths)})));
+ return zipStore(files);
+}
+function exportList(){const r=route().name;if(r==='register')return regList();if(r==='dashboard')return dList();return S.trainings.slice().sort((a,b)=>a.startDate<b.startDate?-1:1)}
+function regRows(list){
+ const head=['Code','Title','Start date','End date','Time from','Time to','Ends next day','Time zone','Hours','Duration mode','Type','Scope','Delivery','Facilitator','Learning targets','Competencies','Participants','Venue','Cost ('+T().currency+')','Feedback score','Status','Key improvements','Actioned'].map(h=>t(h));
+ return[head].concat(list.map(r=>[r.code,r.title,r.startDate,r.endDate,r.timeFrom,r.timeTo,r.endsNextDay?t('Yes'):t('No'),r.tz,hoursOf(r),t(isManual(r)?'Manual':'Auto'),t(r.type),t(r.scope),t(r.delivery||'In person'),r.facilitator,r.targets,r.competencies.join('; '),r.participants,r.venue,r.cost,r.score==null?'':r.score,t(status(r)),(r.improvements||'').replace(/\n/g,' | '),r.actioned?t('Yes'):t('No')]));
+}
+function summaryRows(list){const tt=totals(list);return[[t('Measure'),t('Value')],[t('Trainings'),tt.n],[t('Completed'),tt.done],[t('Pending Feedback'),tt.pend],[t('Upcoming'),tt.up],[t('Total hours'),+tt.hours.toFixed(2)],[t('Participants'),tt.people],[t('Total cost')+' ('+T().currency+')',tt.cost],[t('Cost per participant'),tt.cph==null?'':Math.round(tt.cph)],[t('Avg feedback'),tt.avg==null?'':+tt.avg.toFixed(2)],[t('Rated trainings'),tt.rated],[t('Exported on'),todayStr()],[t('Source'),T().appName+' v'+VERSION]]}
+function impRows(list){const rows=[[t('Code'),t('Title'),t('Facilitator'),t('Feedback score'),t('Status'),t('Key improvements'),t('Actioned')]];list.filter(r=>r.score!=null||status(r)==='Pending Feedback').sort((a,b)=>(a.score==null?99:a.score)-(b.score==null?99:b.score)).forEach(r=>rows.push([r.code,r.title,r.facilitator,r.score==null?'':r.score,(isLow(r)?t('Low')+' / ':'')+t(status(r)),(r.improvements||'').replace(/\n/g,' | '),r.actioned?t('Yes'):t('No')]));return rows}
+function csvCell(v){let s=String(v==null?'':v);if(typeof v==='string'&&/^[=+\-@\t\r]/.test(s))s="'"+s;return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+function dl(name,blob){const a=document.createElement('a');const u=URL.createObjectURL(blob);a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(u)},1500)}
+function reportHtml(list,title){
+ const tt=totals(list);
+ const kt='<table><tr><th>'+esc(t('Trainings'))+'</th><th>'+esc(t('Total hours'))+'</th><th>'+esc(t('Participants'))+'</th><th>'+esc(t('Total cost'))+' ('+esc(T().currency)+')</th><th>'+esc(t('Avg feedback'))+'</th></tr><tr><td>'+tt.n+'</td><td>'+fmtH(tt.hours)+'</td><td>'+fmtN(tt.people)+'</td><td>'+fmtN(tt.cost)+'</td><td>'+(tt.avg==null?'-':round1(tt.avg).toFixed(1))+' / 5</td></tr></table>';
+ const rows=list.map(r=>'<tr><td>'+esc(r.code)+'</td><td>'+esc(r.title)+'</td><td>'+esc(fmtRange(r))+'</td><td style="text-align:right">'+fmtH(hoursOf(r))+'</td><td>'+esc(t(r.type))+'/'+esc(t(r.scope))+'</td><td>'+esc(r.facilitator)+'</td><td style="text-align:right">'+r.participants+'</td><td style="text-align:right">'+fmtN(r.cost)+'</td><td style="text-align:right">'+(r.score==null?'-':r.score)+'</td><td>'+esc(t(status(r)))+'</td></tr>').join('');
+ const low=list.filter(isLow);
+ return '<h1>'+esc(T().appName)+' – '+esc(title)+'</h1><p>'+esc(t('Created on {d}',{d:todayStr()}))+' · '+esc(t('{n} records',{n:list.length}))+'</p>'+kt+'<h2>'+esc(t('Training register'))+'</h2><table border="1" cellspacing="0" cellpadding="4" style="border-collapse:collapse;width:100%"><tr><th>'+esc(t('Code'))+'</th><th>'+esc(t('Title'))+'</th><th>'+esc(t('Date'))+'</th><th>'+esc(t('Hours'))+'</th><th>'+esc(t('Type'))+'/'+esc(t('Scope'))+'</th><th>'+esc(t('Facilitator'))+'</th><th>'+esc(t('People'))+'</th><th>'+esc(t('Cost'))+'</th><th>'+esc(t('Score'))+'</th><th>'+esc(t('Status'))+'</th></tr>'+rows+'</table>'+
+  (low.length?'<h2>'+esc(t('Low scores and improvements'))+'</h2><ul>'+low.map(r=>'<li><b>'+esc(r.title)+'</b> ('+r.score+'): '+esc((r.improvements||t('no improvement written')).replace(/\n/g,'; '))+'</li>').join('')+'</ul>':'')+
+  '<p style="margin-top:18pt;font-size:9pt;color:#555">'+esc(t('All data in this version is fictional.'))+' · '+esc(COPY)+'</p>';
+}
+function printHtml(html,cls){const p=$('#printRoot');p.innerHTML=html;document.body.classList.add(cls);const done=()=>{document.body.classList.remove(cls);p.innerHTML='';window.removeEventListener('afterprint',done)};window.addEventListener('afterprint',done);setTimeout(()=>{try{window.print()}catch(e){toast('err',t('Printing is not available here.'));done()}},50)}
+ACT.exp=el=>{
+ const k=el.dataset.k;const list=exportList();const day=todayStr();const base=T().appName.replace(/[^\w\-]+/g,'')||'SkillLedger';
+ $$('.menu.on').forEach(m=>m.classList.remove('on'));
+ try{
+ if(k==='csv'){dl(base+'_Register_'+day+'.csv',new Blob(['﻿'+regRows(list).map(r=>r.map(csvCell).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}))}
+ else if(k==='xlsx'){const rr=regRows(list);dl(base+'_Register_'+day+'.xlsx',buildXlsx([{name:t('Register'),rows:rr,widths:[14,34,12,12,9,9,10,18,8,10,10,13,10,20,40,26,12,30,14,10,16,40,9]},{name:t('Summary'),rows:summaryRows(list),widths:[30,18]},{name:t('Improvements'),rows:impRows(list),widths:[14,34,20,10,20,50,9]}]))}
+ else if(k==='doc'){const h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>'+esc(T().appName)+'</title></head><body style="font-family:Calibri,Arial">'+reportHtml(list,t('Report'))+'</body></html>';dl(base+'_Report_'+day+'.doc',new Blob(['﻿'+h],{type:'application/msword'}))}
+ else if(k==='pdf'){printHtml(reportHtml(list,t('Report')),'pr-report');toast('info',t('In the print window choose "Save as PDF".'))}
+ else if(k==='json'){dl(base+'_Backup_'+day+'.json',new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));logAct('Backup downloaded');save()}
+ if(k!=='pdf')toast('ok',t('Export ready: {n} records.',{n:k==='json'?S.trainings.length:list.length}));
+ }catch(e){toast('err',t('Export failed: ')+e.message)}
+};
+
+/* ===== Settings ===== */
+function vSettings(){
+ const o=isOwner();const sec=(id,h,inner)=>'<section class="card pad col" id="s_'+id+'"><h2 style="font-size:19px">'+esc(t(h))+'</h2>'+inner+'</section>';
+ const mon=[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>'<option value="'+m+'"'+(T().fyStart===m?' selected':'')+'>'+esc(monName(m-1))+'</option>').join('');
+ const th=(k,l,c)=>'<label class="opt" style="flex-direction:column;align-items:flex-start;min-width:150px;flex:1"><span class="row" style="gap:8px"><input type="radio" name="theme" value="'+k+'"'+(T().theme===k?' checked':'')+' data-chg="theme"><b>'+esc(t(l))+'</b></span><span class="row" style="gap:4px">'+c.map(x=>'<span style="width:26px;height:26px;border-radius:6px;background:'+x+';border:1px solid #8884"></span>').join('')+'</span></label>';
+ const html='<div><h1 style="font-size:clamp(24px,3.5vw,32px)">'+esc(t('Settings'))+'</h1><div class="muted">'+esc(o?t('Changes apply at once and are saved in this browser.'):t('You can change language, theme, time zone and the guide. Other settings belong to the Owner.'))+'</div></div>'+
+ '<div class="grid g-auto" style="align-items:start">'+
+ sec('gen','General',(o?'<div class="fld"><label for="s_app">'+esc(t('System name'))+'</label><div class="row"><input class="inp" id="s_app" value="'+esc(T().appName)+'" maxlength="40" style="flex:1;min-width:160px"><button class="btn sm" data-act="setapp">'+esc(t('Save'))+'</button></div><div class="hint">'+esc(t('You can rename the system. The copyright line at the bottom is fixed and cannot be changed.'))+'</div><div class="err" id="s_app_e" role="alert"></div></div><div class="fld"><label for="s_own">'+esc(t('Your name (greeting)'))+'</label><div class="row"><input class="inp" id="s_own" value="'+esc(T().ownerName)+'" maxlength="40" style="flex:1;min-width:160px"><button class="btn sm" data-act="setown">'+esc(t('Save'))+'</button></div></div>':'')+
+  '<div class="fld"><label for="s_lang">'+esc(t('Language'))+'</label><select class="inp" id="s_lang" data-chg="lang"><option value="en"'+(lang()==='en'?' selected':'')+'>English</option><option value="bn"'+(lang()==='bn'?' selected':'')+'>বাংলা</option></select></div>'+
+  '<div class="fld"><label for="s_zone">'+esc(t('My time zone'))+'</label><select class="inp" id="s_zone" data-chg="zone">'+(ZONES.includes(T().myZone)?'':'<option selected>'+esc(T().myZone)+'</option>')+ZONES.map(z=>'<option value="'+z+'"'+(T().myZone===z?' selected':'')+'>'+esc(z+' ('+utcOffsetLabel(z)+')')+'</option>').join('')+'</select><div class="hint">'+esc(t('Used to show you the local time of trainings held in another zone.'))+'</div></div>')+
+ (o?sec('cur','Currency and year','<div class="fld"><label for="s_cur">'+esc(t('Currency'))+'</label><select class="inp" id="s_cur">'+Object.keys(CURRENCIES).map(c=>'<option'+(T().currency===c?' selected':'')+' value="'+c+'">'+c+' ('+esc(CURRENCIES[c])+')</option>').join('')+'</select></div><div class="fld"><label for="s_rate">'+esc(t('Conversion rate for existing amounts'))+'</label><input class="inp" id="s_rate" value="1" inputmode="decimal" style="max-width:160px"><div class="hint">'+esc(t('1 = change only the label. To convert, type the rate (new amount = old amount × rate). Live exchange rates are not available offline.'))+'</div><div class="err" id="s_rate_e" role="alert"></div></div><button class="btn sm" style="align-self:flex-start" data-act="setcur">'+esc(t('Apply currency'))+'</button><div class="fld"><label for="s_fy">'+esc(t('Financial year starts in'))+'</label><select class="inp" id="s_fy" data-chg="fy" style="max-width:200px">'+mon+'</select></div>'):'')+
+ (o?sec('score','Scoring','<div class="fld"><label for="s_low">'+esc(t('Low-score line'))+'</label><div class="row"><input class="inp" id="s_low" value="'+T().lowLine+'" inputmode="decimal" style="max-width:120px"><button class="btn sm" data-act="setlow">'+esc(t('Save'))+'</button></div><div class="hint">'+esc(t('Scores below this line are marked Low. The scale is fixed: 1 to 5, one decimal at most.'))+'</div><div class="err" id="s_low_e" role="alert"></div></div>'):'')+
+ (o?sec('lists','Competency list','<div class="chips">'+T().competencies.map((c,i)=>'<span class="chipx" style="cursor:default">'+esc(c)+' <button class="act d" style="padding:0 4px;min-height:24px" data-act="rmcomp" data-i="'+i+'" aria-label="'+esc(t('Remove')+' '+c)+'">×</button></span>').join('')+'</div><div class="row"><input class="inp" id="s_nc" style="max-width:240px" placeholder="'+esc(t('New competency'))+'" aria-label="'+esc(t('New competency'))+'"><button class="btn sm" data-act="setcomp">'+esc(t('Add'))+'</button></div><div class="hint">'+esc(t('Removing a name here does not change old records.'))+'</div>'):'')+
+ sec('theme','Theme','<div class="seg" role="radiogroup" aria-label="Theme">'+th('mist','Mist (default)',['#F3F6F5','#0E6E6B','#F2A93B'])+th('sand','Sand',['#EFEAE0','#0B6360','#D9902B'])+th('dusk','Dusk (dark)',['#0E1F1F','#4CC9C2','#F2B84B'])+'</div>')+
+ sec('lumi','Lumi, the guide','<label class="opt" style="align-self:flex-start"><input type="checkbox" id="s_lumi" data-chg="lumi"'+(T().lumi?' checked':'')+'><span>'+esc(t('Show Lumi in messages'))+'</span></label><div class="row" style="gap:14px">'+['ok','err','warn','info','def'].map(k=>'<span class="col" style="align-items:center;gap:2px">'+lumi(k,52)+'<span class="xs muted">'+esc(t({ok:'Success',err:'Error',warn:'Careful',info:'Info',def:'Hello'}[k]))+'</span></span>').join('')+'</div><div class="hint">'+esc(t('Lumi is green when something worked and red when something needs fixing. Switch it off for plain messages. Your own Lumi picture comes in a later version.'))+'</div>')+
+ (o?sec('date','Date used for status','<div class="seg"><label class="opt"><input type="radio" name="dm" value="today" data-chg="dm"'+(T().fixedDate?'':' checked')+'><span>'+esc(t('Today (real date)'))+'</span></label><label class="opt"><input type="radio" name="dm" value="fixed" data-chg="dm"'+(T().fixedDate?' checked':'')+'><span>'+esc(t('A fixed date (for demos and tests)'))+'</span></label></div><div class="fld"><label for="s_fd">'+esc(t('Fixed date'))+'</label><input class="inp" type="date" id="s_fd" value="'+esc(T().fixedDate)+'" style="max-width:200px"><button class="btn sm" style="align-self:flex-start" data-act="setfd">'+esc(t('Apply'))+'</button></div><div class="hint">'+esc(t('Upcoming, Completed and Pending Feedback depend on this date.'))+' '+esc(t('Now using: {d}',{d:todayStr()}))+'</div>'):'')+
+ (o?sec('data','Data and backup','<div class="row"><button class="btn sec" data-act="exp" data-k="json">'+esc(t('Download backup'))+'</button><button class="btn sec" data-act="restore">'+esc(t('Restore from backup'))+'</button><input type="file" id="s_file" accept=".json,application/json" class="sr" aria-label="Backup file"></div><div class="row"><button class="btn sec" data-act="reseed">'+esc(t('Reload the 12 test records'))+'</button><button class="btn dng" data-act="wipe">'+esc(t('Delete all records'))+'</button></div><div class="hint">'+esc(t('Data is kept in this browser only. A backup file also holds the Owner passcode check, so keep it private. This version cannot sync between computers.'))+'</div>'):'')+
+ sec('about','About and copyright','<div style="font-size:14px"><b>'+esc(T().appName)+'</b> · '+esc(t('Version'))+' '+VERSION+' (Phase 1)</div><div style="font-size:14px">'+esc(COPY)+'</div><div class="row"><a class="btn sec sm" href="#help">'+esc(t('Open manual'))+'</a><button class="btn sec sm" data-act="manualpdf">'+esc(t('Download manual (PDF)'))+'</button><a class="btn sec sm" href="#terms">'+esc(t('Terms of use'))+'</a></div>')+
+ '</div>';
+ return{html:html,after:()=>{const f=$('#s_file');if(f)f.addEventListener('change',restoreFile)}};
+}
+CHG.theme=el=>{S.settings.theme=el.value;save();render()};
+CHG.zone=el=>{S.settings.myZone=el.value;save();toast('ok',t('Saved.'))};
+CHG.fy=el=>{if(!isOwner())return;S.settings.fyStart=+el.value;D.fy=null;save();toast('ok',t('Saved.'))};
+CHG.lumi=el=>{S.settings.lumi=el.checked;save();toast('ok',el.checked?t('Lumi is on.'):t('Lumi is off.'));render()};
+CHG.dm=el=>{if(el.value==='today'){S.settings.fixedDate='';save();toast('ok',t('Using the real date.'));render()}};
+ACT.setapp=()=>{const v=$('#s_app').value.trim();const e=$('#s_app_e');if(!v||v.length>40){e.textContent=t('Enter a name of 1 to 40 characters');e.classList.add('on');return}e.classList.remove('on');S.settings.appName=v;save();toast('ok',t('System name saved.'));render()};
+ACT.setown=()=>{S.settings.ownerName=$('#s_own').value.trim().slice(0,40);save();toast('ok',t('Saved.'))};
+ACT.setcur=async()=>{const rate=num($('#s_rate').value);const e=$('#s_rate_e');if(isNaN(rate)||rate<=0){e.textContent=t('Enter a rate above 0');e.classList.add('on');return}e.classList.remove('on');
+ const nc=$('#s_cur').value;if(nc===T().currency&&rate===1){toast('info',t('Nothing to change.'));return}
+ if(rate!==1){const ok=await confirmBox({title:t('Convert all amounts?'),body:'<p style="margin:0">'+esc(t('Every cost will be multiplied by {r} and shown in {c}.',{r:rate,c:nc}))+'</p><p class="muted small" style="margin:0">'+esc(t('Download a backup first if you want to keep the old amounts.'))+'</p>',ok:t('Convert')});if(!ok)return;S.trainings.forEach(r=>{r.cost=Math.round(r.cost*rate*100)/100})}
+ S.settings.currency=nc;logAct('Currency set to '+nc+(rate!==1?' (rate '+rate+')':''));save();toast('ok',t('Currency is now {c}.',{c:nc}));render()};
+ACT.setlow=()=>{const v=num($('#s_low').value);const e=$('#s_low_e');if(isNaN(v)||v<1||v>5){e.textContent=t('Enter a number from 1 to 5');e.classList.add('on');return}e.classList.remove('on');S.settings.lowLine=v;save();toast('ok',t('Low-score line saved.'));render()};
+ACT.setcomp=()=>{const v=$('#s_nc').value.trim();if(!v||v.length>40){toast('err',t('Enter a name of 1 to 40 characters'));return}if(T().competencies.some(c=>c.toLowerCase()===v.toLowerCase())){toast('warn',t('That competency already exists.'));return}T().competencies.push(v);save();toast('ok',t('Added.'));render()};
+ACT.rmcomp=el=>{const c=T().competencies.splice(+el.dataset.i,1);save();toast('ok',t('Removed {c}.',{c:c[0]}));render()};
+ACT.setfd=()=>{const v=$('#s_fd').value;if(!parseD(v)){toast('err',t('Enter a real date'));return}S.settings.fixedDate=v;save();toast('ok',t('Status now uses {d}.',{d:v}));render()};
+ACT.restore=()=>{$('#s_file').click()};
+function restoreFile(e){
+ const f=e.target.files[0];if(!f)return;const fr=new FileReader();
+ fr.onload=async()=>{try{const o=JSON.parse(fr.result);if(!o||!o.settings||!Array.isArray(o.trainings))throw new Error(t('This is not a backup file from this system.'));
+  const bad=o.trainings.filter(r=>!r||typeof r.title!=='string'||!parseD(r.startDate)||!parseD(r.endDate)||typeof r.cost!=='number'||typeof r.participants!=='number').length;if(bad)throw new Error(t('{n} record(s) in the file are damaged.',{n:bad}));
+  const ok=await confirmBox({title:t('Restore this backup?'),body:'<p style="margin:0">'+esc(t('The file holds {n} records. They will replace everything here, and you will be signed out.',{n:o.trainings.length}))+'</p>',ok:t('Restore'),danger:true});if(!ok)return;
+  const d=defaults();o.settings=Object.assign(d.settings,o.settings);o.settings.dash=Object.assign(d.settings.dash,o.settings.dash||{});S=Object.assign(d,o);save();sessionSet(null);toast('ok',t('Backup restored. Please sign in again.'));location.hash='';render()}catch(x){toast('err',x.message||String(x))}};
+ fr.readAsText(f);e.target.value='';
+}
+ACT.reseed=async()=>{const ok=await confirmBox({title:t('Reload the test records?'),body:'<p style="margin:0">'+esc(t('All current records will be replaced by the 12 fictional test records.'))+'</p>',ok:t('Replace'),danger:true});if(!ok)return;seed();logAct('Test data reloaded');save();toast('ok',t('12 test records loaded.'))};
+ACT.wipe=()=>{openModal('<h2 style="font-size:20px">'+esc(t('Delete all records?'))+'</h2><p>'+esc(t('This removes every training. Download a backup first if you may need them. Type DELETE to confirm.'))+'</p><input class="inp" id="wipeIn" aria-label="DELETE" autocomplete="off" autofocus><div class="err" id="wipeE" role="alert"></div><div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn sec" data-act="mclose">'+esc(t('Cancel'))+'</button><button class="btn dng" data-act="wipego">'+esc(t('Delete all'))+'</button></div>')};
+ACT.wipego=()=>{if($('#wipeIn').value.trim()!=='DELETE'){$('#wipeE').textContent=t('Type DELETE exactly.');$('#wipeE').classList.add('on');return}S.trainings=[];logAct('All records deleted');save();closeModal(true);toast('ok',t('All records deleted.'))};
+
+/* ===== Access ===== */
+function vAccess(){
+ if(!isOwner())return{html:'<div class="card pad">'+esc(t('Only the Owner can open this page.'))+'</div>'};
+ const lock=(k,h,d)=>'<label class="opt" style="flex-direction:column;align-items:flex-start;flex:1 1 220px"><span class="row" style="gap:8px"><input type="radio" name="lock" value="'+k+'"'+(T().lock===k?' checked':'')+' data-chg="lock"><b>'+esc(t(h))+'</b></span><span class="muted small">'+esc(t(d))+'</span></label>';
+ const lg=S.logins.slice(0,100);
+ const html='<div><div class="lbl">'+esc(t('Only the Owner sees this page'))+'</div><h1 style="font-size:clamp(24px,3.5vw,32px)">'+esc(t('Access control'))+'</h1></div>'+
+ '<section class="card pad col"><h2 style="font-size:19px">'+esc(t('System state (the lock switch)'))+'</h2><div class="seg" role="radiogroup">'+lock('open','Open','You can add, edit and delete. Viewers can only look.')+lock('locked','Locked, read-only','Nobody can change records, not even you, until you unlock. Use this during judging.')+lock('private','Private','Only you can enter. Viewers see "closed by the owner".')+'</div></section>'+
+ '<div class="grid g-auto" style="align-items:start"><section class="card pad col"><h2 style="font-size:19px">'+esc(t('Viewer codes'))+'</h2><div class="muted small">'+esc(t('Give a code to the instructor. They can look at everything but change nothing.'))+'</div>'+
+  (S.viewers.length?S.viewers.map((v,i)=>'<div class="item"><div><b>'+esc(v.code)+'</b> '+(v.revoked?'<span class="pill p-lo">'+esc(t('Revoked'))+'</span>':v.expires&&v.expires<todayStr()?'<span class="pill p-pe">'+esc(t('Expired'))+'</span>':'<span class="pill p-ok">'+esc(t('Active'))+'</span>')+'<div class="muted small">'+esc(v.label)+' · '+esc(t('created'))+' '+esc(v.created.slice(0,10))+(v.expires?' · '+esc(t('expires'))+' '+esc(v.expires):'')+'</div></div><div class="row"><button class="act'+(v.revoked?'':' d')+'" data-act="vrev" data-i="'+i+'">'+esc(v.revoked?t('Allow again'):t('Revoke'))+'</button><button class="act d" data-act="vdel" data-i="'+i+'">'+esc(t('Delete'))+'</button></div></div>').join(''):'<div class="muted">'+esc(t('No viewer codes yet.'))+'</div>')+
+  '<div class="row" style="align-items:end"><div class="fld"><label for="vl" class="xs lbl">'+esc(t('Label (who is it for)'))+'</label><input class="inp" id="vl" placeholder="Instructor" maxlength="30"></div><div class="fld"><label for="vx" class="xs lbl">'+esc(t('Expires (optional)'))+'</label><input class="inp" type="date" id="vx"></div><button class="btn" data-act="vnew">+ '+esc(t('New code'))+'</button></div></section>'+
+ '<section class="card pad col"><h2 style="font-size:19px">'+esc(t('Owner passcode'))+'</h2><div class="fld"><label for="pw0">'+esc(t('Current passcode'))+'</label><input class="inp" type="password" id="pw0" autocomplete="current-password"></div><div class="fld"><label for="pw1">'+esc(t('New passcode (at least 6 characters)'))+'</label><input class="inp" type="password" id="pw1" autocomplete="new-password"></div><div class="err" id="pwE" role="alert"></div><button class="btn" style="align-self:flex-start" data-act="pwchg">'+esc(t('Change passcode'))+'</button>'+
+  '<div class="ins" style="margin-top:6px">'+esc(t('Honest note: in this single-file version the passcode and codes are checked inside the browser. They keep casual visitors out, but they are not bank-level security. Use fictional data only.'))+'</div></section></div>'+
+ '<section class="card pad col"><div class="row between"><h2 style="font-size:19px">'+esc(t('Who logged in, and when'))+'</h2><button class="btn sec sm" data-act="clrlog">'+esc(t('Clear log'))+'</button></div><div class="tw"><table><thead><tr><th>'+esc(t('When'))+'</th><th>'+esc(t('Who'))+'</th><th>'+esc(t('Result'))+'</th><th>'+esc(t('Note'))+'</th></tr></thead><tbody>'+(lg.length?lg.map(x=>'<tr><td>'+esc(x.t.slice(0,16).replace('T',' '))+' UTC</td><td>'+esc(x.who)+'</td><td>'+(x.ok?'<span class="pill p-ok">'+esc(t('Success'))+'</span>':'<span class="pill p-lo">'+esc(t('Refused'))+'</span>')+'</td><td>'+esc(x.note||'')+'</td></tr>').join(''):'<tr><td colspan="4" class="muted">'+esc(t('No logins recorded yet.'))+'</td></tr>')+'</tbody></table></div><div class="muted small">'+esc(t('The log shows the name typed by a viewer and their code label. It cannot prove who the person really is, and it only covers this browser.'))+'</div></section>'+
+ '<section class="card pad col"><h2 style="font-size:19px">'+esc(t('Recent activity'))+'</h2><div class="tw"><table><thead><tr><th>'+esc(t('When'))+'</th><th>'+esc(t('Who'))+'</th><th>'+esc(t('What'))+'</th></tr></thead><tbody>'+(S.log.length?S.log.slice(0,50).map(x=>'<tr><td>'+esc(x.t.slice(0,16).replace('T',' '))+' UTC</td><td>'+esc(x.who)+'</td><td>'+esc(x.a)+'</td></tr>').join(''):'<tr><td colspan="3" class="muted">'+esc(t('Nothing yet.'))+'</td></tr>')+'</tbody></table></div></section>';
+ return{html:html};
+}
+CHG.lock=el=>{S.settings.lock=el.value;logAct('Lock set to '+el.value);save();toast(el.value==='open'?'ok':'warn',t({open:'The system is open.',locked:'The system is locked (read-only).',private:'The system is private.'}[el.value]));render()};
+ACT.vnew=()=>{const l=($('#vl').value.trim()||'Viewer').slice(0,30);const x=$('#vx').value;if(x&&!parseD(x)){toast('err',t('Enter a real date'));return}
+ const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let c='';const a=new Uint32Array(6);(window.crypto||{getRandomValues:v=>v.forEach((_,i)=>v[i]=Math.random()*4e9)}).getRandomValues(a);a.forEach(n=>c+=ch[n%ch.length]);
+ S.viewers.push({code:'TMS-'+c,label:l,created:nowISO(),revoked:false,expires:x||''});logAct('Viewer code created for '+l);save();toast('ok',t('New code: {c}',{c:'TMS-'+c}));render()};
+ACT.vrev=el=>{const v=S.viewers[+el.dataset.i];v.revoked=!v.revoked;logAct((v.revoked?'Revoked ':'Re-allowed ')+v.code);save();toast('ok',v.revoked?t('Code revoked.'):t('Code allowed again.'));render()};
+ACT.vdel=async el=>{const v=S.viewers[+el.dataset.i];const ok=await confirmBox({title:t('Delete this code?'),body:'<p style="margin:0"><b>'+esc(v.code)+'</b></p>',ok:t('Delete'),danger:true});if(!ok)return;S.viewers.splice(+el.dataset.i,1);save();render()};
+ACT.pwchg=()=>{const e=$('#pwE');e.classList.remove('on');const o=S.settings.owner;if(hashPw($('#pw0').value,o.salt)!==o.hash){e.textContent=t('Current passcode is wrong');e.classList.add('on');return}const n=$('#pw1').value;if(n.length<6){e.textContent=t('Use at least 6 characters');e.classList.add('on');return}const salt=uid();S.settings.owner={salt:salt,hash:hashPw(n,salt)};logAct('Passcode changed');save();toast('ok',t('Passcode changed.'));$('#pw0').value='';$('#pw1').value=''};
+ACT.clrlog=async()=>{const ok=await confirmBox({title:t('Clear the login log?'),body:'',ok:t('Clear'),danger:true});if(!ok)return;S.logins=[];save();render()};
+
+/* ===== Help and Terms ===== */
+function manualData(){
+ const en=[
+  ['1. Start here','<p>Open the system and sign in. The <b>Owner</b> uses the passcode and can add, change and delete. A <b>Viewer</b> uses a code from the Owner and can only look. Use the language list at the top to switch between English and Bangla. Settings has three colour themes and the Lumi guide (green = it worked, red = fix something).</p>'],
+  ['2. Add a training','<p>Open <b>Add training</b>. Fields marked * must be filled. Fixed answers are chosen, not typed.</p><table border="1" cellspacing="0" cellpadding="5" style="border-collapse:collapse;width:100%"><tr><th>Field</th><th>Rule</th><th>Example</th></tr><tr><td>Training title *</td><td>Text. A warning appears if the same title and start date exist.</td><td>Leadership Essentials</td></tr><tr><td>Start / end date *</td><td>End date not before start date.</td><td>12 Aug – 13 Aug</td></tr><tr><td>Time from / to *</td><td>"To" later than "from", or tick "Ends next day (+1)" when it finishes after midnight.</td><td>09:30 – 16:00</td></tr><tr><td>Time zone *</td><td>The zone of the training. Others see their own local time.</td><td>Asia/Dhaka</td></tr><tr><td>Duration</td><td>Automatic: (to − from) × number of days. Set hours manually to override; it shows <i>Manual</i>; <i>Reset to auto</i> goes back.</td><td>13 h</td></tr><tr><td>Type / Scope *</td><td>In-house or External; Domestic or International.</td><td></td></tr><tr><td>Facilitator *</td><td>Type; earlier names are suggested.</td><td>Farhana Rahman</td></tr><tr><td>Key learning targets *</td><td>Free text.</td><td></td></tr><tr><td>Key competencies *</td><td>Tick one or more. Add new names in Settings or on the form.</td><td></td></tr><tr><td>Registered participants *</td><td>Whole number, 0 or more.</td><td>24</td></tr><tr><td>Venue *</td><td>Text.</td><td>Head office</td></tr><tr><td>Cost *</td><td>0 or more, in the currency set in Settings. 0 is allowed.</td><td>85000</td></tr><tr><td>Feedback score</td><td>1 to 5, at most one decimal. Only after the training has ended. Outside the scale is refused.</td><td>4.5</td></tr><tr><td>Key improvements</td><td>One recommendation per line.</td><td></td></tr></table><p><b>Status is automatic:</b> end date today or later = <i>Upcoming</i>; ended and scored = <i>Completed</i>; ended without a score = <i>Pending Feedback</i>.</p>'],
+  ['3. Register','<p>All trainings in a table. Search box, filters (type, scope, facilitator, status, dates), click a column heading to sort. <b>View</b> shows every detail. <b>Edit</b> and <b>Delete</b> are for the Owner. Pink rows have a score below the low line. The last row shows totals of what you see.</p>'],
+  ['4. Dashboard','<p>Totals (trainings, hours, participants, cost, average feedback) and charts: by month, type/scope/status, facilitator feedback, cost against score, low scores. Click a bar or slice to filter everything. Choose a ready-made view or press <b>Customize</b> to tick and order the widgets. Use the year arrows to move between financial years. Each chart can be shown as a table.</p>'],
+  ['5. Reports','<p>Phase 1 reports are the Register, the Dashboard and the Improvement tracker, all exportable. Reports by training code, trainer, employee, team, section and department arrive in version 2.</p>'],
+  ['6. Improvements and export','<p>The <b>Improvement tracker</b> lists feedback and recommendations, lowest score first; low scores are highlighted; tick <i>Actioned</i> when done. The <b>Export</b> list gives Excel, CSV, Word, PDF (print window, choose Save as PDF) and a Backup file. Exports follow the filters on the screen you are on.</p>'],
+  ['7. Assessments and employee link','<p class="grey">Comes in version 2 and 3: nominated employee IDs, attendance, cost sharing, assessment links, exam history, manager views. Not installed in this version.</p>'],
+  ['8. Settings and access','<p>Settings: system name, language, time zone, currency (label or conversion by a rate you type), financial year start, low-score line, competency list, theme, Lumi, date used for status, backup and restore. <b>Access</b> (Owner): lock switch (Open, Locked, Private), viewer codes, passcode, login log and activity log.</p>'],
+  ['9. Rules and limits','<ul><li>Feedback: 1 to 5, average shown to one decimal; below the low line (3.5) = Low.</li><li>Duration never exceeds 24 hours per day. 20:00 to 00:00 needs the +1 tick and equals 4 hours.</li><li>Data is kept in this browser only. Use Backup to move or protect it.</li><li>Currency change does not use live exchange rates.</li><li>Passcode and codes are checked inside the browser: they stop casual visitors, not determined ones.</li></ul>'],
+  ['10. Terms of use','TERMS']];
+ const bn=[
+  ['১. শুরু করুন','<p>সিস্টেম খুলে সাইন ইন করুন। <b>মালিক (Owner)</b> পাসকোড দিয়ে ঢুকে যোগ, পরিবর্তন ও মুছতে পারেন। <b>দর্শক (Viewer)</b> মালিকের দেওয়া কোড দিয়ে শুধু দেখতে পারেন। পাশের তালিকা থেকে ইংরেজি বা বাংলা বেছে নিন। সেটিংসে তিনটি থিম ও Lumi গাইড আছে (সবুজ = হয়েছে, লাল = ঠিক করুন)।</p>'],
+  ['২. প্রশিক্ষণ যোগ করুন','<p><b>Add training</b> খুলুন। * চিহ্নিত ঘর পূরণ করতেই হবে। নির্দিষ্ট উত্তর বেছে নিতে হয়, লিখতে নয়।</p><ul><li><b>শিরোনাম ও তারিখ:</b> সমাপ্তির তারিখ শুরুর আগে হতে পারবে না। একই শিরোনাম ও শুরুর তারিখ থাকলে সতর্কতা আসবে।</li><li><b>সময় (from/to):</b> "to" সময় "from"-এর পরে হতে হবে। মধ্যরাত পেরিয়ে শেষ হলে "Ends next day (+1)" টিক দিন।</li><li><b>সময়অঞ্চল:</b> প্রশিক্ষণের সময়অঞ্চল দিন। অন্যরা নিজেদের সময় দেখবেন।</li><li><b>সময়কাল (Duration):</b> স্বয়ংক্রিয়: (to − from) × দিনের সংখ্যা। হাতে বদলালে <i>Manual</i> দেখাবে; <i>Reset to auto</i> ফিরিয়ে আনবে।</li><li><b>অংশগ্রহণকারী:</b> পূর্ণসংখ্যা, ০ বা তার বেশি। <b>খরচ:</b> ০ বা তার বেশি (০ হলে ঠিক আছে)। <b>ফিডব্যাক স্কোর:</b> ১ থেকে ৫, সর্বোচ্চ এক দশমিক; সমাপ্তির পরেই দেওয়া যায়; প্রান্তের বাইরে হলে গ্রহণ হয় না।</li></ul><p><b>অবস্থা (Status) স্বয়ংক্রিয়:</b> সমাপ্তির তারিখ আজ বা পরে = <i>Upcoming</i>; সমাপ্ত ও স্কোর আছে = <i>Completed</i>; সমাপ্ত কিন্তু স্কোর নেই = <i>Pending Feedback</i>।</p>'],
+  ['৩. রেজিস্টার','<p>সব প্রশিক্ষণ এক টেবিলে। সার্চ বক্স, ফিল্টার (ধরন, পরিধি, ফ্যাসিলিটেটর, অবস্থা, তারিখ), কলামের নামে ক্লিক করে সাজানো। <b>View</b> সব তথ্য দেখায়। <b>Edit</b> ও <b>Delete</b> শুধু মালিকের। গোলাপি সারিতে স্কোর সীমার নিচে। শেষ সারিতে যা দেখছেন তার যোগফল।</p>'],
+  ['৤. ড্যাশবোর্ড','<p>মোট (প্রশিক্ষণ, ঘণ্টা, অংশগ্রহণকারী, খরচ, গড় ফিডব্যাক) ও চার্ট: মাসভিত্তিক, ধরন/পরিধি/অবস্থা, ফ্যাসিলিটেটরের ফিডব্যাক, খরচ বনাম স্কোর, কম স্কোর। সব ফিল্টার করতে বার বা অংশে ক্লিক করুন। তৈরি ভিউ বা <b>Customize</b> দিয়ে কোনটি দেখবেন ও ক্রম ঠিক করুন। বছরের তীর দিয়ে অর্থবছর বদলান। প্রতিটি চার্ট টেবিল আকারেও দেখা যায়।</p>'],
+  ['৫. রিপোর্ট','<p>প্রথম সংস্করণে রিপোর্ট মানে রেজিস্টার, ড্যাশবোর্ড ও ইমপ্রুভমেন্ট ট্র্যাকার, সবই এক্সপোর্টযোগ্য। প্রশিক্ষণ কোড, ট্রেইনার, কর্মী, টিম, সেকশন ও বিভাগভিত্তিক রিপোর্ট দ্বিতীয় সংস্করণে আসবে।</p>'],
+  ['৬. ইমপ্রুভমেন্ট ও এক্সপোর্ট','<p><b>Improvement tracker</b> ফিডব্যাক ও সুপারিশ দেখায়, সবচেয়ে কম স্কোর আগে; কম স্কোর হাইলাইট হয়; কাজ হলে <i>Actioned</i> টিক দিন। <b>Export</b> তালিকায় Excel, CSV, Word, PDF (প্রিন্ট উইন্ডোয় Save as PDF বেছে নিন) ও Backup আছে। এক্সপোর্ট বর্তমান পর্দার ফিল্টার অনুসারে হয়।</p>'],
+  ['৭. অ্যাসেসমেন্ট ও কর্মী লিংক','<p class="grey">সংস্করণ ২ ও ৩-এ আসছে: মনোনীত কর্মীর আইডি, উপস্থিতি, খরচ বন্টন, অ্যাসেসমেন্ট লিংক, পরীক্ষার ইতিহাস। এই সংস্করণে নেই।</p>'],
+  ['৮. সেটিংস ও অ্যাক্সেস','<p>সেটিংস: সিস্টেমের নাম, ভাষা, সময়অঞ্চল, মুদ্রা (শুধু লেবেল বা আপনার দেওয়া হারে রূপান্তর), অর্থবছর শুরুর মাস, কম-স্কোর সীমা, দক্ষতার তালিকা, থিম, Lumi, অবস্থার জন্য ব্যবহৃত তারিখ, ব্যাকআপ ও রিস্টোর। <b>Access</b> (মালিক): লক (Open, Locked, Private), দর্শক কোড, পাসকোড, লগইন লগ ও কাজের লগ।</p>'],
+  ['৯. নিয়ম ও সীমা','<ul><li>ফিডব্যাক: ১ থেকে ৫, গড় এক দশমিকে; সীমার (৩.৫) নিচে = Low।</li><li>প্রতিদিন সর্বোচ্চ ২৪ ঘণ্টা। ২০:০০ থেকে ০০:০০ হলে +1 টিক লাগবে ও ২০:০০–০০:০০ = ৪ ঘণ্টা।</li><li>ডেটা শুধু এই ব্রাউজারে থাকে। সরাতে বা রক্ষায় Backup ব্যবহার করুন।</li><li>মুদ্রা বদলে লাইভ মুদ্রার হার ব্যবহার হয় না।</li><li>পাসকোড ও কোড ব্রাউজারের ভেতরে যাচাই হয়: সাধারণ আগন্তুককে থামায়, দক্ষ কাউকে নয়।</li></ul>'],
+  ['১০. ব্যবহারের শর্ত','TERMS']];
+ return lang()==='bn'?bn:en;
+}
+function termsHtml(){
+ const L=[['Ownership','This system and its design belong to the owner. "'+COPY+'" is part of the software and may not be removed.'],['Demonstration data','This version holds fictional data only. Do not enter real employee, company or payroll information.'],['Use','Use the system only with the access given by the Owner. Do not try to bypass the lock or another person\'s access.'],['AI help','Any AI suggestion is a draft. A person decides. The system never changes a score or a record by itself without showing it.'],['Data location and privacy','Data is kept in this browser (see Settings). Real employee data needs consent and a policy before real use.'],['No warranty','Provided as a learning and demonstration project, as it is.']];
+ const BNL=[['মালিকানা','এই সিস্টেম ও এর নকশা মালিকের। "'+COPY+'" সফটওয়্যারের অংশ, সরানো যাবে না।'],['ডেমো ডেটা','এই সংস্করণে শুধু কাল্পনিক ডেটা। বাস্তব কর্মী, প্রতিষ্ঠান বা বেতনের তথ্য দেবেন না।'],['ব্যবহার','শুধু মালিকের দেওয়া অ্যাক্সেস দিয়ে ব্যবহার করুন। লক বা অন্যের অ্যাক্সেস ডিঙানোর চেষ্টা করবেন না।'],['AI সহায়তা','AI-র পরামর্শ খসড়া। সিদ্ধান্ত মানুষের। সিস্টেম নিজে না দেখিয়ে কোনো স্কোর বা রেকর্ড বদলাবে না।'],['ডেটার জায়গা ও গোপনীয়তা','ডেটা এই ব্রাউজারে থাকে (সেটিংস দেখুন)। বাস্তব কর্মীর তথ্য ব্যবহারের আগে সম্মতি ও নীতিমালা লাগবে।'],['কোনো গ্যারান্টি নেই','শেখা ও ডেমো প্রকল্প হিসেবে যেমন আছে তেমন দেওয়া হয়।']];
+ return '<ol>'+(lang()==='bn'?BNL:L).map(x=>'<li><b>'+esc(lang()==='bn'?x[0]:t(x[0]))+'.</b> '+esc(x[1])+'</li>').join('')+'</ol><p class="small muted">'+esc(t('A short notice for a project, not legal advice. Have it checked by a lawyer before real use.'))+'</p>';
+}
+function manualHtml(print){
+ const m=manualData();
+ return '<h1>'+esc(T().appName)+' – '+esc(t('User manual'))+'</h1><p class="muted small">'+esc(t('Version'))+' '+VERSION+' · '+esc(todayStr())+'</p>'+m.map((c,i)=>'<h2'+(print&&i>0&&i%3===0?' class="pbreak"':'')+'>'+c[0]+'</h2>'+(c[1]==='TERMS'?termsHtml():c[1])).join('')+'<p class="small muted" style="margin-top:20px">'+esc(COPY)+'</p>';
+}
+function vHelp(){
+ const m=manualData();
+ return{html:'<div class="row between"><div><h1 style="font-size:clamp(24px,3.5vw,32px)">'+esc(t('Help and manual'))+'</h1><div class="muted">'+esc(t('How to use the system, in short.'))+'</div></div><div class="row"><button class="btn" data-act="manualpdf">'+esc(t('Download manual (PDF)'))+'</button></div></div>'+
+ '<nav class="card pad" aria-label="'+esc(t('Contents'))+'"><div class="lbl" style="margin-bottom:6px">'+esc(t('Contents'))+'</div><div class="chips">'+m.map((c,i)=>'<a class="chipx" style="text-decoration:none;color:inherit" href="#help" data-act="jump" data-i="'+i+'">'+c[0]+'</a>').join('')+'</div></nav>'+
+ '<article class="card pad manual">'+m.map((c,i)=>'<h2 id="mc'+i+'" tabindex="-1">'+c[0]+'</h2>'+(c[1]==='TERMS'?termsHtml():c[1])).join('')+'</article>'}
+}
+ACT.jump=(el,e)=>{e.preventDefault();const x=$('#mc'+el.dataset.i);if(x){x.scrollIntoView({behavior:'smooth',block:'start'});x.focus({preventScroll:true})}};
+ACT.manualpdf=()=>{printHtml(manualHtml(true),'pr-manual');toast('info',t('In the print window choose "Save as PDF".'))};
+function vTerms(){return{html:'<div class="card pad col"><h1 style="font-size:clamp(24px,3.5vw,32px)">'+esc(t('Terms of use'))+'</h1>'+termsHtml()+'</div>'}}
+
+/* ===== start ===== */
+window.__SL={get S(){return S},load,save,render,sha256,calcDuration,validate,status,totals,seed,zonedToUtc,fmtInZone,ACT,buildXlsx,regRows,D,R,hoursOf,todayStr,fyRange,VERSION,COPY,BNKEYS:()=>BN};
+load();sessionLoad();
+/* ===== Bangla ===== */
+Object.assign(BN,{"\"Actioned\" is a tick so you can see which recommendations were acted on.": "\"ব্যবস্থা নেওয়া হয়েছে\" একটি টিক, যাতে বোঝা যায় কোন সুপারিশে কাজ হয়েছে।", "\"Ends next day\" applies only when the end time is earlier than the start time": "\"পরদিন শেষ\" কেবল তখনই প্রযোজ্য যখন শেষ সময় শুরুর সময়ের আগে", "\"n/a\": not held yet.": "\"প্রযোজ্য নয়\": এখনো অনুষ্ঠিত হয়নি।", "\"none\": held, feedback missing.": "\"নেই\": অনুষ্ঠিত হয়েছে, ফিডব্যাক বাকি।", "1 = change only the label. To convert, type the rate (new amount = old amount × rate). Live exchange rates are not available offline.": "১ = শুধু লেবেল বদলাবে। অঙ্ক রূপান্তর করতে রেট লিখুন (নতুন অঙ্ক = পুরোনো অঙ্ক × রেট)। অফলাইনে লাইভ বিনিময় হার পাওয়া যায় না।", "12 test records loaded.": "১২টি পরীক্ষামূলক রেকর্ড লোড হয়েছে।", "A fixed date (for demos and tests)": "নির্দিষ্ট তারিখ (ডেমো ও টেস্টের জন্য)", "A score can be entered only after the training end date": "ট্রেনিং শেষ হওয়ার তারিখের পরেই স্কোর দেওয়া যাবে", "A short notice for a project, not legal advice. Have it checked by a lawyer before real use.": "প্রকল্পের জন্য একটি সংক্ষিপ্ত নোটিশ, আইনি পরামর্শ নয়। বাস্তব ব্যবহারের আগে আইনজীবীকে দিয়ে দেখিয়ে নিন।", "A training with the same title and start date already exists ({c}). Save anyway?": "একই শিরোনাম ও শুরুর তারিখের ট্রেনিং আগে থেকেই আছে ({c})। তবুও সংরক্ষণ করবেন?", "About and copyright": "পরিচিতি ও কপিরাইট", "Access": "অ্যাক্সেস", "Access control": "অ্যাক্সেস নিয়ন্ত্রণ", "Actioned": "ব্যবস্থা নেওয়া হয়েছে", "Actions": "কাজ", "Active": "সক্রিয়", "Active filters": "চালু ফিল্টার", "Add": "যোগ করুন", "Add another competency": "আরেকটি দক্ষতা যোগ করুন", "Add feedback": "ফিডব্যাক যোগ করুন", "Add improvement": "উন্নয়ন যোগ করুন", "Add score": "স্কোর যোগ করুন", "Add the first training": "প্রথম ট্রেনিং যোগ করুন", "Add training": "ট্রেনিং যোগ করুন", "Added.": "যোগ হয়েছে।", "All": "সব", "All current records will be replaced by the 12 fictional test records.": "বর্তমান সব রেকর্ড মুছে ১২টি কাল্পনিক পরীক্ষামূলক রেকর্ড বসবে।", "All data in this version is fictional.": "এই সংস্করণের সব তথ্য কাল্পনিক।", "All records deleted.": "সব রেকর্ড মুছে ফেলা হয়েছে।", "All time": "সব সময়", "All with feedback": "ফিডব্যাকসহ সব", "Allow again": "আবার অনুমতি দিন", "Apply": "প্রয়োগ করুন", "Apply currency": "মুদ্রা প্রয়োগ করুন", "Auto": "স্বয়ংক্রিয়", "Auto would be {h} h": "স্বয়ংক্রিয় হলে হতো {h} ঘণ্টা", "Average": "গড়", "Average feedback by facilitator": "ফ্যাসিলিটেটর অনুযায়ী গড় ফিডব্যাক", "Average feedback by facilitator (1 to 5)": "ফ্যাসিলিটেটর অনুযায়ী গড় ফিডব্যাক (১ থেকে ৫)", "Average of participant answers, 1 to 5, at most 1 decimal. Leave empty until feedback arrives": "অংশগ্রহণকারীদের উত্তরের গড়, ১ থেকে ৫, দশমিকের পর সর্বোচ্চ ১ ঘর। ফিডব্যাক না আসা পর্যন্ত ফাঁকা রাখুন", "Avg feedback": "গড় ফিডব্যাক", "Back to register": "রেজিস্টারে ফিরুন", "Backup file (all data)": "ব্যাকআপ ফাইল (সব তথ্য)", "Backup restored. Please sign in again.": "ব্যাকআপ ফিরিয়ে আনা হয়েছে। আবার সাইন ইন করুন।", "By month": "মাস অনুযায়ী", "Cancel": "বাতিল", "Careful": "সতর্ক", "Change passcode": "পাসকোড বদলান", "Changes apply at once and are saved in this browser.": "পরিবর্তন সঙ্গে সঙ্গে কার্যকর হয় এবং এই ব্রাউজারে সংরক্ষিত থাকে।", "Changes saved.": "পরিবর্তন সংরক্ষিত হয়েছে।", "Chart": "চার্ট", "Choose at least one competency": "অন্তত একটি দক্ষতা বেছে নিন", "Clear": "মুছুন", "Clear filters": "ফিল্টার মুছুন", "Clear log": "লগ মুছুন", "Clear the login log?": "লগইন লগ মুছবেন?", "Click View to open the training. Improvement actions are in the Improvement tracker.": "ট্রেনিং খুলতে \"দেখুন\" চাপুন। উন্নয়ন কাজ আছে উন্নয়ন ট্র্যাকারে।", "Click to filter": "ফিল্টার করতে ক্লিক করুন", "Close": "বন্ধ করুন", "Code": "কোড", "Code allowed again.": "কোডটি আবার চালু হয়েছে।", "Code revoked.": "কোডটি বাতিল করা হয়েছে।", "Competency list": "দক্ষতার তালিকা", "Completed": "সম্পন্ন", "Contents": "সূচিপত্র", "Conversion rate for existing amounts": "বিদ্যমান অঙ্কের রূপান্তর হার", "Convert": "রূপান্তর করুন", "Convert all amounts?": "সব অঙ্ক রূপান্তর করবেন?", "Cost": "খরচ", "Cost (BDT)": "খরচ (BDT)", "Cost against feedback score": "ফিডব্যাক স্কোরের বিপরীতে খরচ", "Cost against score": "স্কোরের বিপরীতে খরচ", "Cost cannot be negative. Enter 0 for a free training": "খরচ ঋণাত্মক হতে পারে না। বিনামূল্যের ট্রেনিংয়ে ০ লিখুন", "Cost control": "খরচ নিয়ন্ত্রণ", "Cost per participant": "জনপ্রতি খরচ", "Cost per training": "ট্রেনিংপ্রতি খরচ", "Create and enter": "তৈরি করে প্রবেশ করুন", "Created on {d}": "তৈরি হয়েছে {d}", "Currency": "মুদ্রা", "Currency and year": "মুদ্রা ও বছর", "Currency is now {c}.": "মুদ্রা এখন {c}।", "Current passcode": "বর্তমান পাসকোড", "Current passcode is wrong": "বর্তমান পাসকোড ভুল", "Customize": "সাজিয়ে নিন", "Customize dashboard": "ড্যাশবোর্ড সাজান", "Dashboard": "ড্যাশবোর্ড", "Data and backup": "তথ্য ও ব্যাকআপ", "Data is kept in this browser only. A backup file also holds the Owner passcode check, so keep it private. This version cannot sync between computers.": "তথ্য শুধু এই ব্রাউজারে থাকে। ব্যাকআপ ফাইলে মালিকের পাসকোড যাচাইয়ের অংশও থাকে, তাই ফাইলটি গোপন রাখুন। এই সংস্করণ এক কম্পিউটার থেকে আরেকটিতে সিঙ্ক করে না।", "Date": "তারিখ", "Date used for status": "স্ট্যাটাসের জন্য ব্যবহৃত তারিখ", "Delete": "মুছুন", "Delete all": "সব মুছুন", "Delete all records": "সব রেকর্ড মুছুন", "Delete all records?": "সব রেকর্ড মুছবেন?", "Delete this code?": "এই কোডটি মুছবেন?", "Delete this training?": "এই ট্রেনিংটি মুছবেন?", "Delivery": "পদ্ধতি", "Domestic": "দেশীয়", "Download a backup first if you want to keep the old amounts.": "পুরোনো অঙ্ক রাখতে চাইলে আগে ব্যাকআপ নামিয়ে নিন।", "Download backup": "ব্যাকআপ নামান", "Download manual (PDF)": "ম্যানুয়াল নামান (PDF)", "Duration": "সময়কাল", "Duration is automatic again.": "সময়কাল আবার স্বয়ংক্রিয়।", "Dusk (dark)": "সন্ধ্যা (গাঢ়)", "Edit": "সম্পাদনা", "Edit training": "ট্রেনিং সম্পাদনা", "End date": "শেষের তারিখ", "End date cannot be before the start date": "শেষের তারিখ শুরুর তারিখের আগে হতে পারে না", "End time must be later than start time. If it ends after midnight, tick \"Ends next day (+1)\"": "শেষ সময় শুরুর সময়ের পরে হতে হবে। মধ্যরাতের পরে শেষ হলে \"পরদিন শেষ (+১)\" টিক দিন", "Ends next day (+1)": "পরদিন শেষ (+১)", "Enter": "প্রবেশ", "Enter a name of 1 to 40 characters": "১ থেকে ৪০ অক্ষরের একটি নাম লিখুন", "Enter a number": "একটি সংখ্যা লিখুন", "Enter a number from 1 to 5": "১ থেকে ৫ এর মধ্যে একটি সংখ্যা লিখুন", "Enter a rate above 0": "০ এর বেশি একটি রেট লিখুন", "Enter a real date": "একটি সঠিক তারিখ লিখুন", "Enter a time like 09:30": "০৯:৩০ এর মতো সময় লিখুন", "Enter a time like 16:00": "১৬:০০ এর মতো সময় লিখুন", "Enter a whole number (no decimals, no text)": "পূর্ণসংখ্যা লিখুন (দশমিক বা অক্ষর নয়)", "Enter hours above 0": "০ এর বেশি ঘণ্টা লিখুন", "Error": "ত্রুটি", "Every cost will be multiplied by {r} and shown in {c}.": "প্রতিটি খরচ {r} দিয়ে গুণ হয়ে {c} এ দেখাবে।", "Expired": "মেয়াদ শেষ", "Expires (optional)": "মেয়াদ (ঐচ্ছিক)", "Export": "এক্সপোর্ট", "Export failed: ": "এক্সপোর্ট ব্যর্থ:", "Export ready: {n} records.": "এক্সপোর্ট প্রস্তুত: {n}টি রেকর্ড।", "Exported on": "এক্সপোর্টের তারিখ", "External": "বাহ্যিক", "Facilitator": "ফ্যাসিলিটেটর", "Facilitator: All": "ফ্যাসিলিটেটর: সব", "Feedback": "ফিডব্যাক", "Feedback by facilitator": "ফ্যাসিলিটেটর অনুযায়ী ফিডব্যাক", "Feedback missing": "ফিডব্যাক বাকি", "Feedback score": "ফিডব্যাক স্কোর", "Feedback score (1 to 5)": "ফিডব্যাক স্কোর (১ থেকে ৫)", "Fill dates and times to see the duration": "সময়কাল দেখতে তারিখ ও সময় দিন", "Filters": "ফিল্টার", "Financial year starts in": "অর্থবছর শুরু হয়", "First time here. Set the Owner passcode. Only the Owner can add, change or delete records and decide who can look.": "প্রথমবার এসেছেন। মালিকের পাসকোড দিন। শুধু মালিক রেকর্ড যোগ, বদল বা মুছতে এবং কারা দেখতে পারবে তা ঠিক করতে পারবেন।", "Fixed date": "নির্দিষ্ট তারিখ", "Follow-up needed": "ফলো-আপ দরকার", "For online training write \"Online\" and the platform": "অনলাইন ট্রেনিংয়ে \"Online\" ও প্ল্যাটফর্মের নাম লিখুন", "Forgot the passcode? It is stored only in this browser. Restoring a backup file (Settings) or clearing this site's data resets it, and clearing data deletes records.": "পাসকোড ভুলে গেছেন? এটি শুধু এই ব্রাউজারে আছে। ব্যাকআপ ফাইল ফিরিয়ে আনলে (সেটিংস) বা সাইটের ডেটা মুছলে এটি রিসেট হয়, আর ডেটা মুছলে রেকর্ডও চলে যায়।", "General": "সাধারণ", "Give a code to the instructor. They can look at everything but change nothing.": "প্রশিক্ষককে একটি কোড দিন। তিনি সব দেখতে পারবেন, কিছু বদলাতে পারবেন না।", "Go back": "ফিরে যান", "Good afternoon": "শুভ অপরাহ্ন", "Good evening": "শুভ সন্ধ্যা", "Good morning": "সুপ্রভাত", "Group": "গ্রুপ", "Hello": "হ্যালো", "Help": "সহায়তা", "Help and manual": "সহায়তা ও ম্যানুয়াল", "Highest cost per participant: {x} at {c} {u}.": "জনপ্রতি সর্বোচ্চ খরচ: {x}, {c} {u}।", "Home": "হোম", "Honest note: in this single-file version the passcode and codes are checked inside the browser. They keep casual visitors out, but they are not bank-level security. Use fictional data only.": "সৎ কথা: এই এক-ফাইলের সংস্করণে পাসকোড ও কোড ব্রাউজারের ভেতরেই যাচাই হয়। এতে সাধারণ দর্শক ঠেকানো যায়, কিন্তু ব্যাংক-মানের নিরাপত্তা নয়। শুধু কাল্পনিক তথ্য ব্যবহার করুন।", "Hours": "ঘণ্টা", "How to use the system, in short.": "সিস্টেম কীভাবে ব্যবহার করবেন, সংক্ষেপে।", "Hybrid": "হাইব্রিড", "Improvement tracker": "উন্নয়ন ট্র্যাকার", "Improvements": "উন্নয়ন", "Improvements recommended": "সুপারিশকৃত উন্নয়ন", "In person": "সশরীরে", "In the print window choose \"Save as PDF\".": "প্রিন্ট উইন্ডোতে \"Save as PDF\" বেছে নিন।", "In your zone {z}: {a} to {b}.": "আপনার জোন {z} অনুযায়ী: {a} থেকে {b}।", "In-house": "ইন-হাউস", "Info": "তথ্য", "Insights from your data (calculated, not guessed)": "আপনার তথ্য থেকে অন্তর্দৃষ্টি (হিসাব করা, আন্দাজ নয়)", "International": "আন্তর্জাতিক", "KPI": "কেপিআই", "Key competencies": "মূল দক্ষতা", "Key improvements": "মূল উন্নয়ন", "Key learning targets": "মূল শিক্ষণ লক্ষ্য", "Label (who is it for)": "লেবেল (কার জন্য)", "Language": "ভাষা", "Learning": "শিক্ষা", "Load the 12 fictional test records": "১২টি কাল্পনিক পরীক্ষামূলক রেকর্ড লোড করুন", "Locked (read-only)": "তালাবদ্ধ (শুধু দেখা)", "Locked, read-only": "তালাবদ্ধ, শুধু দেখা", "Log a new training": "নতুন ট্রেনিং লিখুন", "Low": "কম", "Low line": "নিম্ন রেখা", "Low score": "কম স্কোর", "Low score only": "শুধু কম স্কোর", "Low score with no improvement written. Please add one.": "কম স্কোর কিন্তু উন্নয়ন লেখা নেই। একটি যোগ করুন।", "Low scores and improvements": "কম স্কোর ও উন্নয়ন", "Low scores and pending": "কম স্কোর ও বাকি", "Low scores and pending feedback": "কম স্কোর ও বাকি ফিডব্যাক", "Low scores first": "আগে কম স্কোর", "Low-score line": "কম-স্কোরের রেখা", "Low-score line saved.": "কম-স্কোরের রেখা সংরক্ষিত হয়েছে।", "Low-score line: below {l} of 5 (change in Settings)": "কম-স্কোরের রেখা: ৫ এর মধ্যে {l} এর নিচে (সেটিংসে বদলানো যায়)", "Lumi is green when something worked and red when something needs fixing. Switch it off for plain messages. Your own Lumi picture comes in a later version.": "কাজ হলে লুমি সবুজ, ঠিক করার কিছু থাকলে লাল। সাদামাটা বার্তা চাইলে বন্ধ করুন। নিজের লুমি ছবি পরের সংস্করণে আসবে।", "Lumi is off.": "লুমি বন্ধ।", "Lumi is on.": "লুমি চালু।", "Lumi, the guide": "লুমি, সহায়ক", "Manual": "ম্যানুয়াল", "Marked as actioned.": "ব্যবস্থা নেওয়া হয়েছে বলে চিহ্নিত।", "Marked as not actioned.": "ব্যবস্থা নেওয়া হয়নি বলে চিহ্নিত।", "Measure": "মাপকাঠি", "Menu": "মেনু", "Mist (default)": "কুয়াশা (ডিফল্ট)", "Month": "মাস", "More than 24 hours per day is not possible": "দিনে ২৪ ঘণ্টার বেশি সম্ভব নয়", "Move down": "নিচে নামান", "Move up": "উপরে তুলুন", "Must be later than \"from\"": "\"থেকে\" সময়ের পরে হতে হবে", "My time zone": "আমার টাইম জোন", "My view": "আমার ভিউ", "Needs your attention": "আপনার নজর দরকার", "New code": "নতুন কোড", "New code: {c}": "নতুন কোড: {c}", "New competency": "নতুন দক্ষতা", "New passcode (at least 6 characters)": "নতুন পাসকোড (কমপক্ষে ৬ অক্ষর)", "New training": "নতুন ট্রেনিং", "Next up": "এরপর", "Next year": "পরের বছর", "No": "না", "No data yet for this selection.": "এই নির্বাচনের জন্য এখনো তথ্য নেই।", "No feedback score or improvements recorded yet.": "এখনো কোনো ফিডব্যাক স্কোর বা উন্নয়ন লেখা হয়নি।", "No improvement recorded.": "কোনো উন্নয়ন লেখা নেই।", "No logins recorded yet.": "এখনো কোনো লগইন নথিভুক্ত হয়নি।", "No low scores and nothing pending.": "কোনো কম স্কোর নেই, কিছু বাকিও নেই।", "No record matches these filters.": "এই ফিল্টারে কোনো রেকর্ড মেলেনি।", "No scores yet for this selection.": "এই নির্বাচনে এখনো স্কোর নেই।", "No special pattern found in this selection.": "এই নির্বাচনে বিশেষ কোনো ধরন পাওয়া যায়নি।", "No trainings in this selection.": "এই নির্বাচনে কোনো ট্রেনিং নেই।", "No trainings yet.": "এখনো কোনো ট্রেনিং নেই।", "No upcoming trainings.": "আসন্ন কোনো ট্রেনিং নেই।", "No viewer codes yet.": "এখনো কোনো দর্শক কোড নেই।", "Nobody can change records, not even you, until you unlock. Use this during judging.": "আনলক না করা পর্যন্ত কেউ রেকর্ড বদলাতে পারবে না, আপনিও না। বিচারের সময় এটি ব্যবহার করুন।", "Not saved. {n} item(s) need your attention.": "সংরক্ষিত হয়নি। {n}টি বিষয় ঠিক করা দরকার।", "Note": "নোট", "Nothing needs attention right now.": "এখন নজর দেওয়ার মতো কিছু নেই।", "Nothing to change.": "বদলানোর কিছু নেই।", "Nothing to show here.": "এখানে দেখানোর কিছু নেই।", "Nothing yet.": "এখনো কিছু নেই।", "Now using: {d}": "এখন ব্যবহার হচ্ছে: {d}", "OK": "ঠিক আছে", "Online": "অনলাইন", "Only the Owner can open this page.": "শুধু মালিক এই পেজ খুলতে পারবেন।", "Only the Owner sees this page": "শুধু মালিক এই পেজ দেখেন", "Only you can enter. Viewers see \"closed by the owner\".": "শুধু আপনি ঢুকতে পারবেন। দর্শকরা \"মালিক বন্ধ রেখেছেন\" দেখবে।", "Open": "খোলা", "Open improvements": "খোলা উন্নয়ন", "Open manual": "ম্যানুয়াল খুলুন", "One recommendation per line. Low scores appear in the Improvement tracker": "প্রতি লাইনে একটি সুপারিশ। কম স্কোর উন্নয়ন ট্র্যাকারে দেখা যাবে", "Overview": "সার্বিক চিত্র", "Owner": "মালিক", "Owner passcode": "মালিকের পাসকোড", "Owner passcode (at least 6 characters)": "মালিকের পাসকোড (কমপক্ষে ৬ অক্ষর)", "PDF report (print)": "পিডিএফ রিপোর্ট (প্রিন্ট)", "Participants": "অংশগ্রহণকারী", "Participants cannot be negative": "অংশগ্রহণকারী ঋণাত্মক হতে পারে না", "Participation": "অংশগ্রহণ", "Passcode changed.": "পাসকোড বদলানো হয়েছে।", "Pending Feedback": "ফিডব্যাক বাকি", "Pending feedback": "ফিডব্যাক বাকি", "People": "মানুষ", "Pink rows: score below {l}.": "গোলাপি সারি: স্কোর {l} এর নিচে।", "Please fix {n} item(s) before saving:": "সংরক্ষণের আগে {n}টি বিষয় ঠিক করুন:", "Possible duplicate": "সম্ভাব্য ডুপ্লিকেট", "Previous year": "আগের বছর", "Printing is not available here.": "এখানে প্রিন্ট করা যাচ্ছে না।", "Private": "ব্যক্তিগত", "Quality of training": "ট্রেনিংয়ের মান", "Quick actions": "দ্রুত কাজ", "Rated": "স্কোর আছে", "Rated trainings": "স্কোরসহ ট্রেনিং", "Recent activity": "সাম্প্রতিক কাজ", "Recommendations from feedback. Lowest scores first.": "ফিডব্যাক থেকে সুপারিশ। সবচেয়ে কম স্কোর আগে।", "Refused": "প্রত্যাখ্যাত", "Register": "রেজিস্টার", "Registered participants": "নিবন্ধিত অংশগ্রহণকারী", "Reload the 12 test records": "১২টি পরীক্ষামূলক রেকর্ড আবার লোড করুন", "Reload the test records?": "পরীক্ষামূলক রেকর্ড আবার লোড করবেন?", "Remove": "সরান", "Removed {c}.": "{c} সরানো হয়েছে।", "Removing a name here does not change old records.": "এখানে নাম সরালে পুরোনো রেকর্ড বদলায় না।", "Repeat the passcode": "পাসকোড আবার লিখুন", "Replace": "প্রতিস্থাপন", "Report": "রিপোর্ট", "Reset to auto": "স্বয়ংক্রিয়ে ফিরুন", "Restore": "ফিরিয়ে আনুন", "Restore from backup": "ব্যাকআপ থেকে ফিরিয়ে আনুন", "Restore this backup?": "এই ব্যাকআপ ফিরিয়ে আনবেন?", "Result": "ফলাফল", "Revoke": "বাতিল করুন", "Revoked": "বাতিলকৃত", "Same as the start date for a one-day training": "একদিনের ট্রেনিংয়ে শুরুর তারিখই দিন", "Sand": "বালি", "Save": "সংরক্ষণ", "Save anyway": "তবুও সংরক্ষণ করুন", "Save as My view": "\"আমার ভিউ\" হিসেবে রাখুন", "Save changes": "পরিবর্তন সংরক্ষণ", "Save training": "ট্রেনিং সংরক্ষণ", "Saved.": "সংরক্ষিত হয়েছে।", "Scope": "পরিসর", "Scope: All": "পরিসর: সব", "Score": "স্কোর", "Score must be between 1 and 5. {v} is outside the scale": "স্কোর ১ থেকে ৫ এর মধ্যে হতে হবে। {v} স্কেলের বাইরে", "Scores below this line are marked Low. The scale is fixed: 1 to 5, one decimal at most.": "এই রেখার নিচের স্কোরে \"কম\" চিহ্ন পড়বে। স্কেল স্থির: ১ থেকে ৫, দশমিকের পর সর্বোচ্চ ১ ঘর।", "Scoring": "স্কোরিং", "Search": "খুঁজুন", "Search, sort and filter": "খোঁজা, সাজানো ও ফিল্টার", "Set hours manually": "ঘণ্টা নিজে দিন", "Settings": "সেটিংস", "Show": "দেখান", "Show Lumi in messages": "বার্তায় লুমি দেখান", "Show as table": "টেবিলে দেখান", "Show chart": "চার্ট দেখান", "Sign out": "সাইন আউট", "Source": "উৎস", "Start and end time are the same. The training must last more than zero minutes": "শুরু ও শেষ সময় এক। ট্রেনিং শূন্য মিনিটের বেশি হতে হবে", "Start date": "শুরুর তারিখ", "Start from": "শুরু থেকে", "Start typing: earlier names are suggested": "লিখতে শুরু করুন: আগের নাম প্রস্তাব হবে", "Start until": "শুরু পর্যন্ত", "Status": "স্ট্যাটাস", "Status now uses {d}.": "স্ট্যাটাস এখন {d} ব্যবহার করছে।", "Status: All": "স্ট্যাটাস: সব", "Success": "সফল", "Summary": "সারসংক্ষেপ", "System name": "সিস্টেমের নাম", "System name saved.": "সিস্টেমের নাম সংরক্ষিত হয়েছে।", "System state (the lock switch)": "সিস্টেমের অবস্থা (তালা)", "Terms of use": "ব্যবহারের শর্তাবলি", "Theme": "থিম", "That competency already exists.": "এই দক্ষতা আগে থেকেই আছে।", "That number looks too large": "সংখ্যাটি অনেক বড় মনে হচ্ছে", "That training was not found.": "ট্রেনিংটি পাওয়া যায়নি।", "The Owner has closed the system for now.": "মালিক আপাতত সিস্টেম বন্ধ রেখেছেন।", "The file holds {n} records. They will replace everything here, and you will be signed out.": "ফাইলে {n}টি রেকর্ড আছে। এগুলো এখানকার সবকিছুর জায়গা নেবে এবং আপনি সাইন আউট হবেন।", "The log shows the name typed by a viewer and their code label. It cannot prove who the person really is, and it only covers this browser.": "লগে দর্শকের লেখা নাম ও কোডের লেবেল দেখা যায়। ব্যক্তিটি আসলে কে তা এটি প্রমাণ করে না, আর এটি শুধু এই ব্রাউজারের জন্য।", "The system is locked. Unlock it in Access to add or change records.": "সিস্টেম তালাবদ্ধ। রেকর্ড যোগ বা বদলাতে অ্যাক্সেস থেকে আনলক করুন।", "The two passcodes are different": "দুটি পাসকোড মেলেনি", "This cannot be undone. Export a backup first if you are unsure.": "এটি ফেরানো যাবে না। নিশ্চিত না হলে আগে ব্যাকআপ এক্সপোর্ট করুন।", "This code is not valid, or it has been revoked or has expired.": "কোডটি সঠিক নয়, অথবা বাতিল বা মেয়াদোত্তীর্ণ।", "This field is required": "এই ঘরটি পূরণ করা আবশ্যক", "This is not a backup file from this system.": "এটি এই সিস্টেমের ব্যাকআপ ফাইল নয়।", "This removes every training. Download a backup first if you may need them. Type DELETE to confirm.": "এতে সব ট্রেনিং মুছে যাবে। লাগতে পারে মনে হলে আগে ব্যাকআপ নামান। নিশ্চিত করতে DELETE লিখুন।", "This score is below {l}. It will be marked Low. Please add at least one improvement.": "এই স্কোর {l} এর নিচে। এতে \"কম\" চিহ্ন পড়বে। অন্তত একটি উন্নয়ন লিখুন।", "This version keeps data in this browser only. All data here is fictional.": "এই সংস্করণ তথ্য শুধু এই ব্রাউজারে রাখে। এখানকার সব তথ্য কাল্পনিক।", "This year": "এই বছর", "Tick what you want to see. Use the arrows to set the order. KPIs and charts are placed in this order.": "যা দেখতে চান তাতে টিক দিন। তীর দিয়ে ক্রম ঠিক করুন। কেপিআই ও চার্ট এই ক্রমে বসবে।", "Time": "সময়", "Time from": "শুরুর সময়", "Time to": "শেষের সময়", "Time zone of this training": "এই ট্রেনিংয়ের টাইম জোন", "Times are in {z} ({o}).": "সময় {z} ({o}) অনুযায়ী।", "Title": "শিরোনাম", "Title, facilitator, venue, code...": "শিরোনাম, ফ্যাসিলিটেটর, স্থান, কোড...", "Today (real date)": "আজ (আসল তারিখ)", "Too many wrong tries. Wait 30 seconds.": "অনেকবার ভুল হয়েছে। ৩০ সেকেন্ড অপেক্ষা করুন।", "Total cost": "মোট খরচ", "Total cost of the training. Enter 0 if free": "ট্রেনিংয়ের মোট খরচ। বিনামূল্যে হলে ০ দিন", "Total hours": "মোট ঘণ্টা", "Totals": "মোট", "Totals and charts": "মোট ও চার্ট", "Totals and charts follow the filters. Average feedback counts only trainings that have a score.": "মোট ও চার্ট ফিল্টার অনুসরণ করে। গড় ফিডব্যাকে শুধু স্কোর-থাকা ট্রেনিং ধরা হয়।", "Training": "ট্রেনিং", "Training Management System": "ট্রেনিং ম্যানেজমেন্ট সিস্টেম", "Training Management System for Learning and Development teams.": "লার্নিং ও ডেভেলপমেন্ট টিমের জন্য ট্রেনিং ম্যানেজমেন্ট সিস্টেম।", "Training deleted.": "ট্রেনিং মুছে ফেলা হয়েছে।", "Training register": "ট্রেনিং রেজিস্টার", "Training saved.": "ট্রেনিং সংরক্ষিত হয়েছে।", "Training title": "ট্রেনিংয়ের শিরোনাম", "Trainings": "ট্রেনিং", "Trainings by type, scope and status": "ধরন, পরিসর ও স্ট্যাটাস অনুযায়ী ট্রেনিং", "Type": "ধরন", "Type DELETE exactly.": "ঠিক DELETE লিখুন।", "Type, scope and status": "ধরন, পরিসর ও স্ট্যাটাস", "Type: All": "ধরন: সব", "Upcoming": "আসন্ন", "Upcoming, Completed and Pending Feedback depend on this date.": "আসন্ন, সম্পন্ন ও ফিডব্যাক বাকি এই তারিখের উপর নির্ভর করে।", "Use 150 characters or fewer": "১৫০ অক্ষরের মধ্যে লিখুন", "Use 2000 characters or fewer": "২০০০ অক্ষরের মধ্যে লিখুন", "Use 40 characters or fewer": "৪০ অক্ষরের মধ্যে লিখুন", "Use at least 6 characters": "কমপক্ষে ৬ অক্ষর দিন", "Use at most 1 decimal": "দশমিকের পর সর্বোচ্চ ১ ঘর", "Use at most 2 decimals": "দশমিকের পর সর্বোচ্চ ২ ঘর", "Used to show you the local time of trainings held in another zone.": "অন্য জোনে হওয়া ট্রেনিংয়ের স্থানীয় সময় দেখাতে ব্যবহৃত হয়।", "User manual": "ব্যবহার ম্যানুয়াল", "Using the real date.": "আসল তারিখ ব্যবহার হচ্ছে।", "Value": "মান", "Venue": "স্থান", "Version": "সংস্করণ", "View": "দেখুন", "View-only. You can look at everything but change nothing.": "শুধু দেখা। সব দেখতে পারবেন, কিছু বদলাতে পারবেন না।", "View: choose by what you care about": "ভিউ: যা আপনার কাছে গুরুত্বপূর্ণ তা বেছে নিন", "Viewer": "দর্শক", "Viewer changes last until you leave this page.": "দর্শকের বদল এই পেজ ছাড়া পর্যন্ত থাকে।", "Viewer code": "দর্শক কোড", "Viewer codes": "দর্শক কোডসমূহ", "Welcome": "স্বাগতম", "What": "কী", "When": "কখন", "Who": "কে", "Who and where": "কে ও কোথায়", "Who logged in, and when": "কে কখন লগইন করেছেন", "Whole number, 0 or more": "পূর্ণসংখ্যা, ০ বা তার বেশি", "Word report": "ওয়ার্ড রিপোর্ট", "Wrong passcode": "পাসকোড ভুল", "Year": "বছর", "Yes": "হ্যাঁ", "You can add, edit and delete. Viewers can only look.": "আপনি যোগ, সম্পাদনা ও মুছতে পারবেন। দর্শকরা শুধু দেখতে পারবে।", "You can change language, theme, time zone and the guide. Other settings belong to the Owner.": "আপনি ভাষা, থিম, টাইম জোন ও সহায়ক বদলাতে পারবেন। বাকি সেটিংস মালিকের।", "You can rename the system. The copyright line at the bottom is fixed and cannot be changed.": "সিস্টেমের নাম বদলানো যায়। নিচের কপিরাইট লাইন স্থির, বদলানো যায় না।", "You have view-only access. Only the Owner can add or change records.": "আপনার শুধু দেখার অনুমতি আছে। রেকর্ড যোগ বা বদল করতে পারেন কেবল মালিক।", "Your dashboard view is saved.": "আপনার ড্যাশবোর্ড ভিউ সংরক্ষিত হয়েছে।", "Your name (greeting)": "আপনার নাম (শুভেচ্ছায়)", "Your name (shown in the greeting)": "আপনার নাম (শুভেচ্ছায় দেখাবে)", "Your name (so the Owner can see who looked)": "আপনার নাম (যাতে মালিক দেখতে পান কে দেখেছেন)", "Your training year at a glance.": "আপনার ট্রেনিং বছর এক নজরে।", "Your view. Arrange it, pick what matters, and every chart is clickable.": "আপনার ভিউ। সাজান, গুরুত্বপূর্ণটা বাছুন, প্রতিটি চার্টে ক্লিক করা যায়।", "click a bar to filter the whole dashboard to that month": "বারে ক্লিক করলে পুরো ড্যাশবোর্ড সেই মাসে ফিল্টার হবে", "created": "তৈরি", "e.g. 4.2": "যেমন ৪.২", "ended {n} days ago, no score": "{n} দিন আগে শেষ, স্কোর নেই", "expires": "মেয়াদ", "for sessions that finish after midnight": "যে সেশন মধ্যরাতের পরে শেষ হয় তার জন্য", "from {n} rated trainings": "{n}টি স্কোরসহ ট্রেনিং থেকে", "held, but no score entered": "অনুষ্ঠিত, কিন্তু স্কোর দেওয়া হয়নি", "no improvement written": "উন্নয়ন লেখা নেই", "none": "নেই", "not held yet": "এখনো অনুষ্ঠিত হয়নি", "none yet": "এখনো নেই", "per participant": "জনপ্রতি", "registered, all trainings": "নিবন্ধিত, সব ট্রেনিং", "score {s} is below {l}": "স্কোর {s}, {l} এর নিচে", "starts in {n} days": "{n} দিনে শুরু", "{a} done · {b} pending · {c} upcoming": "{a} সম্পন্ন · {b} বাকি · {c} আসন্ন", "{a} of {b} records shown · click a column heading to sort": "{b}টির মধ্যে {a}টি রেকর্ড দেখানো হচ্ছে · সাজাতে কলামের শিরোনামে ক্লিক করুন", "{a} training(s) are below the {l} line and {b} have no score yet. Open the Improvement tracker.": "{a}টি ট্রেনিং {l} রেখার নিচে এবং {b}টির স্কোর এখনো নেই। উন্নয়ন ট্র্যাকার খুলুন।", "{d} day(s) × {h} h per day": "{d} দিন × দিনে {h} ঘণ্টা", "{n} facilitator(s) have no score yet.": "{n} জন ফ্যাসিলিটেটরের স্কোর এখনো নেই।", "{n} record(s) in the file are damaged.": "ফাইলের {n}টি রেকর্ড নষ্ট।", "{n} records": "{n}টি রেকর্ড", "{n} set manually": "{n}টি হাতে দেওয়া", "{p}% of spend sits in two months. {a} and {b} carry {c} of {d}.": "খরচের {p}% দুই মাসে। {a} ও {b} মিলে {d} এর মধ্যে {c} বহন করছে।", "Fix the date or time to see the duration": "সময়কাল দেখতে তারিখ বা সময় ঠিক করুন"});
+render();
+})();
+</script>
+</body></html>
