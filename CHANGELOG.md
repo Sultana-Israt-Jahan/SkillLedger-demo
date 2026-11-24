@@ -1,5 +1,10 @@
 # SkillLedger changelog
 
+## v1.1.0
+- Watermark "SIJ - SkillLedger" (author initials) shown faintly on every screen, including the login screen, and restored automatically if removed or hidden.
+- Watermark and copyright line added to PDF/Word reports, the Excel Summary sheet, the last row of the CSV export and the JSON backup.
+- Honest limit: the watermark is part of the page code. It deters casual reuse and shows origin; it cannot stop someone who edits the source.
+
 ## v1.0.0 (Phase 1: rubric core)
 - 15-field training form with validation (whole-number participants >= 0, cost >= 0, feedback 1-5 with at most 1 decimal, rejected outside the scale, only after the end date).
 - Duration: auto = (to - from) x days; manual override shows "Manual" with a reset button. Time zone per training and "Ends next day (+1)" tick instead of a midnight rule.
