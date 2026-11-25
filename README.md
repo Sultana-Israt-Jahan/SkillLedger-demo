@@ -1,7 +1,7 @@
 # SkillLedger: Training Management System
 
 A training register and dashboard for Learning & Development (L&D) managers.
-Built for an "AI in HR" capstone competition. All data in this demo is fictional.
+A personal HR-technology project by Sultana Israt Jahan, started as an "AI in HR" capstone. All data in this demo is fictional.
 
 **Live demo:** https://Sultana-Israt-Jahan.github.io/SkillLedger-demo/
 
@@ -33,7 +33,7 @@ This public page is a **demo build of the full system**. Every screen and featur
 - Typing is locked. To try the form, pick a demo example (valid ones, and ones that trigger the checks such as a score of 6 or a session ending after midnight without the tick).
 - Changes last only until the page is reloaded, and nothing is stored or sent anywhere.
 
-The full version is developed privately and presented in the competition.
+The full version is developed privately and shown on request.
 
 ## Try it
 
@@ -56,7 +56,7 @@ The full version is developed privately and presented in the competition.
 
 ## How it was built
 
-The system was designed and specified by the author and built with AI assistance (Claude). Requirements, decisions, review of every result and the test plan are the author's; the AI wrote and tested the code against that plan. The prompt log and verification notes are part of the competition submission.
+The system was designed and specified by the author and built with AI assistance (Claude). Requirements, decisions, review of every result and the test plan are the author's; the AI wrote and tested the code against that plan. The prompt log and verification notes are kept with the project and available on request.
 
 ## Author
 
