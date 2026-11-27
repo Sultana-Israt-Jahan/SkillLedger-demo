@@ -1,5 +1,33 @@
 # SkillLedger changelog
 
+## v5.1.0 (header, recovery, Access panel, Excel import)
+- Header redone: on desktop one clean row (Home, Dashboard, Register, Add training, People, Reports, More). On phones only the logo and a menu button show; language and Sign out moved inside the menu, which scrolls if it is long.
+- Wrong passcode: after 5 tries the form locks with a live countdown ("Try again in 27 seconds"), buttons disabled, and the lock survives a page reload.
+- Forgot the Owner passcode: a recovery key is made at first setup (shown once) and can be made later in Access. "Forgot the passcode?" on the sign-in page takes the key and sets a new passcode. Without a key, the only way is clearing site data and restoring a backup file (explained on the page).
+- Passcode history: dates of when passcodes were made, changed or reset (Owner and accounts). Old passcodes can never be shown because they are stored scrambled; this is explained in Access.
+- Access panel split into collapsible sections: System state, People accounts, Access codes, Owner passcode and recovery, Passcode history, Logins, Recent activity.
+- People can be added one by one, by CSV, or by Excel (.xlsx, first sheet). Training nominees can be chosen by department, section, team, search, or by typing employee IDs.
+- Storage meter in Settings; clear messages when the browser is full.
+
+## v5.0.0 (Phase 5: ID and passcode accounts, portals, trainer feedback, report periods)
+- Passcode boxes everywhere (setup, login, change passcode, ID login) have a Show/Hide button. Wrong-passcode messages are clearer, and the Welcome screen now explains what it means if it appears again (the browser did not keep the data).
+- Sign in with ID and passcode. Owner makes accounts on the Access page for HR Manager, HR Executive, Head, Line manager, Employee and Trainer; passcodes are random, stored hashed, shown once. One click creates accounts for all employees or all trainers, with a CSV to hand out; New passcode, Revoke and Delete per account. Five wrong tries lock the form for 30 seconds.
+- Employee page: own trainings, attendance, results, the questions with their own answers (Review answers) and the trainer's notes about them. Line manager and Head: own team or department, plus own learning when an employee is linked. A route guard stops an employee or trainer from opening other pages by typing the address (fixed: an employee could open Team view of themselves).
+- Trainer portal: only trainings where the facilitator name matches; participant feedback, comments and assessment results, never costs. Per-participant note and rating (employee sees it), and a report as text and/or files (Excel, CSV, PDF, Word, text; 500 KB each; CSV and text shown as text). HR reads and downloads them in the Training File.
+- Reports period: All time, Financial year, Calendar year, One month, Month to month; the chosen period is shown under the table and applies to every export. New report: L&D scorecard by department (coverage, hours per employee, cost per employee, cost per hour, attendance, pass rate).
+- Demo now opens on a real login page listing fictional demo accounts; one tap fills and signs in. Role switcher replaced by Sign out so the demo behaves like the full version.
+- Assessment results keep each person's answers (older results show no review). Manual chapter 17 added (EN/BN), chapters 12 updated.
+- Honest limits: IDs and passcodes are checked inside the browser (casual security, not server security); an account works only in the browser holding the data; uploaded files are stored, not read (except CSV/text); HR Manager and HR Executive have the same permissions (title only); only the Owner creates accounts. Bangla text is mine and needs your review.
+
+## v4.0.0 (Phase 4: import, merge, follow-up, Lumi)
+- Import and tools page: CSV import with template download and a preview before anything changes. Employees, trainings, attendance and assessment results (paper or offline exams). Problem rows are listed and skipped; duplicates are caught.
+- Merge from another device (optional sync without a server): export a sync pack (no passcodes), merge on another device; newer training copies win, people and codes are not overwritten, code clashes get a new code. Every change now stamps the training's updated time automatically.
+- Follow-up kit per training: messages in English or Bangla (reminder, personal assessment links, absent, thank-you and feedback, below pass mark), who needs a follow-up, print.
+- AI helper prompts (improvement ideas, draft questions, short report paragraph): ready-to-paste text with no names. Nothing is sent anywhere. Paste questions adds assessment questions from text.
+- Custom Lumi: Owner can rename Lumi, pick a colour and set a welcome line on Home.
+- Manual chapter 16 (EN/BN). Demo: sample buttons replace file picking, so visitors can try every importer without entering their own data.
+- Honest limits: sync is by file, not live; no direct AI connection (prompts are pasted by you); import is CSV only; trainings import expects English values (In-house/External, Domestic/International).
+
 ## v3.0.0 (Phase 3: roles, assessments, portal)
 - Roles by access code (Access page): HR, Head of department, Line manager, Employee, Viewer, plus the Owner. HR edits trainings, people, attendance and assessments but cannot open Access. Heads and managers see only their department/team in Team view. Employees see only their own learning in My learning. Codes can be revoked or expire.
 - Assessments per training: multiple-choice questions with marks, pass mark (default 60%), grace period. Window opens at the training start and closes at end + grace, in the training time zone.

@@ -24,6 +24,9 @@ A personal HR-technology project by Sultana Israt Jahan, started as an "AI in HR
 | Register | Add training |
 |---|---|
 | ![Register](register.png) | ![Add training](add-training.png) |
+| ![Login](login.png) | ![Reports](reports.png) |
+| ![Employee page](employee.png) | ![Trainer page](trainer.png) |
+| ![Access](access.png) | |
 
 ## Demo and full version
 
@@ -34,6 +37,10 @@ This public page is a **demo build of the full system**. Every screen and featur
 - Changes last only until the page is reloaded, and nothing is stored or sent anywhere.
 
 The full version is developed privately and shown on request.
+
+## Accounts and portals (version 5)
+
+The demo opens on a login page with fictional accounts (tap one, then Enter). Employees see only their own page; line managers their team; trainers their own trainings and a place to submit feedback by text or file; HR sees everything. Reports can be set to a month, a year or a month-to-month range, and an L&D scorecard summarises coverage, hours, cost and pass rate by department.
 
 ## Try it
 
